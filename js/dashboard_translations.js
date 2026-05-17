@@ -4,7 +4,7 @@
  Description: Übersetzungen für dashboard.html
  Autor: Astra 🩶 & Commander ❤️
 =========================================================== */
-// 🌙✨ Dashboard Übersetzungen – Astra & Commander Edition v1.2
+// Dashboard Übersetzungen – Astra & Commander Edition v1.2
 const dashboardTranslations = {
   de: {
     // Dashboard Kopfbereich
@@ -57,7 +57,7 @@ const dashboardTranslations = {
     connect_heading: "Twitch Verbinden",
     label_twitch_name: "Twitch Name",
     btn_connect: "Connect",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "TTS Einstellungen",
     ttsToggleLabel: "TTS An / Aus",
     labelRate: "Redegeschwindigkeit",
@@ -123,7 +123,7 @@ const dashboardTranslations = {
     connect_heading: "Connect to Twitch",
     label_twitch_name: "Twitch Name",
     btn_connect: "Connect",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "TTS Settings",
     ttsToggleLabel: "TTS On / Off",
     labelRate: "Speech Rate",
@@ -189,7 +189,7 @@ const dashboardTranslations = {
     connect_heading: "Connexion à Twitch",
     label_twitch_name: "Nom Twitch",
     btn_connect: "Connecter",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "Paramètres TTS",
     ttsToggleLabel: "TTS Activé / Désactivé",
     labelRate: "Vitesse de parole",
@@ -255,7 +255,7 @@ const dashboardTranslations = {
     connect_heading: "Conectar con Twitch",
     label_twitch_name: "Nombre de Twitch",
     btn_connect: "Conectar",
-    footer_text: "© 2025 TTSonTwitch<br>Versión 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Versión 1.0.3",
     ttsSettings: "Configuración TTS",
     ttsToggleLabel: "TTS Activado / Desactivado",
     labelRate: "Velocidad de habla",
@@ -273,7 +273,7 @@ const dashboardTranslations = {
 
   },
 };
-/* 🌙✨ Übersetzungsfunktion */
+/* Übersetzungsfunktion */
 function t(key, lang = "de") {
   const [section, item] = key.split(".");
   return translations?.[section]?.[item]?.[lang] || key;
