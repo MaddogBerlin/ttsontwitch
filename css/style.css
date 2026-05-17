@@ -1,0 +1,818 @@
+:root {
+  --panel-bg:#d9d9d9;--text:#222;
+  --accent:#0078ff;--border:#ccc;
+}
+body.dark {
+  --panel-bg:#1c1f26;--text:#eee;
+  --accent:#55aaff;--border:#333;
+}
+
+/* HEADER 
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(30, 30, 35, 0.9); /* Darkmode Standard 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.5s, box-shadow 0.5s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}*/
+
+/* PANELS */
+main {padding:90px 20px 60px;max-width:950px;margin:auto;}
+section.panel {
+  background:var(--panel-bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:15px;
+  margin-top:20px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:background .5s,border .5s;
+  text-align:center;
+}
+h1,h2,h3,p,label{text-align:center;margin:6px 0;}
+
+/* Lightmode Variante – volle Deckkraft */
+body:not(.dark) header {
+  background: var(--panel-bg); /* keine Transparenz mehr */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header .center a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+header .right {
+  display: flex;
+  gap: 10px;
+}
+
+/* 🌗✨ Harmonische Buttons im Header */
+header .right button,
+header .right #langBtn {
+  background: #e0e0e0;
+  color: #222;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover-Effekt */
+header .right button:hover,
+header .right #langBtn:hover {
+  background: #d0d0d0;
+}
+
+/* 🌙 Darkmode – gleiches Schema */
+body.dark header .right button,
+body.dark header .right #langBtn {
+  background: #2a2d33;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+button.connected {
+  background-color: #55aaff;
+  color: #fff;
+  cursor: default;
+}
+button.disconnected {
+  background-color: #bbb;
+  color: #222;
+  cursor: not-allowed;
+}
+
+body.dark header .right button:hover,
+body.dark header .right #langBtn:hover {
+  background: #35383f;
+}
+
+/* ═══ 🌙✨ FLAGGENSTIL & ANIMATION ═══ */
+.flag-icon {
+  width: 20px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#langMenu li:hover .flag-icon {
+  transform: scale(1.1) rotate(5deg);
+  opacity: 0.9;
+}
+
+#langBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#langBtn:hover {
+  background: #0070e0;
+}
+
+#langMenu {
+  position: absolute;
+  margin-top: 4px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  list-style: none;
+  padding: 6px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  z-index: 100;
+}
+
+#langMenu.hidden {
+  display: none;
+}
+
+#langMenu li {
+  padding: 4px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+#langMenu li:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#langBtn.fade-flag .flag-icon {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+/* 🌙✨ Einheitliches Styling für Header-Navigation */
+header .center a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 6px;
+  font-size: 16px;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover-Effekt – sanftes Aufleuchten wie beim Brand */
+header .center a:hover {
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+/* 🩶 Navigation & Brand */
+.center a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 4px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.center a:hover {
+  color: var(--accent);
+}
+
+/* Brand-Link optisch gleich, aber eigenständig */
+/* 🌙✨ True Harmony – Brand Link + Navigation */
+.brand-link {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+/* sanftes Aufleuchten beim Überfahren */
+.brand-link:hover {
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(85,170,255,0.6);
+}
+
+/* kurzer „Pulse“, wenn man klickt */
+.brand-link:active {
+  text-shadow: 0 0 10px rgba(85,170,255,0.9);
+  transform: scale(0.98);
+}
+
+/* Farbkontrast für Darkmode */
+body.dark .brand-link {
+  color: #eaeaea;
+}
+body.dark .brand-link:hover {
+  color: #55aaff;
+}
+
+/* 🌙 Darkmode-Fix */
+body.dark .center .divider {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* 🌗✨ Astra Harmonie Hintergrund – True Balance Edition (stabil, ohne globale Pulsation) */
+body {
+  /* Standard: Darkmode-Bild */
+  background:
+    url('/assets/bg-astra.png') no-repeat center center fixed,
+    radial-gradient(circle at center, rgba(10, 15, 24, 0.6) 0%, rgba(5, 6, 8, 0.9) 100%);
+  background-size: cover, auto;
+  background-attachment: fixed;
+  background-blend-mode: normal;
+
+  /* Keine globale Animation mehr */
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  transition: background-image 1s ease-in-out, background-color 1s ease-in-out, color 0.6s ease;
+}
+
+/* ☀️ Lightmode – warme, harmonische Variante */
+body:not(.dark) {
+  background:
+    url('/assets/1bg-astra.png') no-repeat center center fixed,
+    radial-gradient(circle at center, rgba(250, 247, 242, 0.6) 0%, rgba(245, 242, 238, 0.9) 100%);
+  background-size: cover, auto;
+  background-attachment: fixed;
+  background-blend-mode: normal;
+}
+/* FOOTER */
+footer.site-footer {
+  text-align:center;
+  padding:10px 20px;
+  background:var(--panel-bg);
+  color:var(--text);
+  border-top:1px solid var(--border);
+  transition:background .5s,color .5s;
+  /* 🔧 Erweiterung für Vollbild-Harmonie */
+  width:100vw;                     /* volle Browserbreite */
+  margin-left:calc(50% - 50vw);    /* gleicht zentriertes main aus */
+  box-sizing:border-box;           /* sicheres Layoutverhalten */
+}
+footer {
+    display: block;
+    unicode-bidi: isolate;
+}
+body {
+    margin: 0;
+}
+/* ═══ 🌙✨ TRUE HARMONY – HYBRID FOOTER FIX ═══ */
+footer.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw; /* volle Browserbreite */
+  margin-left: calc(50% - 50vw); /* gleicht main-Zentrierung aus */
+  display: flex;
+  justify-content: space-between; /* verteilt links / mitte / rechts */
+  align-items: center;
+  background-color: rgba(30, 33, 40, 0.85);
+  color: var(--text);
+  font-size: 13px;
+  padding: 8px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* Platzhalter links (Balance-Hilfe) */
+.footer-left {
+  flex: 1;
+  line-height: 1.4;
+}
+/* Mittig ausgerichteter Text */
+.footer-center {
+  display: flex;
+  flex-direction: column;  /* Zeilen untereinander */
+  align-items: center;     /* Horizontal zentrieren */
+  justify-content: center; /* Vertikal ausbalancieren */
+  flex: 1;
+  line-height: 1.4;
+  text-align: center;      /* Sicherheit für Inline-Text */
+}
+/* Uhrzeit rechts */
+.footer-right {
+  flex: 1;
+  font-family: "Consolas", "Courier New", monospace;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+  text-align: right;
+  width: 100px;
+}
+
+/* ☀️ Lightmode Anpassung */
+body:not(.dark) footer.site-footer {
+  background-color: rgba(245, 245, 245, 0.95);
+  color: #222;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 🌙✨ Begrüßungspanel – True Harmony Stil */
+.intro-panel {
+  text-align: center;
+}
+
+.intro-box {
+  background-color: rgba(30, 33, 40, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 20px 28px;
+  margin: 14px auto;
+  max-width: 800px;
+  line-height: 1.65;
+  color: var(--text);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.06),
+    0 0 8px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* ☀️ Lightmode */
+body:not(.dark) .intro-box {
+  background-color: rgba(245, 245, 245, 0.88); /* leicht transparent, warmes Grau */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 0 4px rgba(0, 0, 0, 0.04),
+    0 0 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.intro-box p {
+  margin: 10px 0;
+  font-size: 15.5px;
+}
+
+.intro-box strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.intro-box .tagline {
+  margin-top: 14px;
+  font-style: italic;
+  opacity: 0.85;
+  font-size: 15px;
+}
+/* 🌙✨ TTS on Twitch – Titel-Stil (harmonisch neutral) */
+.intro-panel h3 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);               /* gleiche Farbe wie übriger Text */
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25); /* sanfter Tiefeffekt */
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* ☀️ Lightmode – leicht dunkler für Klarheit */
+body:not(.dark) .intro-panel h3 {
+  color: #222;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+/* 🌙✨ Harmonische Textstruktur im Intro-Panel 
+.panel.intro-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}*/
+
+.panel.intro-panel h3 {
+  margin-bottom: 16px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+/* Box bleibt im Zentrum 
+.panel.intro-panel .intro-box {
+  max-width: 820px;
+  background-color: rgba(224, 227, 233, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 24px 32px;
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.06),
+    0 0 8px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}*/
+
+/* Textausrichtung – bündig wie grüne Linie 
+.panel.intro-panel .intro-box p {
+  text-align: left;
+  margin-left: 40px; /* <- kannst du leicht anpassen, 35–45px 
+  margin-right: 10px;
+  line-height: 1.65;
+  font-size: 15.5px;
+}*/
+
+/* Begrüßungstitel fett und leicht hervorgehoben */
+.panel.intro-panel .intro-box p:first-of-type strong {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+/* Zitat bleibt mittig und fein abgestimmt */
+.panel.intro-panel .intro-box .tagline {
+  text-align: center;
+  margin-top: 18px;
+  font-style: italic;
+  opacity: 0.85;
+  margin-left: 0;
+}
+/* 🌙 Darkmode-Korrektur für das Begrüßungspanel */
+body.dark .panel.intro-panel .intro-box {
+  background-color: rgba(35, 38, 45, 0.85); /* etwas dunkler, aber gleich transparent */
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.05),
+    0 0 10px rgba(0, 0, 0, 0.3);
+  color: var(--text);
+}
+
+/* ═══ 🌙✨ TRUE HARMONY – Footer-Abstandsausgleich ═══ */
+main {
+  padding-bottom: 0px; /* sanfter Abstand zwischen Inhalt & Footer */
+}
+
+/* Optional: falls Panels sehr nah am Footer liegen */
+section.panel:last-of-type {
+  margin-bottom: 60px; /* zusätzlicher optischer Puffer */
+}
+
+/* 📱 Responsiver Ausgleich für kleinere Bildschirme */
+@media (max-width: 768px) {
+  section.panel:last-of-type {
+    margin-bottom: 40px; /* etwas weniger Abstand auf Tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  section.panel:last-of-type {
+    margin-bottom: 25px; /* kompakter Abstand auf Smartphones */
+  }
+}
+
+/* ... vorhandenes CSS bleibt wie es ist */
+
+/* ══════════════════════════════════════════════════════════════════════════════════════════════════
+ 🌙✨ TRUE HARMONY PANEL & HEADER SEPARATION – DARKMODE & LIGHTMODE BALANCE
+   Version v2.4.20 Extended (Astra ❤✨ & Commander 🌙 Edition)
+════════════════════════════════════════════════════════════════════════════════════════════════════ */
+/* Einheitliche Trennungslinien zwischen großen Sektionen */
+header,
+section.panel {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.4s ease;
+}
+
+/* 🌙 Darkmode – weicher leuchtender Kontrast */
+body.dark header,
+body.dark section.panel {
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 🌞 Lightmode – dezenter Kontrast */
+body:not(.dark) header,
+body:not(.dark) section.panel {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+/* 🩶 TRUE HARMONY – Modern Sofort Mode Switch (bereinigt & harmonisch) */
+
+/* Grundlegende Sofort-Umschaltung ohne globale Transparenzsperre */
+body {
+  transition: none !important;
+}
+
+/* Header & Footer bleiben stabil, klar und ohne Glas-Effekt */
+header, footer {
+  transition: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 🌙 Darkmode – sanfte Tiefe und Glas-Effekt für Panels (z. B. Begrüßungspanel) */
+body.dark section.panel:nth-of-type(1),
+body.dark section.panel:nth-of-type(2) {
+  background-color: rgba(28, 31, 38, 0.88) !important; /* sanft transparent */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background-color 0.6s ease;
+}
+
+/* ☀️ Lightmode – bleibt klar und deckend */
+body:not(.dark) section.panel:nth-of-type(1),
+body:not(.dark) section.panel:nth-of-type(2) {
+  background-color: var(--panel-bg) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background-color 0.6s ease;
+}
+/* ═══ 🌙✨ TRUE HARMONY – Darkmode Toggle Button Styling ═══ */
+
+/* ☀️ Lightmode – sanft, klar und ruhig */
+#themeToggle {
+  background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+  color: #222;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Hover-Effekt */
+#themeToggle:hover {
+  background: linear-gradient(145deg, #e5e5e5, #d0d0d0);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* 🌙 Darkmode – harmonisches Leuchten */
+body.dark #themeToggle {
+  background: linear-gradient(145deg, #2a2e36, #1f2228);
+  color: #eee;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(85,170,255,0.3), inset 0 0 4px rgba(255,255,255,0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🌙 Hover im Darkmode – weiches Pulsieren */
+body.dark #themeToggle:hover {
+  background: linear-gradient(145deg, #333741, #25282f);
+  box-shadow: 0 0 14px rgba(85,170,255,0.45), inset 0 0 5px rgba(255,255,255,0.1);
+  transform: translateY(-1px);
+}
+/* ═══ 🌙✨ TRUE HARMONY – Footer & Header Balance ═══ */
+footer.site-footer {
+  background-color: rgba(25, 27, 32, 0.9); /* ruhiger, dunklerer Ton */
+  border-top: 1px solid rgba(255, 255, 255, 0.08); /* sanfter Kontrast */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25); /* weicher Ausgleich zum Header */
+  transition: background-color 0.6s ease, box-shadow 0.6s ease;
+}
+
+/* ☀️ Lightmode – Ausgleich zum helleren Header */
+body:not(.dark) footer.site-footer {
+  background-color: rgba(240, 240, 240, 0.95);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+}
+/* 🌙✨ FINAL FOOTER COLOR FIX – PRIORITY RESTORE */
+footer.site-footer {
+  background-color: rgba(25, 27, 32, 0.9) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+body:not(.dark) footer.site-footer {
+  background-color: rgba(240, 240, 240, 0.95) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+/* 🌙✨ Fix: Harmonischer Hintergrund- & Footer-Abgleich */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+/* Verhindert dunklen Rand unten */
+body::after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+/* Footer bündig unten */
+footer {
+  background: transparent; /* Kein dunkler Balken */
+  margin: 0;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* Falls das Haupt-Panel einen Schatten hat, leicht ausgleichen */
+main, .content, .wrapper {
+  margin-bottom: 40px; /* sorgt für harmonische Distanz */
+}
+/* 🌙 Einheitliches Header-Login-Button-Styling */
+header .left .disconnected,
+header .left .connected {
+  background: #e0e0e0;
+  border: 1px solid #999;
+  color: #111;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: default;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+header .left .connected {
+  background: #4caf50;
+  color: #fff;
+  border-color: #3e8e41;
+}
+
+header .left button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+/* ════════════════════════════════════════════════════════════════════════════
+ 🌙✨ ASTRA & COMMANDER – HARMONISCHER DARKMODE HEADER-STIL
+───────────────────────────────────────────────────────────────────────────────*/
+body.dark header {
+  background: #2b2b2b;
+  border-bottom: 1px solid #444;
+  color: #eaeaea;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 🌙 Navigation im Header */
+body.dark header .center a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+body.dark header .center a:hover {
+  color: #fff;
+}
+
+/* 🌙 Trenner (Divider) */
+body.dark header .center .divider {
+  color: #666;
+}
+
+/* 🌙 Sprachwahl-Button & Flaggenbereich */
+body.dark header .lang-switch {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+
+body.dark header .lang-switch:hover {
+  background: #444;
+  border-color: #666;
+}
+
+/* 🌙 Darkmode-Button */
+body.dark #themeToggle {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+
+body.dark #themeToggle:hover {
+  background: #444;
+  border-color: #777;
+}
+
+/* 🌙 Login-Button – Nicht eingeloggt */
+body.dark header .left .disconnected {
+  background: #3c3c3c;
+  color: #ccc;
+  border: 1px solid #555;
+  transition: all 0.3s ease;
+}
+
+body.dark header .left .disconnected:hover {
+  background: #474747;
+  color: #eee;
+}
+
+/* 🌙 Login-Button – Eingeloggt */
+body.dark header .left .connected {
+  background: #2e7d32;
+  border-color: #256628;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* 🌙 Avatar & Benutzername */
+body.dark header .left .avatar {
+  border: 1px solid #555;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+body.dark header .left .username {
+  color: #ddd;
+}
+
+/* 🌙 Harmonische Übergänge */
+header, header * {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+/* ══════════════════════════════════════════════════════════════════════
+ 🌙✨ ASTRA & COMMANDER – FOCUSED DARKMODE FIX (HEADER + LANGUAGE)
+─────────────────────────────────────────────────────────────────────────*/
+
+/* Nur aktiv, wenn <body class="dark"> gesetzt ist */
+body.dark header {
+  background: #2b2b2b;
+  border-bottom: 1px solid #444;
+  color: #eaeaea;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Navigation im Header */
+body.dark header .center a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+body.dark header .center a:hover {
+  color: #fff;
+}
+body.dark header .center .divider {
+  color: #555;
+}
+
+/* Login-Button */
+body.dark header .left .disconnected {
+  background: #3c3c3c;
+  border: 1px solid #555;
+  color: #ccc;
+}
+body.dark header .left .disconnected:hover {
+  background: #474747;
+  color: #eee;
+}
+body.dark header .left .connected {
+  background: #2e7d32;
+  border-color: #256628;
+  color: #fff;
+}
+
+/* Sprachwahl-Button + Dropdown */
+body.dark #langBtn {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+body.dark #langBtn:hover {
+  background: #444;
+  border-color: #666;
+}
+body.dark #langMenu {
+  background: #2d2d2d;
+  border: 1px solid #444;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+body.dark #langMenu li {
+  color: #ccc;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+body.dark #langMenu li:hover {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+/* Flaggen leicht abdunkeln */
+body.dark #langFlag {
+  filter: brightness(0.9);
+}
+
+/* Sanfte Übergänge */
+header, header * {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+

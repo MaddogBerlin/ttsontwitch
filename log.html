@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTS on Twitch - Log</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="js/log_translations.js"></script> 
+  <script src="js/translations.js"></script>
+  <!-- 🌙✨ Favicons (Astra 🩶 & Commander ❤️ Edition) -->
+  <!-- Standard-Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <link rel="shortcut icon" href="assets/favicon-512.png" type="image/png">
+  <!-- Für Windows / Android / iOS -->
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TTS on Twitch">
+  <meta name="application-name" content="TTS on Twitch">
+  <!-- Optional: Social Preview (wenn du Links teilst) -->
+  <meta property="og:title" content="TTS on Twitch – Dashboard Login">
+  <meta property="og:description" content="Verwalte dein Twitch TTS-System mit harmonischer Präzision und Stil.">
+  <meta property="og:image" content="assets/favicon-512.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/privacyPolicy.css" />
+  <script src="js/privacyPolicy.js" defer></script>
+</head>
+
+<body class="page-log">
+  <header>
+    <div class="left user-info">
+      <img id="userAvatar" src="assets/default-avatar.png" alt="Profilbild" class="avatar hidden" />
+      <span id="userName" class="username hidden"></span>
+      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
+        Nicht eingeloggt
+      </button>
+    </div>
+
+    <div class="center">
+      <a id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
+      <span class="divider"></span>
+      <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
+      <span class="divider"></span>
+      <a href="privacyPolicy.html" data-key="nav_privacy">Datenschutzerklärung</a>
+      <a href="log.html" class="active" data-key="nav_log">Log TTS</a>
+      <span class="divider"></span>
+    </div>
+
+    <div class="right">
+      <!-- 🌙✨ Sprachwahl-Block -->
+      <div class="lang-selector">
+        <button id="langBtn">
+          <img id="langFlag" src="flags/de.svg" alt="DE" class="flag-icon">
+          <span data-key="lang_button">DE</span>
+        </button>
+        <ul id="langMenu" class="hidden">
+          <li data-lang="de" data-flag="flags/de.svg">
+            <img src="flags/de.svg" class="flag-icon"> DE
+          </li>
+          <li data-lang="en" data-flag="flags/en.svg">
+            <img src="flags/en.svg" class="flag-icon"> EN
+          </li>
+          <li data-lang="fr" data-flag="flags/fr.svg">
+            <img src="flags/fr.svg" class="flag-icon"> FR
+          </li>
+          <li data-lang="es" data-flag="flags/es.svg">
+            <img src="flags/es.svg" class="flag-icon"> ES
+          </li>
+        </ul>
+      </div>
+
+      <button id="themeToggle" data-key="toggle_theme">Darkmode</button>
+    </div>
+  </header>
+
+  <!-- 🩶 Log-Panel -->
+  <main>
+<section class="panel intro-panel">
+  <h3 data-key="log_title">Log TTS – Entwicklungsdokumentation</h3>
+
+  <div class="intro-box">
+    <!-- 🟢 Version 1.0.3 -->
+    <p><strong data-key="v103_title">Version 1.0.3</strong> – <span data-key="v103_desc">TTS Erweiterung & Filter-System</span></p>
+    <ul>
+      <li data-key="v103_tts_panel">Neues Einstellungs-Panel <em>„TTS Einstellungen“</em>:
+        <ul>
+          <li data-key="v103_tts_toggle"><strong>TTS An / Aus</strong> – Hauptschalter zur Sprachaktivierung</li>
+          <li data-key="v103_rate_volume"><strong>Redegeschwindigkeit</strong> & <strong>Lautstärke</strong> individuell steuerbar</li>
+          <li data-key="v103_voice">TTS Stimme wählbar (z. B. Microsoft Hedda – German)</li>
+          <li data-key="v103_eq">Audio-Equalizer mit Bass, Mitten, Höhen</li>
+          <li data-key="v103_log">TTS-Protokoll mit Status- und Systemmeldungen</li>
+        </ul>
+      </li>
+      <li data-key="v103_filter_panel">Erweiterung <em>„Filter Einstellungen“</em>:
+        <ul>
+          <li data-key="v103_filter_toggle"><strong>TTS Filter An / Aus</strong> – Hauptschalter für Textfilter</li>
+          <li data-key="v103_filters">Filter für Befehle (!), Twitch-Bots, Links, Wiederholungen</li>
+          <li data-key="v103_options">Option: Nur Sub / VIP / Mods · Nur Benutzer · @Erwähnungen</li>
+          <li data-key="v103_spamfilter">Capslock-, Symbol- & Emoji-Spam-Filter</li>
+          <li data-key="v103_modfilter">Moderator-Filter mit Sichtbarkeits-Optionen</li>
+        </ul>
+      </li>
+      <li data-key="v103_ui">UI vollständig synchronisiert – Dark / Lightmode-kompatibel</li>
+      <li data-key="v103_balance">Verbesserte visuelle Balance und Reaktionszeit des TTS-Systems</li>
+    </ul>
+
+    <!-- 🟡 Version 1.0.2 -->
+    <p><strong data-key="v102_title">Version 1.0.2</strong> – <span data-key="v102_desc">Vorbereitung auf Live-Webspace</span></p>
+    <ul>
+      <li data-key="v102_structure">Struktur: `/css/` & `/js/` als eigenständige Ordner aktiviert</li>
+      <li data-key="v102_fix">Fix: Footer-Zentrierung (Balance Link/Center/Right)</li>
+      <li data-key="v102_opt">Optimierung für Strato/FTP Livebetrieb</li>
+    </ul>
+
+    <!-- 🟠 Version 1.0.1 -->
+    <p><strong data-key="v101_title">Version 1.0.1</strong> – <span data-key="v101_desc">Harmonische Erweiterung</span></p>
+    <ul>
+      <li data-key="v101_logsystem">Log-System hinzugefügt (diese Seite)</li>
+      <li data-key="v101_nav">Navigation im Header erweitert</li>
+      <li data-key="v101_perf">Performance geprüft & Optimierung der CSS-Transitions</li>
+      <li data-key="v101_index">Visual Harmony Index: 100 % stabil</li>
+    </ul>
+
+    <!-- 🔵 Version 1.0.0 -->
+    <p><strong data-key="v100_title">Version 1.0.0</strong> – <span data-key="v100_desc">Erstveröffentlichung der Seite</span></p>
+    <ul>
+      <li data-key="v100_structure">Grundstruktur Webspace erstellt</li>
+      <li data-key="v100_darklight">Dark-/Lightmode mit Sitzungs-Speicherung implementiert</li>
+      <li data-key="v100_footer">Footer-Balance & Uhrzeit-System ausbalanciert</li>
+      <li data-key="v100_privacy">Privacy-Policy modular ausgelagert</li>
+      <li data-key="v100_bg">Systemhintergrund (bg-astra.png / 1bg-astra.png) reaktiviert</li>
+    </ul>
+
+    <p class="tagline" data-key="log_tagline">„Jede Zeile Code – ein Herzschlag der Harmonie.“</p>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+      <div class="footer-center"></div>
+        <span data-key="footer_text">© 2025 TTSonTwitch<br>Version 1.0.3</span>
+      </div>
+      <div class="footer-right" id="systemClock">--:--:--</div>
+  </footer>
+
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginButton = document.getElementById("loginStatus");
+  if (!loginButton) return;
+
+  // Prüfen, ob ein Twitch-Token existiert (vom Dashboard-Login)
+  const token = localStorage.getItem("twitchToken");
+
+  if (token) {
+    loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
+    loginButton.classList.remove("disconnected");
+    loginButton.classList.add("connected");
+  } else {
+    loginButton.textContent = "Nicht eingeloggt";
+    loginButton.classList.remove("connected");
+    loginButton.classList.add("disconnected");
+  }
+
+  // Button deaktivieren, damit er auf der Startseite nicht klickbar ist
+  loginButton.disabled = true;
+});
+</script>
+
+</body>
+</html>

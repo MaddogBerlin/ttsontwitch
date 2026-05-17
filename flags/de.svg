@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
+  <!-- jede Farbe exakt 2/3 Höhe (= 0.6667) -->
+  <rect width="3" height="2" fill="#FFCE00"/>          <!-- Gold: Hintergrund -->
+  <rect width="3" height="0.6667" y="0.6667" fill="#D00"/>  <!-- Rot: Mitte -->
+  <rect width="3" height="0.6667" y="0" fill="#000"/>       <!-- Schwarz: oben -->
+</svg>

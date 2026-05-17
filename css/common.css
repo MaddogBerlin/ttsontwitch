@@ -1,0 +1,238 @@
+/* 🌙✨ Astra & Commander – Common Style Core
+   Gemeinsames Fundament für Header, Footer, Buttons & Textfarben
+   Version 1.0 – designed for style.css + dashboard.css
+*/
+
+/* ─────────────── GLOBAL BASICS ─────────────── */
+:root {
+  --color-bg: #121212;
+  --color-text: #e6e6e6;
+  --color-accent: #6ab7ff;
+  --color-success: #4caf50;
+  --color-error: #e53935;
+  --color-panel: #1e1e1e;
+  --font-main: "Segoe UI", Roboto, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* ─────────────── HEADER ─────────────── */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #0d0d0d, #1a1a1a);
+  color: var(--color-text);
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0 6px;
+  transition: color 0.2s ease;
+}
+
+header a:hover {
+  color: #9cd6ff;
+}
+/* ─────────────── LINKS ─────────────── */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+/* 🌙 Einheitliches Header-Login-Button-Styling */
+header .left .disconnected,
+header .left .connected {
+  background: #e0e0e0;
+  border: 1px solid #999;
+  color: #111;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: default;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+header .left .connected {
+  background: #4caf50;
+  color: #fff;
+  border-color: #3e8e41;
+}
+
+header .left button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+/* ─────────────── LOGIN STATUS / USER INFO ─────────────── */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.username {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+button.disconnected {
+  background-color: #2e2e2e;
+  color: #aaa;
+  border: 1px solid #444;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+button.connected {
+  background-color: var(--color-success);
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: default;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ─────────────── FOOTER ─────────────── */
+footer {
+  text-align: center;
+  font-size: 13px;
+  padding: 10px 0;
+  color: #999;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 20px;
+}
+
+/* ─────────────── BUTTONS ─────────────── */
+button {
+  font-family: inherit;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #82c6ff;
+}
+/* ══════════════════════════════════════════════════════
+ 🌙✨ TRUE HARMONY DARKMODE VARIATION – Astra & Commander Edition
+═════════════════════════════════════════════════════════ */
+html.dark, body.dark {
+  /* Nur bestehende Variablen überschreiben – NICHTS Neues */
+  --color-bg: #121212;           /* Hintergrund dunkler */
+  --color-text: #e6e6e6;         /* Standardtext heller */
+  --color-panel: #1a1a1a;        /* Panels leicht abgesetzt */
+  --color-border: #333;          /* Linien dezenter */
+  --color-accent: #6ab7ff;       /* Akzentfarbe für Buttons / Links */
+}
+.log-divider {
+  border: none;
+  border-top: 2px solid rgba(100, 100, 100, 0.3);
+  margin: 30px auto;
+  width: 80%;
+  max-width: 900px;
+}
+
+/* ================================================== */
+/* 🌙✨ Astra & Commander – True Harmony Farbdefinition (Originalwerte aus style.css) */
+/* Lightmode Struktur */
+body.page-index header {
+  background: #f5f6fa;
+  color: #222;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+body.page-index header .brand-link {
+  color: #222;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Darkmode Struktur */
+body.page-index.dark header {
+  background: #1b1e24;
+  color: #e0e3e9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+body.page-index.dark header .brand-link {
+  color: #e0e3e9;
+  text-shadow: 0 0 6px rgba(74, 104, 255, 0.4);
+}
+
+/* Einheitliche Zentrierung */
+body.page-index header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 36px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Einheitliche Anwendung */
+body {
+  background-color: var(--panel-bg);
+  color: var(--text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* 🎨 Harmonische Tiefe & Glaseffekt */
+.panel.intro-panel .intro-box {
+  max-width: 820px;
+  border-radius: 10px;
+  padding: 24px 32px;
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.06),
+    0 0 8px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+/* ────────────────────────────────────────────────
+   Sofortiger Theme-Wechsel ohne Nachglühen
+   (Astra & Commander)
+   ──────────────────────────────────────────────── */
+body.dark,
+body.light {
+  transition: none !important;
+}
+
+body.dark *,
+body.light * {
+  transition: none !important;
+}
+

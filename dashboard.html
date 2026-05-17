@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTS on Twitch - Dashboard Login</title>
+  <link rel="manifest" href="manifest.json">
+  <!-- 🌙✨ Sprachsteuerung – Astra 🩶 & Commander 🩶 -->
+  <script src="js/translations.js"></script>
+  <script src="js/dashboard_translations.js"></script> 
+  <script defer src="js/dashboard.js"></script>
+  <!-- 🌙✨ Favicons (Astra 🩶 & Commander 🩶 Edition) -->
+  <!-- Standard-Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <link rel="shortcut icon" href="assets/favicon-512.png" type="image/png">
+  <!-- Für Windows / Android / iOS -->
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TTS on Twitch">
+  <meta name="application-name" content="TTS on Twitch">
+  <!-- Optional: Social Preview (wenn du Links teilst) -->
+  <meta property="og:title" content="TTS on Twitch – Dashboard Login">
+  <meta property="og:description" content="Verwalte dein Twitch TTS-System mit harmonischer Präzision und Stil.">
+  <meta property="og:image" content="assets/favicon-512.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>>
+
+<body class="page-dashboard">
+  <header>
+    <div class="left user-info">
+      <img id="userAvatar" src="assets/default-avatar.png" alt="Profilbild" class="avatar hidden" />
+      <span id="userName" class="username hidden"></span>
+      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
+        Nicht eingeloggt
+      </button>
+    </div>
+
+    <div class="center">
+      <a id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
+      <span class="divider"></span>
+      <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
+      <span class="divider"></span>
+      <a href="privacyPolicy.html" data-key="nav_privacy">Datenschutzerklärung</a>
+      <a href="log.html" class="active" data-key="nav_log">Log TTS</a>
+      <span class="divider"></span>
+    </div>
+
+    <div class="right">
+      <!-- 🌙✨ Sprachwahl-Block -->
+      <div class="lang-selector">
+        <button id="langBtn">
+          <img id="langFlag" src="flags/de.svg" alt="DE" class="flag-icon">
+          <span data-key="lang_button">DE</span>
+        </button>
+        <ul id="langMenu" class="hidden">
+          <li data-lang="de" data-flag="flags/de.svg">
+            <img src="flags/de.svg" class="flag-icon"> DE
+          </li>
+          <li data-lang="en" data-flag="flags/en.svg">
+            <img src="flags/en.svg" class="flag-icon"> EN
+          </li>
+          <li data-lang="fr" data-flag="flags/fr.svg">
+            <img src="flags/fr.svg" class="flag-icon"> FR
+          </li>
+          <li data-lang="es" data-flag="flags/es.svg">
+            <img src="flags/es.svg" class="flag-icon"> ES
+          </li>
+        </ul>
+      </div>
+
+      <button id="themeToggle" data-key="toggle_theme">Darkmode</button>
+    </div>
+  </header>
+
+<main>
+
+  <!-- Header 2 -->
+    <section class="panel intro-panel">
+      <h1 data-key="dashboard_title">Dashboard</h1>
+      <div class="intro-box">
+        <p><strong><u data-key="intro_heading">Verwalten Sie Ihre Twitch-TTS-Einstellungen</u></strong></p>
+
+        <p data-key="intro_text">
+          Hier kannst du den <strong>Text-to-Speech</strong>-Dienst nutzen, um deinen
+          Zuschauern eine harmonische Sprachausgabe zu bieten –
+          ein sanftes Zusammenspiel aus Stimme und Gefühl.
+        </p>
+
+        <p data-key="browser_hint">
+          Beachte bitte, dass unterschiedliche Browser-Varianten
+          mehr oder weniger Sprachausgaben unterstützen können.
+          Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
+        </p>
+      </div>
+    </section>
+
+  <!-- Header 3 -->
+    <section class="panel">
+      <h2 data-key="connect_heading">Twitch Verbinden</h2>
+      <div class="twitch-connect" style="margin-top:6px;">
+        <label for="twitchName" style="display:block;margin-bottom:4px;" data-key="label_twitch_name">
+          Twitch Name
+        </label>
+        <div class="input-group" style="display:inline-flex;align-items:center;gap:6px;">
+          <input id="twitchName" type="text" maxlength="25" placeholder="Benutzername" style="width:180px;">
+          <button id="connectBtn" class="action" data-key="btn_connect">Connect</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SPLIT PANEL (TTS + FILTER) ===== -->
+    <section class="panel">
+      <div class="split-panel">
+
+        <!-- LEFT HALF -->
+        <div class="split-half">
+          <h3 id="ttsSettings" data-key="ttsSettings">TTS Einstellungen</h3>
+            <div class="field" style="justify-content:center;gap:8px;">
+              <span id="ttsToggleLabel" data-key="ttsToggleLabel">TTS An / Aus</span>
+              <input id="ttsToggle" type="checkbox">
+            </div>
+
+            <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:center;">
+              <label id="labelRate" data-key="labelRate" style="font-weight:700;">Redegeschwindigkeit</label>
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" style="width:60%;">
+                <span id="rateValue" style="font-weight:600;">1.0×</span>
+              </div>
+
+              <label id="labelVolume" data-key="labelVolume" style="font-weight:700;margin-top:7px;">Lautstärke</label>
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <input id="volume" type="range" min="0" max="1" step="0.05" value="1" style="width:60%;">
+                <span id="volumeValue" style="font-weight:600;">100 %</span>
+              </div>
+
+              <label for="voice" id="labelVoice" data-key="labelVoice" style="font-weight:700;margin-top:7px;">TTS Stimme</label>
+              <div style="display:flex;align-items:center;justify-content:center;">
+                <select id="voice" style="width:60%;text-align:center;">
+                  <option>Standard</option>
+                  <option>Deutsch (Female)</option>
+                  <option>Deutsch (Male)</option>
+                  <option>Englisch (UK)</option>
+                </select>
+              </div>
+
+              <label for="testText" id="labelTest" data-key="labelTest" style="margin-top:7px;">Text eingeben (max 25 Zeichen)</label>
+              <input id="testText" type="text" maxlength="25" placeholder="Testnachricht…" style="width:60%;text-align:center;">
+              <button id="speakBtn" class="action" style="margin-top:8px;" data-key="btnSpeak">Sprechen</button>
+
+              <!-- 🎧 Mini Equalizer -->
+            <div id="equalizerPanel" style="margin-top:15px;text-align:center;">
+              <h4 data-key="equalizerTitle" style="margin-bottom:6px;">Audio-Equalizer</h4>
+              
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:70%;margin:0 auto;">
+                <label data-key="equalizerBass" style="font-weight:600;">Bass</label>
+                <input type="range" id="bassControl" min="-30" max="30" value="0" step="1" style="width:100%;">
+
+                <label data-key="equalizerMid" style="font-weight:600;">Mitten</label>
+                <input type="range" id="midControl" min="-30" max="30" value="0" step="1" style="width:100%;">
+
+                <label data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
+                <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1" style="width:100%;">
+              </div>
+            </div>
+
+
+            <div style="margin-top:12px;">
+               <h4 id="ttsLogTitle" data-key="ttsLogTitle" style="margin:0;font-weight:700;text-align:center;">TTS-Protokoll</h4>
+              </div>
+                <div id="ttsLog" style="height:200px;overflow-y:auto;border:1px solid var(--border);
+                  border-radius:6px;padding:6px;font-size:13px;background:rgba(0,0,0,0.03);">
+                   <div style="opacity:.7;">[System] Protokoll initialisiert…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT HALF -->
+            <div class="split-half">
+              <h3 id="filterSettings" data-key="filterSettings">Filter Einstellungen</h3>
+
+            <div class="field" style="justify-content:center;gap:8px;">
+              <span id="lblFilterToggle" data-key="lblFilterToggle">TTS Filter An / Aus</span>
+              <input id="toggleTTSFilter" type="checkbox">
+            </div>
+
+            <div id="filterGroup" class="slidefade hidden">
+
+            <!-- 1️⃣  Basis-Filter -->
+            <div class="field">
+              <span id="lblCmds" data-key="lblCmds">Blende Commands aus (!)</span>
+              <input id="toggleCommands" type="checkbox">
+            </div>
+              <input id="blockCommands" type="text" placeholder="!command1,!command2" style="display:none;width:70%;margin-top:5px;">
+
+            <div class="field">
+              <span id="lblBots" data-key="lblBots">Blende Twitch Bots aus</span>
+              <input id="toggleBots" type="checkbox">
+            </div>
+            <input id="blockBots" type="text" placeholder="bot1,bot2" style="display:none;width:70%;margin-top:5px;">
+
+            <div class="field">
+              <span id="lblUserOnly" data-key="lblUserOnly">Nur Nachrichten von Benutzer anzeigen</span>
+              <input id="toggleUserOnly" type="checkbox">
+            </div>
+              <input id="filterUserOnly" type="text" placeholder="Benutzername" style="display:none;width:70%;margin-top:5px;">
+
+            <div class="field">
+              <span id="lblMentions" data-key="lblMentions">Nur @-Erwähnungen anzeigen</span>
+              <input id="toggleMentions" type="checkbox">
+            </div>
+              <input id="filterMentions" type="text" placeholder="@Benutzername" style="display:none;width:70%;margin-top:5px;">
+
+            <div class="field">
+              <span id="lblEmotes" data-key="lblEmotes">Emote-Nachrichten ausblenden</span>
+              <input id="toggleEmotes" type="checkbox">
+            </div>
+
+            <!-- 2️⃣  Erweiterte Filter -->
+            <div class="field">
+              <span id="lblLinks" data-key="lblLinks">Keine Links lesen</span>
+              <input id="toggleNoLinks" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblCaps" data-key="lblCaps">Capslock-Filter</span>
+              <input id="toggleCapsFilter" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblRepeat" data-key="lblRepeat">Wiederholungen erkennen</span>
+              <input id="toggleRepeatFilter" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblWordBan" data-key="lblWordBan">TTS-Bannliste (Wörter)</span>
+              <input id="toggleWordBan" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblRole" data-key="lblRole">Nur Sub/VIP/Mod Nachrichten</span>
+              <input id="toggleRoleFilter" type="checkbox">
+            </div>
+
+            <div class="field">
+            <span id="lblTimeout" data-key="lblTimeout">Timeout-Wörter vermeiden</span>
+            <input id="toggleTimeoutSafe" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblSystem" data-key="lblSystem">Systemmeldungen ignorieren</span>
+              <input id="toggleSystemMsg" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblShort" data-key="lblShort">Kurznachrichten überspringen</span>
+              <input id="toggleShortMsg" type="checkbox">
+            </div>
+
+            <div class="field">
+              <span id="lblSymbols" data-key="lblSymbols">Symbol/Emoji-Spam filtern</span>
+              <input id="toggleSymbolSpam" type="checkbox">
+            </div>
+
+            <!-- 3️⃣  Moderatoren-Filter -->
+            <div class="field" style="text-align:center;">
+              <label id="lblModHeader" data-key="lblModHeader" style="display:block;font-weight:700;margin-bottom:6px;">
+                Moderatoren-Filter
+              </label>
+              <div class="mod-filter" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <label>
+                <input type="checkbox" name="modFilter" value="all" checked>
+                <span id="lblModAll" data-key="lblModAll">Zeige alle</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="modFilter" value="only">
+                  <span id="lblModOnly" data-key="lblModOnly">Nur Moderatoren anzeigen</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="modFilter" value="hide">
+                  <span id="lblModHide" data-key="lblModHide">Verstecke Moderatoren</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+        <h3 data-key="chat_header">Twitch Chat</h3>
+        <textarea readonly style="width:100%;height:175px;"></textarea>
+    </section>
+</main>
+
+    <footer class="site-footer">
+      <div class="footer-center"></div>
+        <span data-key="footer_text">© 2025 TTSonTwitch<br>Version 1.0.3</span>
+      </div>
+      <div class="footer-right" id="systemClock">--:--:--</div>
+    </footer>
+</body>
+</html>
