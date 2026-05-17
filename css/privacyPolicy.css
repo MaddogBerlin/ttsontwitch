@@ -236,7 +236,7 @@ header .right {
 body {
   /* Standard: Darkmode-Bild */
   background:
-    url('/assets/bg-astra.png') no-repeat center center fixed,
+    url('../assets/bg-astra.png') no-repeat center center fixed,
     radial-gradient(circle at center, rgba(10, 15, 24, 0.6) 0%, rgba(5, 6, 8, 0.9) 100%);
   background-size: cover, auto;
   background-attachment: fixed;
@@ -252,7 +252,7 @@ body {
 /* ☀️ Lightmode – warme, harmonische Variante */
 body:not(.dark) {
   background:
-    url('/assets/1bg-astra.png') no-repeat center center fixed,
+    url('../assets/1bg-astra.png') no-repeat center center fixed,
     radial-gradient(circle at center, rgba(250, 247, 242, 0.6) 0%, rgba(245, 242, 238, 0.9) 100%);
   background-size: cover, auto;
   background-attachment: fixed;

@@ -236,3 +236,6 @@ body.light * {
   transition: none !important;
 }
 
+header {
+  box-sizing: border-box;
+}

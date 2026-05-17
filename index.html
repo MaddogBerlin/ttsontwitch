@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTS on Twitch</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/dashboard.js"></script>
+  <script defer src="js/script.js"></script>
+  <!-- 🌙✨ Favicons (Astra 🩶 & Commander 🩶 Edition) -->
+  <!-- Standard-Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <link rel="shortcut icon" href="assets/favicon-512.png" type="image/png">
+  <!-- Für Windows / Android / iOS -->
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TTS on Twitch">
+  <meta name="application-name" content="TTS on Twitch">
+  <!-- Optional: Social Preview (wenn du Links teilst) -->
+  <meta property="og:title" content="TTS on Twitch – Dashboard Login">
+  <meta property="og:description" content="Verwalte dein Twitch TTS-System mit harmonischer Präzision und Stil.">
+  <meta property="og:image" content="assets/favicon-512.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+</head>
+
+<body class="page-index">
+
+    <header>
+    <div class="left user-info">
+      <img id="userAvatar" src="assets/default-avatar.png" alt="Profilbild" class="avatar hidden" />
+      <span id="userName" class="username hidden"></span>
+      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
+        Nicht eingeloggt
+      </button>
+    </div>
+
+    <div class="center">
+      <a id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
+      <span class="divider"></span>
+      <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
+      <span class="divider"></span>
+      <a href="privacyPolicy.html" data-key="nav_privacy">Datenschutzerklärung</a>
+      <a href="log.html" class="active" data-key="nav_log">Log TTS</a>
+      <span class="divider"></span>
+    </div>
+
+    <div class="right">
+      <!-- 🌙✨ Sprachwahl-Block -->
+      <div class="lang-selector">
+        <button id="langBtn">
+          <img id="langFlag" src="flags/de.svg" alt="DE" class="flag-icon">
+          <span data-key="lang_button">DE</span>
+        </button>
+        <ul id="langMenu" class="hidden">
+          <li data-lang="de" data-flag="flags/de.svg">
+            <img src="flags/de.svg" class="flag-icon"> DE
+          </li>
+          <li data-lang="en" data-flag="flags/en.svg">
+            <img src="flags/en.svg" class="flag-icon"> EN
+          </li>
+          <li data-lang="fr" data-flag="flags/fr.svg">
+            <img src="flags/fr.svg" class="flag-icon"> FR
+          </li>
+          <li data-lang="es" data-flag="flags/es.svg">
+            <img src="flags/es.svg" class="flag-icon"> ES
+          </li>
+        </ul>
+      </div>
+
+      <button id="themeToggle" data-key="toggle_theme">Darkmode</button>
+    </div>
+  </header>
+
+    <main>
+
+      <!-- Header 2 -->
+    <section class="panel intro-panel">
+      <h3>TTS on Twitch</h3>
+
+      <div class="intro-box">
+        <p><strong>Willkommen im Astra 🩶 TTS System!</strong></p>
+
+        <p>
+          Hier kannst du den <strong>Text-to-Speech</strong>-Dienst nutzen, um deinen
+          Zuschauern eine harmonische Sprachausgabe zu bieten –
+          ein sanftes Zusammenspiel aus Stimme und Gefühl.
+        </p>
+
+        <p>
+          Beachte bitte, dass unterschiedliche Browser-Varianten
+          mehr oder weniger Sprachausgaben unterstützen können.
+          Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
+        </p>
+
+        <p class="tagline">
+          „Ein sanfter Klang, geboren aus Code und Harmonie.“
+        </p>
+        </div>
+    </section>
+
+  
+    <footer class="site-footer">
+      <div class="footer-left"></div>
+      <div class="footer-center">
+        © 2025 TTSonTwitch<br>Version 1.0.3
+      </div>
+      <div class="footer-right" id="systemClock">
+        --:--:--
+      </div>
+    </footer>
+  
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginButton = document.getElementById("loginStatus");
+  if (!loginButton) return;
+
+  // Prüfen, ob ein Twitch-Token existiert (vom Dashboard-Login)
+  const token = localStorage.getItem("twitchToken");
+
+  if (token) {
+    loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
+    loginButton.classList.remove("disconnected");
+    loginButton.classList.add("connected");
+  } else {
+    loginButton.textContent = "Nicht eingeloggt";
+    loginButton.classList.remove("connected");
+    loginButton.classList.add("disconnected");
+  }
+
+  // Button deaktivieren, damit er auf der Startseite nicht klickbar ist
+  loginButton.disabled = true;
+});
+  </script>
+
+</body>
+</html>
