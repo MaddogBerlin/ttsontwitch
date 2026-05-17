@@ -14,44 +14,13 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 🌙✨ Twitch Login – Statusanzeige & Simulation
-document.getElementById("connectBtn").addEventListener("click", () => {
-  const name = document.getElementById("twitchName").value.trim();
-  const log = document.getElementById("ttsLog");
-  const statusBtn = document.getElementById("loginStatus");
-
-  if (!name) {
-    alert("Bitte gib deinen Twitch-Namen ein!");
-    return;
-  }
-
-  // Protokoll-Eintrag
-  const entry = document.createElement("div");
-  entry.textContent = `[${new Date().toLocaleTimeString()}] Verbinde mit Twitch: ${name}...`;
-  log.appendChild(entry);
-  log.scrollTop = log.scrollHeight;
-
-  // Visuelles Feedback
-  const btn = document.getElementById("connectBtn");
-  btn.textContent = "Verbunden ✓";
-  btn.disabled = true;
-  btn.classList.add("connected");
-
-  // Header-Button aktualisieren
-  if (statusBtn) {
-    statusBtn.textContent = `Eingeloggt als ${name}`;
-    statusBtn.classList.remove("disconnected");
-    statusBtn.classList.add("connected");
-  }
-});
-
 /* ══════════════════════════════════════════════════════════════════════════════════════════════════
 // 🌙✨ Twitch OAuth Login – True Harmony Integration
  🌙✨ TRUE HARMONY – TWITCH LOGIN STATUS & PROFILANZEIGE
    Version v1.0.3 Extended (Astra 🩶 & Commander ❤️ Edition)
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "DEINE_CLIENT_ID_HIER"; // <– trage hier deine Twitch Client-ID ein
-const redirectUri = window.location.origin + "/dashboard.html";
+const redirectUri = "https://maddogberlin.github.io/ttsontwitch/dashboard.html";
 const scope = "user:read:email"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
 
 // Funktion: Startet den Twitch-Login-Flow
