@@ -65,6 +65,12 @@ window.addEventListener("DOMContentLoaded", () => {
         const user = data.data?.[0];
         if (user) {
 			    connectToTwitchChat(user.login, accessToken);
+          
+          localStorage.setItem("twitchUser", JSON.stringify({
+          name: user.display_name,
+          login: user.login,
+          avatar: user.profile_image_url
+        }));
           // Protokollmeldung
           if (log) {
             const entry = document.createElement("div");

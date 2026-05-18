@@ -26,7 +26,6 @@ if (userData) {
   const { name, avatar } = JSON.parse(userData);
   document.getElementById("userAvatar").src = avatar;
   document.getElementById("userName").textContent = name;
-  document.getElementById("userInfo").classList.remove("hidden");
 }
 
 function updateClock() {
