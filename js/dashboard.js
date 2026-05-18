@@ -30,7 +30,8 @@ document.getElementById("connectBtn").addEventListener("click", () => {
     `?client_id=${clientId}` +
     `&redirect_uri=${encodeURIComponent(redirectUri)}` +
     `&response_type=token` +
-    `&scope=${encodeURIComponent(scope)}`;
+    `&scope=${encodeURIComponent(scope)}` +
+    `&force_verify=true`;
 
   // Weiterleitung zu Twitch Login
   window.location.href = authUrl;
