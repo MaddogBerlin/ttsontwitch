@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twitch Client-ID ein
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
-const scope = "user:read:email"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
+const scope = "user:read:email chat:read chat:edit"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
 
 // Funktion: Startet den Twitch-Login-Flow
 document.getElementById("connectBtn").addEventListener("click", () => {
