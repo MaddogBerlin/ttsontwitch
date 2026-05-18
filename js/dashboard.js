@@ -373,18 +373,23 @@ function connectToTwitchChat(channelName, accessToken) {
     .catch(err => appendLog(`Chat Fehler: ${err.message}`));
 
   client.on("message", (channel, tags, message, self) => {
-    if (self) return;
+  // Zum Test eigene Nachrichten erlauben
+  // if (self) return;
 
-    const chatBox = document.getElementById("chatBox");
-    if (chatBox) {
-      chatBox.value += `${tags["display-name"]}: ${message}\n`;
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
+  if (!processChatMessage(tags, message)) return;
 
-    if (document.getElementById("ttsToggle")?.checked) {
-      speakChatMessage(message);
-    }
-  });
+  const chatBox = document.getElementById("chatBox");
+  const name = tags["display-name"] || tags.username || "Unbekannt";
+
+  if (chatBox) {
+    chatBox.value += `${name}: ${message}\n`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  if (document.getElementById("ttsToggle")?.checked) {
+    speakChatMessage(message);
+  }
+});
 }
 
 function speakChatMessage(text) {
@@ -400,4 +405,98 @@ function speakChatMessage(text) {
   utter.volume = parseFloat(document.getElementById("volume")?.value || "1");
 
   synth.speak(utter);
+}
+
+function processChatMessage(tags, message) {
+  const username = (tags.username || "").toLowerCase();
+  const displayName = tags["display-name"] || username;
+  const msg = message.trim();
+
+  // Commands ausblenden
+  if (document.getElementById("toggleCommands")?.checked && msg.startsWith("!")) {
+    appendLog(`Gefiltert: Command von ${displayName}`);
+    return false;
+  }
+
+  // Bots ausblenden
+  if (document.getElementById("toggleBots")?.checked) {
+    const botList = (document.getElementById("blockBots")?.value || "")
+      .toLowerCase()
+      .split(",")
+      .map(x => x.trim())
+      .filter(Boolean);
+
+    if (botList.includes(username)) {
+      appendLog(`Gefiltert: Bot ${displayName}`);
+      return false;
+    }
+  }
+
+  // Nur bestimmter Benutzer
+  if (document.getElementById("toggleUserOnly")?.checked) {
+    const allowedUser = (document.getElementById("filterUserOnly")?.value || "")
+      .toLowerCase()
+      .trim();
+
+    if (allowedUser && username !== allowedUser) {
+      return false;
+    }
+  }
+
+  // Nur @ Erwähnungen
+  if (document.getElementById("toggleMentions")?.checked) {
+    const mention = (document.getElementById("filterMentions")?.value || "")
+      .toLowerCase()
+      .trim();
+
+    if (mention && !msg.toLowerCase().includes(mention)) {
+      return false;
+    }
+  }
+
+  // Links blockieren
+  if (document.getElementById("toggleNoLinks")?.checked) {
+    if (/https?:\/\/|www\./i.test(msg)) {
+      appendLog(`Gefiltert: Link von ${displayName}`);
+      return false;
+    }
+  }
+
+  // Capslock Filter
+  if (document.getElementById("toggleCapsFilter")?.checked) {
+    const letters = msg.replace(/[^a-zA-ZÄÖÜäöüß]/g, "");
+    const upper = letters.replace(/[^A-ZÄÖÜ]/g, "");
+
+    if (letters.length >= 8 && upper.length / letters.length > 0.7) {
+      appendLog(`Gefiltert: Capslock von ${displayName}`);
+      return false;
+    }
+  }
+
+  // Kurznachrichten überspringen
+  if (document.getElementById("toggleShortMsg")?.checked && msg.length < 3) {
+    return false;
+  }
+
+  // Symbol/Emoji-Spam grob filtern
+  if (document.getElementById("toggleSymbolSpam")?.checked) {
+    const symbols = msg.replace(/[a-zA-Z0-9ÄÖÜäöüß\s]/g, "");
+    if (msg.length > 0 && symbols.length / msg.length > 0.6) {
+      appendLog(`Gefiltert: Symbolspam von ${displayName}`);
+      return false;
+    }
+  }
+
+  // Rollenfilter: nur Sub/VIP/Mod
+  if (document.getElementById("toggleRoleFilter")?.checked) {
+    const isMod = tags.mod;
+    const isSub = tags.subscriber;
+    const isVip = tags.badges && tags.badges.vip;
+
+    if (!isMod && !isSub && !isVip) {
+      return false;
+    }
+  }
+
+  return true;
 }
