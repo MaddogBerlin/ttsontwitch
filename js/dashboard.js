@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
  🌙✨ TRUE HARMONY – TWITCH LOGIN STATUS & PROFILANZEIGE
    Version v1.0.3 Extended (Astra 🩶 & Commander ❤️ Edition)
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
-const clientId = "DEINE_CLIENT_ID_HIER"; // <– trage hier deine Twitch Client-ID ein
+const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twitch Client-ID ein
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
 const scope = "user:read:email"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
 
