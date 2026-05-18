@@ -47,8 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (accessToken) {
     // optional speichern
-   // localStorage.removeItem("twitchToken");
-    localStorage.removeItem("twitchToken", accessToken);
+    localStorage.setItem("twitchToken", accessToken);
 
     // Token-Parameter aus URL entfernen
     window.history.replaceState({}, document.title, window.location.pathname);
@@ -64,6 +63,7 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const user = data.data?.[0];
         if (user) {
+          connectToTwitchChat(user.login, accessToken);
           // Protokollmeldung
           if (log) {
             const entry = document.createElement("div");
@@ -369,8 +369,8 @@ function connectToTwitchChat(channelName, accessToken) {
   });
 
   client.connect()
-    .then(() => appendLog(`Chat verbunden: ${channelName}`))
-    .catch(err => appendLog(`Chat Fehler: ${err.message}`));
+    .then(() => appendLog(`✅ Chat verbunden mit: ${channelName}`))
+    .catch(err => appendLog(`❌ Chat Fehler: ${err.message}`));
 
   client.on("message", (channel, tags, message, self) => {
     if (self) return;
