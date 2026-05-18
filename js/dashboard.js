@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
    Version v1.0.3 Extended (Astra 🩶 & Commander ❤️ Edition)
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "DEINE_CLIENT_ID_HIER"; // <– trage hier deine Twitch Client-ID ein
-const redirectUri = "https://maddogberlin.github.io/ttsontwitch/";
+const redirectUri = "https://ttsontwitch.de/dashboard.html";
 const scope = "user:read:email"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
 
 // Funktion: Startet den Twitch-Login-Flow
