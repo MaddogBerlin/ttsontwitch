@@ -47,7 +47,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (accessToken) {
     // optional speichern
-    localStorage.removeItem("twitchToken");
+   // localStorage.removeItem("twitchToken");
+    localStorage.removeItem("twitchToken", accessToken);
 
     // Token-Parameter aus URL entfernen
     window.history.replaceState({}, document.title, window.location.pathname);
