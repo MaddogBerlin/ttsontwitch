@@ -352,3 +352,51 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
+
+
+function connectToTwitchChat(channelName, accessToken) {
+  const client = new tmi.Client({
+    connection: {
+      secure: true,
+      reconnect: true
+    },
+    identity: {
+      username: channelName,
+      password: `oauth:${accessToken}`
+    },
+    channels: [channelName]
+  });
+
+  client.connect()
+    .then(() => appendLog(`Chat verbunden: ${channelName}`))
+    .catch(err => appendLog(`Chat Fehler: ${err.message}`));
+
+  client.on("message", (channel, tags, message, self) => {
+    if (self) return;
+
+    const chatBox = document.getElementById("chatBox");
+    if (chatBox) {
+      chatBox.value += `${tags["display-name"]}: ${message}\n`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    if (document.getElementById("ttsToggle")?.checked) {
+      speakChatMessage(message);
+    }
+  });
+}
+
+function speakChatMessage(text) {
+  synth.cancel();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  const selectedVoiceName = document.getElementById("voice")?.value;
+  const selectedVoice = voices.find(v => v.name === selectedVoiceName);
+
+  if (selectedVoice) utter.voice = selectedVoice;
+
+  utter.rate = parseFloat(document.getElementById("rate")?.value || "1");
+  utter.volume = parseFloat(document.getElementById("volume")?.value || "1");
+
+  synth.speak(utter);
+}
