@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const user = data.data?.[0];
         if (user) {
-			    connectToTwitchChat(user.login, accessToken);$
+			    connectToTwitchChat(user.login, accessToken);
           // Protokollmeldung
           if (log) {
             const entry = document.createElement("div");
