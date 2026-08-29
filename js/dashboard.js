@@ -390,6 +390,25 @@ function connectToTwitchChat(channelName, accessToken) {
     }
   }
 
+  // === TTS Filter: Twitch Bots ausblenden ===
+  const botFilterEnabled = document.getElementById("toggleBots")?.checked;
+
+  if (ttsFilterEnabled && botFilterEnabled) {
+    const blockedBots = document
+      .getElementById("blockBots")
+      ?.value
+      .split(",")
+      .map(bot => bot.trim().toLowerCase())
+      .filter(Boolean) || [];
+
+    const sender = (tags["username"] || tags["display-name"] || "").toLowerCase();
+
+    if (blockedBots.includes(sender)) {
+      appendLog(`Bot nicht gesprochen: ${sender}`);
+      return;
+    }
+  }
+
   if (document.getElementById("ttsToggle")?.checked) {
     speakChatMessage(message);
   }
