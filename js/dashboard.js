@@ -361,9 +361,30 @@ function connectToTwitchChat(channelName, accessToken) {
     .then(() => appendLog(`Chat verbunden: ${channelName}`))
     .catch(err => appendLog(`Chat Fehler: ${err.message}`));
 
-  client.on("message", (channel, tags, message, self) => {
+client.on("message", (channel, tags, message, self) => {
   if (self) return;
 
+  const ttsFilterEnabled = document.getElementById("toggleTTSFilter")?.checked;
+
+  // === Filter: Nur Nachrichten von bestimmtem Benutzer anzeigen ===
+  const userOnlyFilterEnabled = document.getElementById("toggleUserOnly")?.checked;
+
+  if (ttsFilterEnabled && userOnlyFilterEnabled) {
+    const allowedUser = document
+      .getElementById("filterUserOnly")
+      ?.value
+      .trim()
+      .toLowerCase();
+
+    const sender = (tags["username"] || tags["display-name"] || "").toLowerCase();
+
+    if (allowedUser && sender !== allowedUser) {
+      appendLog(`Benutzer ausgeblendet: ${sender}`);
+      return;
+    }
+  }
+
+  // Nachricht im Twitch-Chat anzeigen
   const chatBox = document.getElementById("chatBox");
   if (chatBox) {
     chatBox.value += `${tags["display-name"]}: ${message}\n`;
@@ -371,7 +392,6 @@ function connectToTwitchChat(channelName, accessToken) {
   }
 
   // === TTS Filter: Commands ausblenden ===
-  const ttsFilterEnabled = document.getElementById("toggleTTSFilter")?.checked;
   const commandFilterEnabled = document.getElementById("toggleCommands")?.checked;
 
   if (ttsFilterEnabled && commandFilterEnabled) {
@@ -409,24 +429,7 @@ function connectToTwitchChat(channelName, accessToken) {
     }
   }
 
-  // === TTS Filter: Nur bestimmten Benutzer sprechen ===
-  const userOnlyFilterEnabled = document.getElementById("toggleUserOnly")?.checked;
-
-  if (ttsFilterEnabled && userOnlyFilterEnabled) {
-    const allowedUser = document
-      .getElementById("filterUserOnly")
-      ?.value
-      .trim()
-      .toLowerCase();
-
-    const sender = (tags["username"] || tags["display-name"] || "").toLowerCase();
-
-    if (allowedUser && sender !== allowedUser) {
-      appendLog(`Benutzer nicht gesprochen: ${sender}`);
-      return;
-    }
-  }
-
+  // === TTS Ausgabe ===
   if (document.getElementById("ttsToggle")?.checked) {
     speakChatMessage(message);
   }
