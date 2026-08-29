@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TTSonTwitch - Dashboard Login</title>
+  <title>TTS on Twitch - Dashboard Login</title>
   <link rel="manifest" href="manifest.json">
   <!-- 🌙✨ Sprachsteuerung – Astra 🩶 & Commander 🩶 -->
   <script src="js/translations.js"></script>
   <script src="js/dashboard_translations.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/dist/tmi.min.js"></script>
+  <script src="https://unpkg.com/tmi.js@1.8.5/dist/tmi.min.js"></script>
   <script defer src="js/dashboard.js"></script>
   <!-- 🌙✨ Favicons (Astra 🩶 & Commander 🩶 Edition) -->
   <!-- Standard-Favicons -->
@@ -35,7 +35,7 @@
 <body class="page-dashboard">
   <header>
     <div class="left user-info">
-      <img id="userAvatar" src="assets/default-avatar.png" alt="Profilbild" class="avatar hidden" />
+      <img id="userAvatar" src="assets/default_avatar.png" alt="Profilbild" class="avatar hidden" />
       <span id="userName" class="username hidden"></span>
       <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
         Nicht eingeloggt
@@ -43,7 +43,7 @@
     </div>
 
     <div class="center">
-      <a href="index.html" id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
+      <a href="index.html" id="brand" class="brand-link"  data-key="brand_title">TTS on Twitch</a>
       <span class="divider"></span>
       <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
       <span class="divider"></span>
@@ -301,7 +301,7 @@
 
     <footer class="site-footer">
       <div class="footer-center"></div>
-        <span data-key="footer_text">© 2026 TTSonTwitch<br>Version 1.0.3</span>
+        <span data-key="footer_text">© 2025 TTSonTwitch<br>Version 1.0.3</span>
       </div>
       <div class="footer-right" id="systemClock">--:--:--</div>
     </footer>
