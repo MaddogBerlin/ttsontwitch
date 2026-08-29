@@ -237,21 +237,14 @@ document.getElementById("speakBtn").addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const log = document.getElementById("ttsLog");
   const filters = [
-    { id: "toggleCommands", label: "Blende Commands aus (!)" },
-    { id: "toggleBots", label: "Blende Twitch Bots aus" },
-    { id: "toggleUserOnly", label: "Nur Nachrichten von Benutzer anzeigen" },
-    { id: "toggleMentions", label: "Nur @-Erwähnungen anzeigen" },
-    { id: "toggleEmotes", label: "Emote-Nachrichten ausblenden" },
-    { id: "toggleNoLinks", label: "Keine Links lesen" },
-    { id: "toggleCapsFilter", label: "Capslock-Filter" },
-    { id: "toggleRepeatFilter", label: "Wiederholungen erkennen" },
-    { id: "toggleWordBan", label: "TTS-Bannliste (Wörter)" },
-    { id: "toggleRoleFilter", label: "Nur Sub/VIP/Mod Nachrichten" },
-    { id: "toggleTimeoutSafe", label: "Timeout-Wörter vermeiden" },
-    { id: "toggleSystemMsg", label: "Systemmeldungen ignorieren" },
-    { id: "toggleShortMsg", label: "Kurznachrichten überspringen" },
-    { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" }
-  ];
+  { id: "toggleCommands", label: "Blende Commands aus (!)" },
+  { id: "toggleBots", label: "Blende Twitch Bots aus" },
+  { id: "toggleNoLinks", label: "Keine Links lesen" },
+  { id: "toggleRepeatFilter", label: "Wiederholungen erkennen" },
+  { id: "toggleWordBan", label: "TTS-Bannliste (Wörter)" },
+  { id: "toggleSystemMsg", label: "Systemmeldungen ignorieren" },
+  { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" }
+];
 
   function writeFilterLog(label, checked) {
     if (!log) return;
@@ -280,12 +273,10 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 
   // === Zuordnung: Checkbox <-> Eingabefeld ===
-  const toggles = [
-    { toggle: "toggleCommands", input: "blockCommands" },
-    { toggle: "toggleBots", input: "blockBots" },
-    { toggle: "toggleUserOnly", input: "filterUserOnly" },
-    { toggle: "toggleMentions", input: "filterMentions" }
-  ];
+ const toggles = [
+  { toggle: "toggleCommands", input: "blockCommands" },
+  { toggle: "toggleBots", input: "blockBots" }
+];
 
   toggles.forEach(({ toggle, input }) => {
     const t = document.getElementById(toggle);
@@ -365,24 +356,6 @@ client.on("message", (channel, tags, message, self) => {
   if (self) return;
 
   const ttsFilterEnabled = document.getElementById("toggleTTSFilter")?.checked;
-
-  // === Filter: Nur Nachrichten von bestimmtem Benutzer anzeigen ===
-  const userOnlyFilterEnabled = document.getElementById("toggleUserOnly")?.checked;
-
-  if (ttsFilterEnabled && userOnlyFilterEnabled) {
-    const allowedUser = document
-      .getElementById("filterUserOnly")
-      ?.value
-      .trim()
-      .toLowerCase();
-
-    const sender = (tags["username"] || tags["display-name"] || "").toLowerCase();
-
-    if (allowedUser && sender !== allowedUser) {
-      appendLog(`Benutzer ausgeblendet: ${sender}`);
-      return;
-    }
-  }
 
   // Nachricht im Twitch-Chat anzeigen
   const chatBox = document.getElementById("chatBox");
