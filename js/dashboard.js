@@ -240,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
   { id: "toggleCommands", label: "Blende Commands aus (!)" },
   { id: "toggleBots", label: "Blende Twitch Bots aus" },
   { id: "toggleNoLinks", label: "Keine Links lesen" },
-  { id: "toggleRepeatFilter", label: "Wiederholungen erkennen" },
   { id: "toggleWordBan", label: "TTS-Bannliste (Wörter)" },
   { id: "toggleSystemMsg", label: "Systemmeldungen ignorieren" },
   { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" }
