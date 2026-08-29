@@ -402,11 +402,23 @@ client.on("message", (channel, tags, message, self) => {
     }
   }
 
+ // === TTS Filter: Keine Links lesen ===
+  let ttsMessage = message;
+
+  const noLinksFilterEnabled = document.getElementById("toggleNoLinks")?.checked;
+
+  if (ttsFilterEnabled && noLinksFilterEnabled) {
+    ttsMessage = ttsMessage.replace(
+      /(?:https?:\/\/|www\.)[^\s]+/gi,
+      "*****"
+    );
+  }
+
   // === TTS Ausgabe ===
   if (document.getElementById("ttsToggle")?.checked) {
-    speakChatMessage(message);
+    speakChatMessage(ttsMessage);
   }
-});
+  });
 }
 
 function speakChatMessage(text) {
