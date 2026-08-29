@@ -274,7 +274,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // === Zuordnung: Checkbox <-> Eingabefeld ===
  const toggles = [
   { toggle: "toggleCommands", input: "blockCommands" },
-  { toggle: "toggleBots", input: "blockBots" }
+  { toggle: "toggleBots", input: "blockBots" },
+  { toggle: "toggleWordBan", input: "blockWords" }
 ];
 
   toggles.forEach(({ toggle, input }) => {
