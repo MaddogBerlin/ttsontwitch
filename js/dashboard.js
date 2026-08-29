@@ -60,7 +60,18 @@ window.addEventListener("DOMContentLoaded", () => {
         "Client-Id": clientId
       }
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 401) {
+          localStorage.removeItem("twitchToken");
+          throw new Error("Twitch-Token ist ungültig oder abgelaufen.");
+        }
+
+        if (!res.ok) {
+          throw new Error(`Twitch API Fehler (${res.status})`);
+        }
+
+        return res.json();
+    })
       .then(data => {
         const user = data.data?.[0];
         if (user) {
