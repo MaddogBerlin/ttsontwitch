@@ -76,7 +76,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const user = data.data?.[0];
         if (user) {
           connectToTwitchChat(user.login, accessToken);
-          
+
           // Protokollmeldung
           if (log) {
             const entry = document.createElement("div");
@@ -362,18 +362,38 @@ function connectToTwitchChat(channelName, accessToken) {
     .catch(err => appendLog(`Chat Fehler: ${err.message}`));
 
   client.on("message", (channel, tags, message, self) => {
-    if (self) return;
+  if (self) return;
 
-    const chatBox = document.getElementById("chatBox");
-    if (chatBox) {
-      chatBox.value += `${tags["display-name"]}: ${message}\n`;
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
+  const chatBox = document.getElementById("chatBox");
+  if (chatBox) {
+    chatBox.value += `${tags["display-name"]}: ${message}\n`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 
-    if (document.getElementById("ttsToggle")?.checked) {
-      speakChatMessage(message);
+  // === TTS Filter: Commands ausblenden ===
+  const ttsFilterEnabled = document.getElementById("toggleTTSFilter")?.checked;
+  const commandFilterEnabled = document.getElementById("toggleCommands")?.checked;
+
+  if (ttsFilterEnabled && commandFilterEnabled) {
+    const blockedCommands = document
+      .getElementById("blockCommands")
+      ?.value
+      .split(",")
+      .map(cmd => cmd.trim().toLowerCase())
+      .filter(Boolean) || [];
+
+    const command = message.trim().split(/\s+/)[0].toLowerCase();
+
+    if (blockedCommands.includes(command)) {
+      appendLog(`Command nicht gesprochen: ${command}`);
+      return;
     }
-  });
+  }
+
+  if (document.getElementById("ttsToggle")?.checked) {
+    speakChatMessage(message);
+  }
+});
 }
 
 function speakChatMessage(text) {
