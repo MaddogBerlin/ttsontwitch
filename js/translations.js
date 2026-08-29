@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔵 Zusätzliche Übersetzungsdateien automatisch laden
   function loadExtraTranslations() {
     const extraFiles = [
-      "dashboard_translations.js",
       "privacy_translations.js",
       "log_translations.js"
     ];
