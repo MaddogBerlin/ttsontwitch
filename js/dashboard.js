@@ -409,6 +409,24 @@ function connectToTwitchChat(channelName, accessToken) {
     }
   }
 
+  // === TTS Filter: Nur bestimmten Benutzer sprechen ===
+  const userOnlyFilterEnabled = document.getElementById("toggleUserOnly")?.checked;
+
+  if (ttsFilterEnabled && userOnlyFilterEnabled) {
+    const allowedUser = document
+      .getElementById("filterUserOnly")
+      ?.value
+      .trim()
+      .toLowerCase();
+
+    const sender = (tags["username"] || tags["display-name"] || "").toLowerCase();
+
+    if (allowedUser && sender !== allowedUser) {
+      appendLog(`Benutzer nicht gesprochen: ${sender}`);
+      return;
+    }
+  }
+
   if (document.getElementById("ttsToggle")?.checked) {
     speakChatMessage(message);
   }
