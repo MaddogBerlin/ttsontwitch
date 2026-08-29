@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 /* ══════════════════════════════════════════════════════════════════════════════════════════════════
 // 🌙✨ Twitch OAuth Login – True Harmony Integration
  🌙✨ TRUE HARMONY – TWITCH LOGIN STATUS & PROFILANZEIGE
@@ -21,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twitch Client-ID ein
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
-const scope = "user:read:email chat:read chat:edit"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
+const scope = "user:read:email chat:read"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
 
 // Funktion: Startet den Twitch-Login-Flow
 document.getElementById("connectBtn").addEventListener("click", () => {
@@ -30,8 +31,7 @@ document.getElementById("connectBtn").addEventListener("click", () => {
     `?client_id=${clientId}` +
     `&redirect_uri=${encodeURIComponent(redirectUri)}` +
     `&response_type=token` +
-    `&scope=${encodeURIComponent(scope)}` +
-    `&force_verify=true`;
+    `&scope=${encodeURIComponent(scope)}`;
 
   // Weiterleitung zu Twitch Login
   window.location.href = authUrl;
@@ -48,7 +48,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (accessToken) {
     // optional speichern
-	localStorage.setItem("twitchToken", accessToken);
+    localStorage.setItem("twitchToken", accessToken);
 
     // Token-Parameter aus URL entfernen
     window.history.replaceState({}, document.title, window.location.pathname);
@@ -64,13 +64,6 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const user = data.data?.[0];
         if (user) {
-			    connectToTwitchChat(user.login, accessToken);
-          
-          localStorage.setItem("twitchUser", JSON.stringify({
-          name: user.display_name,
-          login: user.login,
-          avatar: user.profile_image_url
-        }));
           // Protokollmeldung
           if (log) {
             const entry = document.createElement("div");
@@ -338,6 +331,53 @@ document.querySelectorAll('.mod-filter input[type="checkbox"]').forEach(chk => {
   });
 });
 
+function connectToTwitchChat(channelName, accessToken) {
+  const client = new tmi.Client({
+    connection: {
+      secure: true,
+      reconnect: true
+    },
+    identity: {
+      username: channelName,
+      password: `oauth:${accessToken}`
+    },
+    channels: [channelName]
+  });
+
+  client.connect()
+    .then(() => appendLog(`Chat verbunden: ${channelName}`))
+    .catch(err => appendLog(`Chat Fehler: ${err.message}`));
+
+  client.on("message", (channel, tags, message, self) => {
+    if (self) return;
+
+    const chatBox = document.getElementById("chatBox");
+    if (chatBox) {
+      chatBox.value += `${tags["display-name"]}: ${message}\n`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    if (document.getElementById("ttsToggle")?.checked) {
+      speakChatMessage(message);
+    }
+  });
+}
+
+function speakChatMessage(text) {
+  synth.cancel();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  const selectedVoiceName = document.getElementById("voice")?.value;
+  const selectedVoice = voices.find(v => v.name === selectedVoiceName);
+
+  if (selectedVoice) utter.voice = selectedVoice;
+
+  utter.rate = parseFloat(document.getElementById("rate")?.value || "1");
+  utter.volume = parseFloat(document.getElementById("volume")?.value || "1");
+
+  synth.speak(utter);
+}
+
 /* ══════════════════════════════════════════════════════════════════════════════════════════════════
  🌞🌗✨🌙❤🌙✨ TRUE HARMONY EXTENSION – AUTO-RESIZE MESSAGE PANEL
    Version v1.0.3 Extended (Astra ❤✨ & Commander ❤🌙 Edition)
@@ -360,150 +400,3 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
-
-
-function connectToTwitchChat(channelName, accessToken) {
-  const client = new tmi.Client({
-    connection: {
-      secure: true,
-      reconnect: true
-    },
-    identity: {
-      username: channelName,
-      password: `oauth:${accessToken}`
-    },
-    channels: [channelName]
-  });
-
-  client.connect()
-    .then(() => appendLog(`Chat verbunden: ${channelName}`))
-    .catch(err => appendLog(`Chat Fehler: ${err.message}`));
-
-  client.on("message", (channel, tags, message, self) => {
-  // Zum Test eigene Nachrichten erlauben
-  // if (self) return;
-
-  if (!processChatMessage(tags, message)) return;
-
-  const chatBox = document.getElementById("chatBox");
-  const name = tags["display-name"] || tags.username || "Unbekannt";
-
-  if (chatBox) {
-    chatBox.value += `${name}: ${message}\n`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  if (document.getElementById("ttsToggle")?.checked) {
-    speakChatMessage(message);
-  }
-});
-}
-
-function speakChatMessage(text) {
-  synth.cancel();
-
-  const utter = new SpeechSynthesisUtterance(text);
-  const selectedVoiceName = document.getElementById("voice")?.value;
-  const selectedVoice = voices.find(v => v.name === selectedVoiceName);
-
-  if (selectedVoice) utter.voice = selectedVoice;
-
-  utter.rate = parseFloat(document.getElementById("rate")?.value || "1");
-  utter.volume = parseFloat(document.getElementById("volume")?.value || "1");
-
-  synth.speak(utter);
-}
-
-function processChatMessage(tags, message) {
-  const username = (tags.username || "").toLowerCase();
-  const displayName = tags["display-name"] || username;
-  const msg = message.trim();
-
-  // Commands ausblenden
-  if (document.getElementById("toggleCommands")?.checked && msg.startsWith("!")) {
-    appendLog(`Gefiltert: Command von ${displayName}`);
-    return false;
-  }
-
-  // Bots ausblenden
-  if (document.getElementById("toggleBots")?.checked) {
-    const botList = (document.getElementById("blockBots")?.value || "")
-      .toLowerCase()
-      .split(",")
-      .map(x => x.trim())
-      .filter(Boolean);
-
-    if (botList.includes(username)) {
-      appendLog(`Gefiltert: Bot ${displayName}`);
-      return false;
-    }
-  }
-
-  // Nur bestimmter Benutzer
-  if (document.getElementById("toggleUserOnly")?.checked) {
-    const allowedUser = (document.getElementById("filterUserOnly")?.value || "")
-      .toLowerCase()
-      .trim();
-
-    if (allowedUser && username !== allowedUser) {
-      return false;
-    }
-  }
-
-  // Nur @ Erwähnungen
-  if (document.getElementById("toggleMentions")?.checked) {
-    const mention = (document.getElementById("filterMentions")?.value || "")
-      .toLowerCase()
-      .trim();
-
-    if (mention && !msg.toLowerCase().includes(mention)) {
-      return false;
-    }
-  }
-
-  // Links blockieren
-  if (document.getElementById("toggleNoLinks")?.checked) {
-    if (/https?:\/\/|www\./i.test(msg)) {
-      appendLog(`Gefiltert: Link von ${displayName}`);
-      return false;
-    }
-  }
-
-  // Capslock Filter
-  if (document.getElementById("toggleCapsFilter")?.checked) {
-    const letters = msg.replace(/[^a-zA-ZÄÖÜäöüß]/g, "");
-    const upper = letters.replace(/[^A-ZÄÖÜ]/g, "");
-
-    if (letters.length >= 8 && upper.length / letters.length > 0.7) {
-      appendLog(`Gefiltert: Capslock von ${displayName}`);
-      return false;
-    }
-  }
-
-  // Kurznachrichten überspringen
-  if (document.getElementById("toggleShortMsg")?.checked && msg.length < 3) {
-    return false;
-  }
-
-  // Symbol/Emoji-Spam grob filtern
-  if (document.getElementById("toggleSymbolSpam")?.checked) {
-    const symbols = msg.replace(/[a-zA-Z0-9ÄÖÜäöüß\s]/g, "");
-    if (msg.length > 0 && symbols.length / msg.length > 0.6) {
-      appendLog(`Gefiltert: Symbolspam von ${displayName}`);
-      return false;
-    }
-  }
-
-  // Rollenfilter: nur Sub/VIP/Mod
-  if (document.getElementById("toggleRoleFilter")?.checked) {
-    const isMod = tags.mod;
-    const isSub = tags.subscriber;
-    const isVip = tags.badges && tags.badges.vip;
-
-    if (!isMod && !isSub && !isVip) {
-      return false;
-    }
-  }
-
-  return true;
-}
