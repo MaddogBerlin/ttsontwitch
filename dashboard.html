@@ -123,18 +123,18 @@
         <div class="split-half">
           <h3 id="ttsSettings" data-key="ttsSettings">TTS Einstellungen</h3>
             <div class="field" style="justify-content:center;gap:8px;">
-              <span id="ttsToggleLabel" data-key="ttsToggleLabel">TTS An / Aus</span>
+              <label for="ttsToggle" id="ttsToggleLabel" data-key="ttsToggleLabel">TTS An / Aus</label>
               <input id="ttsToggle" type="checkbox">
             </div>
 
             <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:center;">
-              <label id="labelRate" data-key="labelRate" style="font-weight:700;">Redegeschwindigkeit</label>
+              <label for="rate" id="labelRate" data-key="labelRate" style="font-weight:700;">Redegeschwindigkeit</label>
               <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
                 <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" style="width:60%;">
                 <span id="rateValue" style="font-weight:600;">1.0×</span>
               </div>
 
-              <label id="labelVolume" data-key="labelVolume" style="font-weight:700;margin-top:7px;">Lautstärke</label>
+              <label for="volume" id="labelVolume" data-key="labelVolume" style="font-weight:700;margin-top:7px;">Lautstärke</label>
               <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
                 <input id="volume" type="range" min="0" max="1" step="0.05" value="1" style="width:60%;">
                 <span id="volumeValue" style="font-weight:600;">100 %</span>
@@ -159,13 +159,13 @@
               <h4 data-key="equalizerTitle" style="margin-bottom:6px;">Audio-Equalizer</h4>
               
               <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:70%;margin:0 auto;">
-                <label data-key="equalizerBass" style="font-weight:600;">Bass</label>
+                <label for="bassControl" data-key="equalizerBass" style="font-weight:600;">Bass</label>
                 <input type="range" id="bassControl" min="-30" max="30" value="0" step="1" style="width:100%;">
 
-                <label data-key="equalizerMid" style="font-weight:600;">Mitten</label>
+                <label for="midControl" data-key="equalizerMid" style="font-weight:600;">Mitten</label>
                 <input type="range" id="midControl" min="-30" max="30" value="0" step="1" style="width:100%;">
 
-                <label data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
+                <label for="trebleControl" data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
                 <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1" style="width:100%;">
               </div>
             </div>
