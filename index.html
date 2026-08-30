@@ -115,16 +115,25 @@
       </div>
     </footer>
   
- <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const loginButton = document.getElementById("loginStatus");
-  if (!loginButton) return;
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginButton = document.getElementById("loginStatus");
+      if (!loginButton) return;
 
-  loginButton.textContent = "Nicht eingeloggt";
-  loginButton.classList.remove("connected");
-  loginButton.classList.add("disconnected");
-  loginButton.disabled = true;
-});
+      const token = sessionStorage.getItem("twitchToken");
+
+      if (token) {
+        loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
+        loginButton.classList.remove("disconnected");
+        loginButton.classList.add("connected");
+      } else {
+        loginButton.textContent = "Nicht eingeloggt";
+        loginButton.classList.remove("connected");
+        loginButton.classList.add("disconnected");
+      }
+
+      loginButton.disabled = true;
+    });
   </script>
 
 </body>
