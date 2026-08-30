@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Zusätzliche Übersetzungen laden
-  loadExtraTranslations();
   applyTranslations();
 
   // 🌍 Sprachumschalter
@@ -94,20 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`🌍 Sprache aktiv: ${currentLang.toUpperCase()}`);
   }
 
-  // 🔵 Zusätzliche Übersetzungsdateien automatisch laden
-  function loadExtraTranslations() {
-    const extraFiles = [
-      "privacy_translations.js",
-      "log_translations.js"
-    ];
-
-    extraFiles.forEach((file) => {
-      const script = document.createElement("script");
-      script.src = "js/" + file;
-      script.onload = () => console.log(`[Loaded] ${file}`);
-      document.head.appendChild(script);
-    });
-  }
 });
 
 // ⚪ Grundübersetzungen – global gültige Begriffe
