@@ -2,6 +2,13 @@
 const themeToggle = document.getElementById("themeToggle");
 const body = document.body;
 
+// Twitch-Verbindung bei echtem Seiten-Reload beenden
+const navigationEntry = performance.getEntriesByType("navigation")[0];
+
+if (navigationEntry?.type === "reload") {
+  sessionStorage.removeItem("twitchToken");
+}
+
 // Beim Laden prüfen, ob Session bereits einen Modus gesetzt hat
 window.addEventListener("DOMContentLoaded", () => {
   const savedTheme = sessionStorage.getItem("theme");
@@ -13,7 +20,6 @@ window.addEventListener("DOMContentLoaded", () => {
     themeToggle.textContent = "Darkmode";
   }
 });
-
 
 /* ══════════════════════════════════════════════════════════════════════════════════════════════════
 // 🌙✨ Twitch OAuth Login – True Harmony Integration
