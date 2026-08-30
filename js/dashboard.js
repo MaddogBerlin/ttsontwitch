@@ -410,8 +410,27 @@ client.on("message", (channel, tags, message, self) => {
   if (ttsFilterEnabled && noLinksFilterEnabled) {
     ttsMessage = ttsMessage.replace(
       /(?:https?:\/\/|www\.)[^\s]+/gi,
-      "*****"
+      "***"
     );
+  }
+
+  // === TTS Filter: Bannliste (Wörter) ===
+  const wordBanFilterEnabled = document.getElementById("toggleWordBan")?.checked;
+
+  if (ttsFilterEnabled && wordBanFilterEnabled) {
+    const blockedWords = document
+      .getElementById("blockWords")
+      ?.value
+      .split(",")
+      .map(word => word.trim())
+      .filter(Boolean) || [];
+
+    blockedWords.forEach(word => {
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(`\\b${escapedWord}\\b`, "gi");
+
+      ttsMessage = ttsMessage.replace(regex, "***");
+    });
   }
 
   // === TTS Ausgabe ===
