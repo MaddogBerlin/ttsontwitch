@@ -241,7 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
   { id: "toggleBots", label: "Blende Twitch Bots aus" },
   { id: "toggleNoLinks", label: "Keine Links lesen" },
   { id: "toggleWordBan", label: "TTS-Bannliste (Wörter)" },
-  { id: "toggleSystemMsg", label: "Systemmeldungen ignorieren" },
   { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" }
 ];
 
@@ -431,6 +430,45 @@ client.on("message", (channel, tags, message, self) => {
 
       ttsMessage = ttsMessage.replace(regex, "***");
     });
+  }
+
+  // === TTS Filter: Symbol/Emoji-Spam filtern ===
+    const symbolSpamFilterEnabled =
+      document.getElementById("toggleSymbolSpam")?.checked;
+
+    if (ttsFilterEnabled && symbolSpamFilterEnabled) {
+
+      // Twitch-Emotes aus den von Twitch gelieferten Emote-Daten erkennen
+      if (tags.emotes) {
+        const twitchEmotes = [];
+
+        Object.values(tags.emotes).forEach(ranges => {
+          ranges.forEach(range => {
+            const [start, end] = range.split("-").map(Number);
+            const emoteName = message.slice(start, end + 1);
+
+            if (emoteName) {
+              twitchEmotes.push(emoteName);
+            }
+          });
+        });
+
+        twitchEmotes.forEach(emoteName => {
+          const escapedEmote = emoteName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const regex = new RegExp(escapedEmote, "g");
+
+          ttsMessage = ttsMessage.replace(regex, "");
+        });
+      }
+
+      // Normale Unicode-Emojis aus der TTS-Ausgabe entfernen
+      ttsMessage = ttsMessage.replace(
+        /\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*/gu,
+        ""
+      );
+
+      // Leerzeichen nach dem Entfernen sauber zusammenziehen
+      ttsMessage = ttsMessage.replace(/\s+/g, " ").trim();
   }
 
   // === TTS Ausgabe ===
