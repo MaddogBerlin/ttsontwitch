@@ -41,15 +41,12 @@ document.getElementById("connectBtn").addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
-  const accessToken = params.get("access_token") || localStorage.getItem("twitchToken");
+  const accessToken = params.get("access_token");
   const statusBtn = document.getElementById("loginStatus");
   const connectBtn = document.getElementById("connectBtn");
   const log = document.getElementById("ttsLog");
 
   if (accessToken) {
-    // optional speichern
-    localStorage.setItem("twitchToken", accessToken);
-
     // Token-Parameter aus URL entfernen
     window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -62,9 +59,8 @@ window.addEventListener("DOMContentLoaded", () => {
     })
       .then(res => {
         if (res.status === 401) {
-          localStorage.removeItem("twitchToken");
-          throw new Error("Twitch-Token ist ungültig oder abgelaufen.");
-        }
+        throw new Error("Twitch-Token ist ungültig oder abgelaufen.");
+      }
 
         if (!res.ok) {
           throw new Error(`Twitch API Fehler (${res.status})`);
@@ -199,6 +195,12 @@ function populateVoices() {
     option.textContent = `${v.name} (${v.lang})`;
     voiceSelect.appendChild(option);
   });
+
+  const savedVoice = voiceSelect.dataset.savedVoice;
+
+  if (savedVoice && voices.some(v => v.name === savedVoice)) {
+    voiceSelect.value = savedVoice;
+  }
 }
 
 // Stimmen laden, sobald sie bereitstehen
@@ -333,6 +335,274 @@ document.querySelectorAll('.mod-filter input[type="checkbox"]').forEach(chk => {
     }
   });
 });
+
+// 🌙✨ TTS Einstellungen – dauerhaftes LocalStorage-Gedächtnis
+const TTS_SETTINGS_KEY = "ttsSettings";
+
+function saveTTSSettings() {
+  const settings = {
+  ttsEnabled:
+    document.getElementById("ttsToggle")?.checked || false,
+
+  ttsFilterEnabled:
+    document.getElementById("toggleTTSFilter")?.checked || false,
+
+  toggleCommands:
+    document.getElementById("toggleCommands")?.checked || false,
+
+  toggleBots:
+    document.getElementById("toggleBots")?.checked || false,
+
+  toggleNoLinks:
+    document.getElementById("toggleNoLinks")?.checked || false,
+
+  toggleWordBan:
+    document.getElementById("toggleWordBan")?.checked || false,
+
+  toggleSymbolSpam:
+  document.getElementById("toggleSymbolSpam")?.checked || false,
+
+  blockCommands:
+    document.getElementById("blockCommands")?.value || "",
+
+  blockBots:
+    document.getElementById("blockBots")?.value || "",
+
+  blockWords:
+  document.getElementById("blockWords")?.value || "",
+
+  modFilter:
+  document.querySelector('input[name="modFilter"]:checked')?.value || "all",
+
+  voice:
+  document.getElementById("voice")?.value || "",
+
+  rate:
+    document.getElementById("rate")?.value || "1",
+
+  volume:
+  document.getElementById("volume")?.value || "1",
+
+  bass:
+    document.getElementById("bassControl")?.value || "0",
+
+  mid:
+    document.getElementById("midControl")?.value || "0",
+
+  treble:
+    document.getElementById("trebleControl")?.value || "0"
+  };
+
+  localStorage.setItem(
+    TTS_SETTINGS_KEY,
+    JSON.stringify(settings)
+  );
+}
+
+[
+  "toggleCommands",
+  "toggleBots",
+  "toggleNoLinks",
+  "toggleWordBan",
+  "toggleSymbolSpam"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener(
+    "change",
+    saveTTSSettings
+  );
+});
+
+[
+  "blockCommands",
+  "blockBots",
+  "blockWords"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener(
+    "input",
+    saveTTSSettings
+  );
+});
+
+document.getElementById("ttsToggle")?.addEventListener(
+  "change",
+  saveTTSSettings
+);
+
+document.getElementById("toggleTTSFilter")?.addEventListener(
+  "change",
+  saveTTSSettings
+);
+
+document.querySelectorAll('input[name="modFilter"]').forEach(box => {
+  box.addEventListener(
+    "change",
+    saveTTSSettings
+  );
+});
+
+document.getElementById("voice")?.addEventListener(
+  "change",
+  saveTTSSettings
+);
+
+[
+  "rate",
+  "volume"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener(
+    "input",
+    saveTTSSettings
+  );
+});
+
+[
+  "bassControl",
+  "midControl",
+  "trebleControl"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener(
+    "input",
+    saveTTSSettings
+  );
+});
+
+function loadTTSSettings() {
+  const savedSettings = localStorage.getItem(TTS_SETTINGS_KEY);
+
+  if (!savedSettings) return;
+
+  const settings = JSON.parse(savedSettings);
+
+  const ttsToggle = document.getElementById("ttsToggle");
+
+  if (ttsToggle && typeof settings.ttsEnabled === "boolean") {
+    ttsToggle.checked = settings.ttsEnabled;
+  }
+
+  const ttsFilterToggle = document.getElementById("toggleTTSFilter");
+
+  if (ttsFilterToggle && typeof settings.ttsFilterEnabled === "boolean") {
+    ttsFilterToggle.checked = settings.ttsFilterEnabled;
+  }
+
+  [
+  "toggleCommands",
+  "toggleBots",
+  "toggleNoLinks",
+  "toggleWordBan",
+  "toggleSymbolSpam"
+  ].forEach(id => {
+    const element = document.getElementById(id);
+
+    if (element && typeof settings[id] === "boolean") {
+      element.checked = settings[id];
+    }
+  });
+
+  [
+    "blockCommands",
+    "blockBots",
+    "blockWords"
+  ].forEach(id => {
+    const element = document.getElementById(id);
+
+    if (element && typeof settings[id] === "string") {
+      element.value = settings[id];
+    }
+  });
+
+    if (typeof settings.modFilter === "string") {
+    document.querySelectorAll('input[name="modFilter"]').forEach(box => {
+      box.checked = box.value === settings.modFilter;
+    });
+  }
+
+  const rate = document.getElementById("rate");
+  const volume = document.getElementById("volume");
+
+  if (rate && typeof settings.rate === "string") {
+    rate.value = settings.rate;
+  }
+
+  if (volume && typeof settings.volume === "string") {
+    volume.value = settings.volume;
+  }
+
+  const bass = document.getElementById("bassControl");
+  const mid = document.getElementById("midControl");
+  const treble = document.getElementById("trebleControl");
+
+  if (bass && typeof settings.bass === "string") {
+    bass.value = settings.bass;
+  }
+
+  if (mid && typeof settings.mid === "string") {
+    mid.value = settings.mid;
+  }
+
+  if (treble && typeof settings.treble === "string") {
+    treble.value = settings.treble;
+  }
+
+  const voice = document.getElementById("voice");
+
+  if (voice && typeof settings.voice === "string") {
+    voice.dataset.savedVoice = settings.voice;
+  }
+
+  const rateValue = document.getElementById("rateValue");
+  const volumeValue = document.getElementById("volumeValue");
+
+  if (rate && rateValue) {
+    rateValue.textContent = rate.value + "×";
+  }
+
+  if (volume && volumeValue) {
+    volumeValue.textContent = Math.round(volume.value * 100) + " %";
+  }
+
+  if (bass) {
+  eqFilters.bass.gain.value = bass.value;
+  }
+
+  if (mid) {
+    eqFilters.mid.gain.value = mid.value;
+  }
+
+  if (treble) {
+    eqFilters.treble.gain.value = treble.value;
+  }
+
+  const ttsOptions = document.getElementById("ttsOptions");
+
+  if (ttsToggle && ttsOptions) {
+    ttsOptions.classList.toggle("active", ttsToggle.checked);
+  }
+
+  const filterGroup = document.getElementById("filterGroup");
+
+  if (ttsFilterToggle && filterGroup) {
+    filterGroup.classList.toggle("active", ttsFilterToggle.checked);
+    filterGroup.classList.toggle("hidden", !ttsFilterToggle.checked);
+  }
+
+  [
+  { toggle: "toggleCommands", input: "blockCommands" },
+  { toggle: "toggleBots", input: "blockBots" },
+  { toggle: "toggleWordBan", input: "blockWords" }
+].forEach(({ toggle, input }) => {
+  const toggleElement = document.getElementById(toggle);
+  const inputElement = document.getElementById(input);
+
+  if (toggleElement && inputElement) {
+    inputElement.style.display = toggleElement.checked ? "block" : "none";
+    inputElement.style.opacity = toggleElement.checked ? "1" : "0";
+  }
+});
+}
+
+loadTTSSettings();
+populateVoices();
 
 function connectToTwitchChat(channelName, accessToken) {
   const client = new tmi.Client({
@@ -469,6 +739,30 @@ client.on("message", (channel, tags, message, self) => {
 
       // Leerzeichen nach dem Entfernen sauber zusammenziehen
       ttsMessage = ttsMessage.replace(/\s+/g, " ").trim();
+  }
+
+  // === TTS Filter: Moderatoren ===
+  const selectedModFilter =
+    document.querySelector('input[name="modFilter"]:checked')?.value || "all";
+
+  const isModerator =
+    tags.mod === true ||
+    tags.mod === "1" ||
+    tags.badges?.moderator === "1";
+
+  if (ttsFilterEnabled) {
+
+    // Nur Moderatoren sprechen
+    if (selectedModFilter === "only" && !isModerator) {
+      appendLog(`Nicht gesprochen: ${tags["display-name"]} ist kein Moderator.`);
+      return;
+    }
+
+    // Moderatoren nicht sprechen
+    if (selectedModFilter === "hide" && isModerator) {
+      appendLog(`Moderator nicht gesprochen: ${tags["display-name"]}`);
+      return;
+    }
   }
 
   // === TTS Ausgabe ===
