@@ -41,14 +41,18 @@ document.getElementById("connectBtn").addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
-  const accessToken = params.get("access_token");
+  const accessToken =
+  params.get("access_token") ||
+  sessionStorage.getItem("twitchToken");
   const statusBtn = document.getElementById("loginStatus");
   const connectBtn = document.getElementById("connectBtn");
   const log = document.getElementById("ttsLog");
 
   if (accessToken) {
-    // Token-Parameter aus URL entfernen
-    window.history.replaceState({}, document.title, window.location.pathname);
+  sessionStorage.setItem("twitchToken", accessToken);
+
+  // Token-Parameter aus URL entfernen
+  window.history.replaceState({}, document.title, window.location.pathname);
 
     // Benutzerinfos abrufen
     fetch("https://api.twitch.tv/helix/users", {
