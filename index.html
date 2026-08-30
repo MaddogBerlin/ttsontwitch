@@ -9,6 +9,7 @@
   <script src="js/translations.js"></script>
   <script src="js/dashboard_translations.js"></script> 
   <script defer src="js/script.js"></script>
+  <!-- 🌙✨ Favicons (Astra 🩶 & Commander 🩶 Edition) -->
   <!-- Standard-Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
@@ -18,10 +19,10 @@
   <meta name="theme-color" content="#0a0a0a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="TTS on Twitch">
-  <meta name="application-name" content="TTS on Twitch">
+  <meta name="apple-mobile-web-app-title" content="TTSonTwitch">
+  <meta name="application-name" content="TTSonTwitch">
   <!-- Optional: Social Preview (wenn du Links teilst) -->
-  <meta property="og:title" content="TTS on Twitch – Dashboard Login">
+  <meta property="og:title" content="TTSonTwitch – Dashboard Login">
   <meta property="og:description" content="Verwalte dein Twitch TTS-System mit harmonischer Präzision und Stil.">
   <meta property="og:image" content="assets/favicon-512.png">
   <meta property="og:type" content="website">
@@ -40,7 +41,7 @@
     </div>
 
     <div class="center">
-      <a id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
+      <a href="index.html" id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
       <span class="divider"></span>
       <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
       <span class="divider"></span>
@@ -50,7 +51,7 @@
     </div>
 
     <div class="right">
-      <!-- Sprachwahl-Block -->
+      <!-- 🌙✨ Sprachwahl-Block -->
       <div class="lang-selector">
         <button id="langBtn">
           <img id="langFlag" src="flags/de.svg" alt="DE" class="flag-icon">
@@ -80,9 +81,9 @@
 
       <!-- Header 2 -->
     <section class="panel intro-panel">
-      <h3>TTSonTwitch</h3>
+      <h3>TTS on Twitch</h3>
 
-      <div class="intro-box">
+      <div class="welcome_tts">
         <p><strong>Willkommen im TTS System!</strong></p>
 
         <p data-key="intro_text">
@@ -96,14 +97,18 @@
           mehr oder weniger Sprachausgaben unterstützen können.
           Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
         </p>
-      </div>
+
+        <p class="tagline">
+          „Ein sanfter Klang, geboren aus Code und Harmonie.“
+        </p>
+        </div>
     </section>
 
   
     <footer class="site-footer">
       <div class="footer-left"></div>
       <div class="footer-center">
-        © 2026 TTSonTwitch<br>Version 1.0.3
+        © 2025 TTSonTwitch<br>Version 1.0.3
       </div>
       <div class="footer-right" id="systemClock">
         --:--:--
@@ -115,20 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginButton = document.getElementById("loginStatus");
   if (!loginButton) return;
 
-  // Prüfen, ob ein Twitch-Token existiert (vom Dashboard-Login)
-  const token = localStorage.getItem("twitchToken");
-
-  if (token) {
-    loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
-    loginButton.classList.remove("disconnected");
-    loginButton.classList.add("connected");
-  } else {
-    loginButton.textContent = "Nicht eingeloggt";
-    loginButton.classList.remove("connected");
-    loginButton.classList.add("disconnected");
-  }
-
-  // Button deaktivieren, damit er auf der Startseite nicht klickbar ist
+  loginButton.textContent = "Nicht eingeloggt";
+  loginButton.classList.remove("connected");
+  loginButton.classList.add("disconnected");
   loginButton.disabled = true;
 });
   </script>

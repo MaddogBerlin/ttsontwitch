@@ -136,25 +136,14 @@
       <div class="footer-right" id="systemClock">--:--:--</div>
   </footer>
 
- <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const loginButton = document.getElementById("loginStatus");
   if (!loginButton) return;
 
-  // Prüfen, ob ein Twitch-Token existiert (vom Dashboard-Login)
-  const token = localStorage.getItem("twitchToken");
-
-  if (token) {
-    loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
-    loginButton.classList.remove("disconnected");
-    loginButton.classList.add("connected");
-  } else {
-    loginButton.textContent = "Nicht eingeloggt";
-    loginButton.classList.remove("connected");
-    loginButton.classList.add("disconnected");
-  }
-
-  // Button deaktivieren, damit er auf der Startseite nicht klickbar ist
+  loginButton.textContent = "Nicht eingeloggt";
+  loginButton.classList.remove("connected");
+  loginButton.classList.add("disconnected");
   loginButton.disabled = true;
 });
 </script>
