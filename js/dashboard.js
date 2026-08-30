@@ -37,6 +37,7 @@ document.getElementById("connectBtn").addEventListener("click", () => {
     `?client_id=${clientId}` +
     `&redirect_uri=${encodeURIComponent(redirectUri)}` +
     `&response_type=token` +
+    `&force_verify=true` +
     `&scope=${encodeURIComponent(scope)}`;
 
   // Weiterleitung zu Twitch Login
