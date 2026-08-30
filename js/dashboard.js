@@ -616,10 +616,14 @@ populateVoices();
 
 function connectToTwitchChat(channelName, accessToken) {
   const client = new tmi.Client({
-    connection: {
-      secure: true,
-      reconnect: true
-    },
+  options: {
+    skipUpdatingEmotesets: true
+  },
+
+  connection: {
+    secure: true,
+    reconnect: true
+  },
     identity: {
       username: channelName,
       password: `oauth:${accessToken}`
