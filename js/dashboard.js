@@ -673,12 +673,58 @@ function connectToTwitchChat(channelName, accessToken) {
 client.on("message", (channel, tags, message, self) => {
   if (self) return;
 
+  // Twitch-Benutzerinformationen für die Chat-Anzeige
+  const displayName = tags["display-name"] || tags.username || "Unbekannt";
+  const userColor = tags.color || "#ffffff";
+  const badges = tags.badges || {};
+
+  const isBroadcaster = badges.broadcaster === "1";
+  const isMod = tags.mod === true || tags.mod === "1" || badges.moderator === "1";
+  const isVip = badges.vip === "1";
+
   const ttsFilterEnabled = document.getElementById("toggleTTSFilter")?.checked;
 
   // Nachricht im Twitch-Chat anzeigen
+  // Nachricht im Twitch-Chat anzeigen
   const chatBox = document.getElementById("chatBox");
+
   if (chatBox) {
-    chatBox.value += `${tags["display-name"]}: ${message}\n`;
+    const chatMessage = document.createElement("div");
+
+    const twitchLogo = document.createElement("img");
+    twitchLogo.src = "assets/Twitch.png";
+    twitchLogo.alt = "Twitch";
+    twitchLogo.style.width = "20px";
+    twitchLogo.style.height = "20px";
+    twitchLogo.style.verticalAlign = "middle";
+    twitchLogo.style.marginRight = "6px";
+
+    const role = document.createElement("span");
+
+    if (isBroadcaster) {
+      role.textContent = "[Broadcaster] ";
+    } else if (isMod) {
+      role.textContent = "[Mod] ";
+    } else if (isVip) {
+      role.textContent = "[VIP] ";
+    }
+
+
+    const separator = document.createElement("span");
+    separator.textContent = " » ";
+
+    const messageText = document.createElement("span");
+    messageText.textContent = message;
+
+    chatMessage.appendChild(twitchLogo);
+    if (role.textContent) {
+    chatMessage.appendChild(role);
+    }
+    chatMessage.appendChild(userName);
+    chatMessage.appendChild(separator);
+    chatMessage.appendChild(messageText);
+
+    chatBox.appendChild(chatMessage);
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
