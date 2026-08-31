@@ -9,6 +9,26 @@ if (navigationEntry?.type === "reload") {
   sessionStorage.removeItem("twitchToken");
 }
 
+// Zuletzt verbundenen Twitch-Account anzeigen
+window.addEventListener("DOMContentLoaded", () => {
+  const savedUser = localStorage.getItem("lastTwitchUser");
+  const lastUserBox = document.getElementById("lastTwitchUser");
+
+  const hashParams = new URLSearchParams(window.location.hash.substring(1));
+  const hashToken = hashParams.get("access_token");
+  const sessionToken = sessionStorage.getItem("twitchToken");
+
+  if (savedUser && lastUserBox && !hashToken && !sessionToken) {
+    lastUserBox.textContent = `↻ ${savedUser}`;
+    lastUserBox.style.display = "block";
+    lastUserBox.style.cursor = "pointer";
+
+    lastUserBox.addEventListener("click", () => {
+      document.getElementById("connectBtn")?.click();
+});   
+  }
+});
+
 // Beim Laden prüfen, ob Session bereits einen Modus gesetzt hat
 window.addEventListener("DOMContentLoaded", () => {
   const savedTheme = sessionStorage.getItem("theme");
@@ -82,6 +102,8 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const user = data.data?.[0];
         if (user) {
+          // Zuletzt erfolgreich verbundenen Twitch-Account merken
+          localStorage.setItem("lastTwitchUser", user.login);
           connectToTwitchChat(user.login, accessToken);
 
           // Protokollmeldung
