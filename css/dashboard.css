@@ -491,7 +491,8 @@ body.dark .panel.intro-panel .intro-box {
 }
 
 /* ═══ 🌙✨ TWITCH CHAT PANEL ═══ */
-section.panel textarea {
+section.panel textarea,
+#chatBox {
   background:rgba(255,255,255,0.9);
   border:1px solid rgba(0,0,0,0.1);
   border-radius:2px;
@@ -503,13 +504,15 @@ section.panel textarea {
   box-shadow:inset 0 0 6px rgba(0,0,0,0.05);
   transition:all 0.3s ease;
 }
-body.dark section.panel textarea {
+body.dark section.panel textarea,
+body.dark #chatBox {
   background:rgba(30,30,30,0.85);
   color:#ddd;
   border-color:rgba(255,255,255,0.2);
   box-shadow:inset 0 0 6px rgba(255,255,255,0.08);
 }
-body:not(.dark) section.panel textarea {
+body:not(.dark) section.panel textarea,
+body:not(.dark) #chatBox {
   background:rgba(255,255,255,0.95);
   color:#111;
   border-color:rgba(0,0,0,0.08);
