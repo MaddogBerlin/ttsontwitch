@@ -890,7 +890,7 @@ function speakChatMessage(text) {
    Version v1.0.3 Extended (Astra ❤✨ & Commander ❤🌙 Edition)
    Funktion: Dynamische Anpassung der Nachrichten-Panel-Höhe im Vollbild & Fenstermodus
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
-const messageArea = document.querySelector('section.panel textarea');
+const messageArea = document.getElementById("chatBox");
 
 function adjustLogHeight() {
   const newHeight = Math.max(window.innerHeight * 0.3, 150); // mind. 150 px
