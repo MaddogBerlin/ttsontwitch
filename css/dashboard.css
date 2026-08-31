@@ -257,6 +257,12 @@ section.panel {
   transition:background .1s,border .1s;
   text-align:center;
 }
+
+#chatBox {
+  text-align: left;
+  font-size: 15px;
+}
+
 h1,h2,h3,p,label{text-align:center;margin:6px 0;}
 
 /* Split Panel */
