@@ -96,8 +96,20 @@ window.addEventListener("DOMContentLoaded", () => {
           statusBtn.classList.remove("disconnected");
           statusBtn.classList.add("connected");
 
+          // Twitch-Eingabe nach erfolgreicher Verbindung ausblenden
+          const twitchNameInput = document.getElementById("twitchName");
+          const twitchNameLabel = document.querySelector('label[for="twitchName"]');
+
+          if (twitchNameInput) {
+            twitchNameInput.style.display = "none";
+          }
+
+          if (twitchNameLabel) {
+            twitchNameLabel.style.display = "none";
+          }
+
           // "Verbinden"-Button deaktivieren
-          connectBtn.textContent = "Verbunden ✓";
+          connectBtn.textContent = "Verbunden";
           connectBtn.disabled = true;
           connectBtn.classList.add("connected");
 
