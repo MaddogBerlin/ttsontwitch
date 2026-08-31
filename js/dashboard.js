@@ -709,6 +709,9 @@ client.on("message", (channel, tags, message, self) => {
       role.textContent = "[VIP] ";
     }
 
+    const userName = document.createElement("span");
+    userName.textContent = displayName;
+    userName.style.color = userColor;
 
     const separator = document.createElement("span");
     separator.textContent = " » ";
