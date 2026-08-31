@@ -649,6 +649,58 @@ function loadTTSSettings() {
 loadTTSSettings();
 populateVoices();
 
+function appendTwitchEmotes(container, message, emotes) {
+  if (!emotes) {
+    container.textContent = message;
+    return;
+  }
+
+  const emotePositions = [];
+
+  Object.entries(emotes).forEach(([emoteId, ranges]) => {
+    ranges.forEach(range => {
+      const [start, end] = range.split("-").map(Number);
+
+      emotePositions.push({
+        emoteId,
+        start,
+        end
+      });
+    });
+  });
+
+  emotePositions.sort((a, b) => a.start - b.start);
+
+  let cursor = 0;
+
+  emotePositions.forEach(({ emoteId, start, end }) => {
+    if (start > cursor) {
+      container.appendChild(
+        document.createTextNode(message.slice(cursor, start))
+      );
+    }
+
+    const emoteImg = document.createElement("img");
+
+    emoteImg.src =
+      `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/1.0`;
+
+    emoteImg.alt = message.slice(start, end + 1);
+    emoteImg.style.height = "24px";
+    emoteImg.style.verticalAlign = "middle";
+
+    container.appendChild(emoteImg);
+
+    cursor = end + 1;
+  });
+
+  if (cursor < message.length) {
+    container.appendChild(
+      document.createTextNode(message.slice(cursor))
+    );
+  }
+}
+
 function connectToTwitchChat(channelName, accessToken) {
   const client = new tmi.Client({
   options: {
@@ -717,7 +769,7 @@ client.on("message", (channel, tags, message, self) => {
     separator.textContent = " » ";
 
     const messageText = document.createElement("span");
-    messageText.textContent = message;
+    appendTwitchEmotes(messageText, message, tags.emotes);
 
     chatMessage.appendChild(twitchLogo);
     if (role.textContent) {
