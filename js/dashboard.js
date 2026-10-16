@@ -113,10 +113,20 @@ window.addEventListener("DOMContentLoaded", () => {
             log.appendChild(entry);
           }
 
+          
           // Header-Button aktualisieren
-          statusBtn.textContent = `Eingeloggt als ${user.display_name}`;
+          statusBtn.dataset.key = "connected_as";
+          statusBtn.dataset.twitchDisplayName = user.display_name;
+
+          const lang = localStorage.getItem("lang") || "de";
+          const connectedText =
+            dashboardTranslations[lang]?.connected_as ||
+            dashboardTranslations.de.connected_as;
+
+          statusBtn.textContent = `${connectedText} ${user.display_name}`;
           statusBtn.classList.remove("disconnected");
           statusBtn.classList.add("connected");
+
 
           // Twitch-Eingabe nach erfolgreicher Verbindung ausblenden
           const twitchNameInput = document.getElementById("twitchName");
@@ -130,10 +140,16 @@ window.addEventListener("DOMContentLoaded", () => {
             twitchNameLabel.style.display = "none";
           }
 
+          
           // "Verbinden"-Button deaktivieren
-          connectBtn.textContent = "Verbunden";
+          connectBtn.dataset.key = "btn_connected";
+          connectBtn.textContent =
+            dashboardTranslations[lang]?.btn_connected ||
+            dashboardTranslations.de.btn_connected;
+
           connectBtn.disabled = true;
           connectBtn.classList.add("connected");
+
 
           // Profilbild im Header anzeigen
           const img = document.createElement("img");

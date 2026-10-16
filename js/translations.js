@@ -84,9 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (text) {
         if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
           el.placeholder = text;
+
+        } else if (
+          el.id === "loginStatus" &&
+          el.dataset.key === "connected_as" &&
+          el.dataset.twitchDisplayName
+        ) {
+          el.textContent = `${text} ${el.dataset.twitchDisplayName}`;
         } else {
           el.innerHTML = text;
         }
+
       }
     });
 

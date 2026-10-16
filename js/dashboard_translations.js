@@ -4,7 +4,7 @@
  Description: Übersetzungen für dashboard.html
  Autor: Astra 🩶 & Commander ❤️
 =========================================================== */
-// Dashboard Übersetzungen – Astra & Commander Edition v1.2
+// 🌙✨ Dashboard Übersetzungen – Astra & Commander Edition v1.2
 const dashboardTranslations = {
   de: {
     // Dashboard Kopfbereich
@@ -12,7 +12,8 @@ const dashboardTranslations = {
     welcome_message: "Willkommen im Dashboard, Commander.",
     intro_heading: "Verwalten Sie Ihre Twitch-TTS-Einstellungen",
     connect_button: "Mit Twitch verbinden",
-    connected_as: "Verbunden als",
+    connected_as: "Eingeloggt als",
+    btn_connected: "Verbunden",
     not_logged_in: "Nicht eingeloggt",
     logout: "Abmelden",
     refresh: "Aktualisieren",
@@ -56,7 +57,7 @@ const dashboardTranslations = {
     browser_hint: "Beachte bitte, dass unterschiedliche Browser-Varianten mehr oder weniger Sprachausgaben unterstützen können. Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.",
     connect_heading: "Twitch Verbinden",
     label_twitch_name: "Twitch Name",
-    btn_connect: "Connect",
+    btn_connect: "Verbinden",
     footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "TTS Einstellungen",
     ttsToggleLabel: "TTS An / Aus",
@@ -79,7 +80,8 @@ const dashboardTranslations = {
     welcome_message: "Welcome to the Dashboard, Commander.",
     intro_heading: "Manage your Twitch TTS settings",
     connect_button: "Connect with Twitch",
-    connected_as: "Connected as",
+    connected_as: "Logged in as",
+    btn_connected: "Connected",
     not_logged_in: "Not logged in",
     logout: "Logout",
     refresh: "Refresh",
@@ -123,7 +125,7 @@ const dashboardTranslations = {
     connect_heading: "Connect to Twitch",
     label_twitch_name: "Twitch Name",
     btn_connect: "Connect",
-    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "TTS Settings",
     ttsToggleLabel: "TTS On / Off",
     labelRate: "Speech Rate",
@@ -146,6 +148,7 @@ const dashboardTranslations = {
     intro_heading: "Gérez vos paramètres TTS Twitch",
     connect_button: "Se connecter avec Twitch",
     connected_as: "Connecté en tant que",
+    btn_connected: "Connecté",
     not_logged_in: "Non connecté",
     logout: "Se déconnecter",
     refresh: "Actualiser",
@@ -189,7 +192,7 @@ const dashboardTranslations = {
     connect_heading: "Connexion à Twitch",
     label_twitch_name: "Nom Twitch",
     btn_connect: "Connecter",
-    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
     ttsSettings: "Paramètres TTS",
     ttsToggleLabel: "TTS Activé / Désactivé",
     labelRate: "Vitesse de parole",
@@ -210,8 +213,9 @@ const dashboardTranslations = {
     dashboard_title: "Panel de control TTS de Twitch",
     welcome_message: "Bienvenido al panel, Comandante.",
     intro_heading: "Administra tus ajustes de TTS de Twitch",
-    connect_button: "Conectarse con Twitch",
+    connect_button: "Conectarse con Twitch", 
     connected_as: "Conectado como",
+    btn_connected: "Conectado",
     not_logged_in: "No conectado",
     logout: "Cerrar sesión",
     refresh: "Actualizar",
@@ -255,7 +259,7 @@ const dashboardTranslations = {
     connect_heading: "Conectar con Twitch",
     label_twitch_name: "Nombre de Twitch",
     btn_connect: "Conectar",
-    footer_text: "© 2026 TTSonTwitch<br>Versión 1.0.3",
+    footer_text: "© 2025 TTSonTwitch<br>Versión 1.0.3",
     ttsSettings: "Configuración TTS",
     ttsToggleLabel: "TTS Activado / Desactivado",
     labelRate: "Velocidad de habla",
@@ -273,7 +277,7 @@ const dashboardTranslations = {
 
   },
 };
-/* Übersetzungsfunktion */
+/* 🌙✨ Übersetzungsfunktion */
 function t(key, lang = "de") {
   const [section, item] = key.split(".");
   return translations?.[section]?.[item]?.[lang] || key;
