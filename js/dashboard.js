@@ -915,15 +915,31 @@ client.on("message", (channel, tags, message, self) => {
     }
   }
 
+
   // === TTS Ausgabe ===
   if (document.getElementById("ttsToggle")?.checked) {
-    speakChatMessage(ttsMessage);
+    speakChatMessage(`${displayName} sagt: ${ttsMessage}`);
   }
+
   });
 }
 
+
+const ttsQueue = [];
+let ttsSpeaking = false;
+
 function speakChatMessage(text) {
-  synth.cancel();
+  if (!text.trim()) return;
+
+  ttsQueue.push(text);
+  processTTSQueue();
+}
+
+function processTTSQueue() {
+  if (ttsSpeaking || ttsQueue.length === 0) return;
+
+  ttsSpeaking = true;
+  const text = ttsQueue.shift();
 
   const utter = new SpeechSynthesisUtterance(text);
   const selectedVoiceName = document.getElementById("voice")?.value;
@@ -933,6 +949,17 @@ function speakChatMessage(text) {
 
   utter.rate = parseFloat(document.getElementById("rate")?.value || "1");
   utter.volume = parseFloat(document.getElementById("volume")?.value || "1");
+
+  utter.onend = () => {
+    ttsSpeaking = false;
+    processTTSQueue();
+  };
+
+  utter.onerror = (event) => {
+    appendLog(`TTS-Fehler: ${event.error}`);
+    ttsSpeaking = false;
+    processTTSQueue();
+  };
 
   synth.speak(utter);
 }
