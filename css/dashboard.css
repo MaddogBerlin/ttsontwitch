@@ -435,7 +435,56 @@ body.dark #filterGroup input[type="text"]:focus {
   box-shadow:0 0 5px rgba(136,187,255,0.35);
 }
 body.dark .mod-filter label { color:#d8d8d8; font-weight:500; }
-body.dark .mod-filter input[type="checkbox"] { accent-color:#88bbff; }
+
+/* 🌙 Darkmode – Filter-Checkboxen */
+body.dark #filterGroup input[type="checkbox"],
+body.dark #ttsToggle,
+body.dark #toggleTTSFilter {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid #596270;
+  border-radius: 3px;
+  background: #292e37;
+  cursor: pointer;
+  vertical-align: middle;
+  position: relative;
+}
+
+/* Aktivierte Checkbox */
+body.dark #filterGroup input[type="checkbox"]:checked,
+body.dark #ttsToggle:checked,
+body.dark #toggleTTSFilter:checked {
+  background: #354b63;
+  border-color: #6895c0;
+}
+
+/* Haken – Filter und beide Hauptschalter */
+body.dark #filterGroup input[type="checkbox"]:checked::after,
+body.dark #ttsToggle:checked::after,
+body.dark #toggleTTSFilter:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #dcecff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Tastaturfokus */
+body.dark #filterGroup input[type="checkbox"]:focus-visible,
+body.dark #ttsToggle:focus-visible,
+body.dark #toggleTTSFilter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* ☀️ Lightmode-Feinschliff */
 body:not(.dark) #filterGroup .field { border-bottom-color:rgba(0,0,0,0.08); }
@@ -574,7 +623,8 @@ body.dark #themeToggle:hover {
 }
 
 /* 🎙️ TTS-Einstellungen – Klappsteuerung */
-#ttsOptionsToggle {
+#ttsOptionsToggle,
+#filterOptionsToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -590,27 +640,42 @@ body.dark #themeToggle:hover {
   cursor: pointer;
 }
 
-#ttsOptionsToggle:hover:not(:disabled) {
+/* Hover für beide Klappleisten */
+#ttsOptionsToggle:hover:not(:disabled),
+#filterOptionsToggle:hover:not(:disabled) {
   color: var(--accent);
 }
 
-#ttsOptionsToggle:disabled {
+/* Deaktivierter Zustand */
+#ttsOptionsToggle:disabled,
+#filterOptionsToggle:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
-#ttsOptionsToggle .tts-options-arrow::after {
+/* Pfeil – geschlossen */
+#ttsOptionsToggle .tts-options-arrow::after,
+#filterOptionsToggle .tts-options-arrow::after {
   content: "⌄";
   font-size: 22px;
   line-height: 1;
 }
 
-#ttsOptionsToggle[aria-expanded="true"] .tts-options-arrow::after {
+/* Pfeil – geöffnet */
+#ttsOptionsToggle[aria-expanded="true"] .tts-options-arrow::after,
+#filterOptionsToggle[aria-expanded="true"] .tts-options-arrow::after {
   content: "⌃";
 }
 
-#ttsOptions.tts-collapsed {
+/* 🎙️🛡️ Eingeklappte TTS- und Filter-Einstellungen */
+#ttsOptions.tts-collapsed,
+#filterGroup.tts-collapsed {
   display: none !important;
+}
+
+/* 🛡️ Filter-Klappleiste vertikal ausrichten */
+#filterOptionsToggle {
+  margin-top: 18px;
 }
 
 /* 🎧 Audio-Equalizer – einklappbarer Bereich */
@@ -625,7 +690,7 @@ body.dark #themeToggle:hover {
   justify-content: space-between;
   padding: 10px 6px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18%px;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
@@ -650,6 +715,182 @@ body.dark #themeToggle:hover {
 
 #equalizerPanel .equalizer-header:hover {
   color: var(--accent);
+}
+
+/* 🎚️ TTS-Regler mit gemeinsamer Umrandung */
+.tts-slider-frame {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tts-slider-track {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  padding: 7px 10px;
+}
+
+.tts-slider-track input[type="range"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #303741;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Chromium / Opera GX – Reglerknopf */
+.tts-slider-track input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 16px;
+  border: 1px solid #687381;
+  border-radius: 3px;
+  background: #8895a5;
+  cursor: grab;
+}
+
+/* Firefox – Reglerknopf */
+.tts-slider-track input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 16px;
+  border: 1px solid #687381;
+  border-radius: 3px;
+  background: #8895a5;
+  cursor: grab;
+}
+
+.tts-slider-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 58px;
+  box-sizing: border-box;
+  border-left: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* 🎙️ TTS-Testeingabe – gemeinsamer Rahmen */
+.tts-input-frame {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Texteingabe */
+#ttsOptions .tts-input-frame #testText {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+#ttsOptions .tts-input-frame #testText::placeholder {
+  color: var(--text);
+  opacity: 0.5;
+}
+
+#ttsOptions .tts-input-frame:focus-within {
+  border-color: var(--accent);
+}
+
+/* Sprechen-Button */
+#ttsOptions .tts-input-frame #speakBtn {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px 14px;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+  background: #303741;
+  color: #eee;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+#ttsOptions .tts-input-frame #speakBtn:hover {
+  background: #3d4855;
+}
+
+/* Lightmode */
+body:not(.dark) #ttsOptions .tts-input-frame #speakBtn {
+  background: #e0e4e9;
+  color: #222;
+}
+
+body:not(.dark) #ttsOptions .tts-input-frame #speakBtn:hover {
+  background: #d0d8e2;
+}
+
+/* 🎙️ TTS-Stimmenauswahl */
+.tts-voice-frame {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #1c1f26;
+}
+
+#ttsOptions .tts-voice-frame #voice {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+#ttsOptions .tts-voice-frame #voice option {
+  background: #1c1f26;
+  color: #eee;
+}
+
+body:not(.dark) .tts-voice-frame {
+  background: #f0f0f0;
+}
+
+body:not(.dark) #ttsOptions .tts-voice-frame #voice option {
+  background: #fff;
+  color: #222;
 }
 
 /* Speak-Button Aktivzustand */
