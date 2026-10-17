@@ -228,7 +228,47 @@ ttsOptionsToggle.addEventListener("click", () => {
 
 updateTTSOptionsVisibility();
 
-toggleSection("toggleTTSFilter","filterGroup");
+// 🛡️ Filter-Hauptschalter und unabhängige Klappsteuerung
+const filterToggle = document.getElementById("toggleTTSFilter");
+const filterGroup = document.getElementById("filterGroup");
+const filterOptionsToggle = document.getElementById("filterOptionsToggle");
+
+function updateFilterOptionsVisibility() {
+  const enabled = filterToggle.checked;
+  const expanded =
+    enabled && filterOptionsToggle.getAttribute("aria-expanded") === "true";
+
+  filterOptionsToggle.disabled = !enabled;
+  filterOptionsToggle.setAttribute("aria-expanded", String(expanded));
+  filterOptionsToggle.setAttribute(
+    "aria-label",
+    expanded ? "Filter-Einstellungen einklappen" : "Filter-Einstellungen aufklappen"
+  );
+
+  filterGroup.classList.toggle("active", enabled);
+  filterGroup.classList.toggle("hidden", !enabled);
+  filterGroup.classList.toggle("tts-collapsed", !expanded);
+}
+
+filterToggle.addEventListener("change", () => {
+  if (!filterToggle.checked) {
+    filterOptionsToggle.setAttribute("aria-expanded", "false");
+  }
+
+  updateFilterOptionsVisibility();
+});
+
+filterOptionsToggle.addEventListener("click", () => {
+  if (!filterToggle.checked) return;
+
+  const expanded =
+    filterOptionsToggle.getAttribute("aria-expanded") === "true";
+
+  filterOptionsToggle.setAttribute("aria-expanded", String(!expanded));
+  updateFilterOptionsVisibility();
+});
+
+updateFilterOptionsVisibility();
 
 const logArea=document.getElementById("ttsLog");
 function appendLog(msg){
@@ -398,22 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
-
-  // === Gesamtschalter (TTS Filter An/Aus) ===
-  const toggleTTSFilter = document.getElementById("toggleTTSFilter");
-  const filterGroup = document.getElementById("filterGroup");
-
-    if (toggleTTSFilter && filterGroup) {
-    toggleTTSFilter.addEventListener("change", () => {
-      if (toggleTTSFilter.checked) {
-        filterGroup.classList.add("active");
-        filterGroup.classList.remove("hidden");
-      } else {
-        filterGroup.classList.remove("active");
-        setTimeout(() => filterGroup.classList.add("hidden"), 300);
-      }
-    });
-  }
 
 });
 
@@ -677,12 +701,8 @@ function loadTTSSettings() {
   // 🎙️ TTS-Status nach dem Laden synchronisieren
   updateTTSOptionsVisibility();
 
-  const filterGroup = document.getElementById("filterGroup");
-
-  if (ttsFilterToggle && filterGroup) {
-    filterGroup.classList.toggle("active", ttsFilterToggle.checked);
-    filterGroup.classList.toggle("hidden", !ttsFilterToggle.checked);
-  }
+  // 🛡️ Filterstatus nach dem Laden synchronisieren
+  updateFilterOptionsVisibility();
 
   [
   { toggle: "toggleCommands", input: "blockCommands" },
