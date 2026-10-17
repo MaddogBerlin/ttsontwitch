@@ -196,13 +196,7 @@
             </details>
 
 
-            <div style="margin-top:12px;">
-               <h4 id="ttsLogTitle" data-key="ttsLogTitle" style="margin:0;font-weight:700;text-align:center;">TTS-Protokoll</h4>
-              </div>
-                <div id="ttsLog" style="height:200px;overflow-y:auto;border:1px solid var(--border);
-                  border-radius:6px;padding:6px;font-size:13px;background:rgba(0,0,0,0.03);">
-                   <div style="opacity:.7;">[System] Protokoll initialisiert…</div>
-                </div>
+            
               </div>
             </div>
 
@@ -285,9 +279,23 @@
       </div>
     </section>
 
+    <!-- 📋 TTS-Protokoll und Twitch-Chat nebeneinander -->
     <section class="panel">
-        <h3 data-key="chat_header">Twitch Chat</h3>
-        <div id="chatBox" style="width:100%;height:175px;overflow-y:auto;"></div>
+      <div class="tts-monitor-layout">
+
+        <div class="tts-monitor-log">
+          <h3 id="ttsLogTitle" data-key="ttsLogTitle">TTS-Protokoll</h3>
+          <div id="ttsLog">
+            <div style="opacity:.7;">[System] Protokoll initialisiert…</div>
+          </div>
+        </div>
+
+        <div class="tts-monitor-chat">
+          <h3 data-key="chat_header">Twitch Chat</h3>
+          <div id="chatBox"></div>
+        </div>
+
+      </div>
     </section>
 </main>
 
