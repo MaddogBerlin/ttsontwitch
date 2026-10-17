@@ -141,22 +141,30 @@
               <span class="tts-options-arrow" aria-hidden="true"></span>
             </button>
 
-            <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:center;">
-              <label for="rate" id="labelRate" data-key="labelRate" style="font-weight:700;">Redegeschwindigkeit</label>
-              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
-                <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" style="width:60%;">
-                <span id="rateValue" style="font-weight:600;">1.0×</span>
+            <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:left;">
+              <label for="rate" id="labelRate" data-key="labelRate" style="display:block;text-align:left;font-weight:700;margin-bottom:8px;";">Redegeschwindigkeit</label>
+              <div class="tts-slider-frame">
+              <div class="tts-slider-track">
+                <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1">
               </div>
+              <span id="rateValue" class="tts-slider-value">1.0×</span>
+            </div>
 
-              <label for="volume" id="labelVolume" data-key="labelVolume" style="font-weight:700;margin-top:7px;">Lautstärke</label>
-              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
-                <input id="volume" type="range" min="0" max="1" step="0.05" value="1" style="width:60%;">
-                <span id="volumeValue" style="font-weight:600;">100 %</span>
+              <hr style="border:0;border-top:1px solid var(--border);margin:12px 0;">
+
+              <label for="volume" id="labelVolume" data-key="labelVolume" style="display:block;text-align:left;font-weight:700;margin-bottom:8px;">Lautstärke</label>
+              <div class="tts-slider-frame">
+              <div class="tts-slider-track">
+                <input id="volume" type="range" min="0" max="1" step="0.05" value="1">
               </div>
+              <span id="volumeValue" class="tts-slider-value">100 %</span>
+            </div>
 
-              <label for="voice" id="labelVoice" data-key="labelVoice" style="font-weight:700;margin-top:7px;">TTS Stimme</label>
-              <div style="display:flex;align-items:center;justify-content:center;">
-                <select id="voice" style="width:60%;text-align:center;">
+              <hr style="border:0;border-top:1px solid var(--border);margin:12px 0;">
+
+              <label for="voice" id="labelVoice" data-key="labelVoice" style="display:block;text-align:left;font-weight:700;margin-top:7px;margin-bottom:8px;">TTS Stimme</label>
+              <div class="tts-voice-frame">
+                <select id="voice">
                   <option>Standard</option>
                   <option>Deutsch (Female)</option>
                   <option>Deutsch (Male)</option>
@@ -164,9 +172,10 @@
                 </select>
               </div>
 
-              <label for="testText" id="labelTest" data-key="labelTest" style="margin-top:7px;">Text eingeben (max 25 Zeichen)</label>
-              <input id="testText" type="text" maxlength="25" placeholder="Testnachricht…" style="width:60%;text-align:center;">
-              <button id="speakBtn" class="action" style="margin-top:8px;" data-key="btnSpeak">Sprechen</button>
+              <div class="tts-input-frame">
+                <input id="testText" type="text" maxlength="25" placeholder="Testnachricht… (max. 25 Zeichen)">
+                <button id="speakBtn" class="action" type="button" data-key="btnSpeak">Sprechen</button>
+              </div>
 
                <!-- 🎧 Mini Equalizer -->
             <details id="equalizerPanel" style="margin-top:15px;">
@@ -205,6 +214,19 @@
               <span id="lblFilterToggle" data-key="lblFilterToggle">TTS Filter An / Aus</span>
               <input id="toggleTTSFilter" type="checkbox">
             </div>
+
+            <!-- 🛡️ Filter-Einstellungen ein-/ausklappen -->
+            <button
+              id="filterOptionsToggle"
+              class="tts-options-toggle"
+              type="button"
+              aria-label="Filter-Einstellungen aufklappen"
+              aria-controls="filterGroup"
+              aria-expanded="false"
+              disabled>
+              <span data-key="ttsFilterTitle">TTS Filter</span>
+              <span class="tts-options-arrow" aria-hidden="true"></span>
+            </button>
 
             <div id="filterGroup" class="slidefade hidden">
 
