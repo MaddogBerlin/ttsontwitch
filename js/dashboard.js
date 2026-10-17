@@ -187,7 +187,47 @@ function toggleSection(toggleId,targetId){
   const t=document.getElementById(toggleId),el=document.getElementById(targetId);
   t.addEventListener("change",()=>el.classList.toggle("active",t.checked));
 }
-toggleSection("ttsToggle","ttsOptions");
+// 🎙️ TTS-Hauptschalter und unabhängige Klappsteuerung
+const ttsToggle = document.getElementById("ttsToggle");
+const ttsOptions = document.getElementById("ttsOptions");
+const ttsOptionsToggle = document.getElementById("ttsOptionsToggle");
+
+function updateTTSOptionsVisibility() {
+  const enabled = ttsToggle.checked;
+  const expanded =
+    enabled && ttsOptionsToggle.getAttribute("aria-expanded") === "true";
+
+  ttsOptionsToggle.disabled = !enabled;
+  ttsOptionsToggle.setAttribute("aria-expanded", String(expanded));
+  ttsOptionsToggle.setAttribute(
+    "aria-label",
+    expanded ? "TTS-Einstellungen einklappen" : "TTS-Einstellungen aufklappen"
+  );
+
+  ttsOptions.classList.toggle("active", enabled);
+  ttsOptions.classList.toggle("tts-collapsed", !expanded);
+}
+
+ttsToggle.addEventListener("change", () => {
+  if (!ttsToggle.checked) {
+    ttsOptionsToggle.setAttribute("aria-expanded", "false");
+  }
+
+  updateTTSOptionsVisibility();
+});
+
+ttsOptionsToggle.addEventListener("click", () => {
+  if (!ttsToggle.checked) return;
+
+  const expanded =
+    ttsOptionsToggle.getAttribute("aria-expanded") === "true";
+
+  ttsOptionsToggle.setAttribute("aria-expanded", String(!expanded));
+  updateTTSOptionsVisibility();
+});
+
+updateTTSOptionsVisibility();
+
 toggleSection("toggleTTSFilter","filterGroup");
 
 const logArea=document.getElementById("ttsLog");
@@ -634,11 +674,8 @@ function loadTTSSettings() {
     eqFilters.treble.gain.value = treble.value;
   }
 
-  const ttsOptions = document.getElementById("ttsOptions");
-
-  if (ttsToggle && ttsOptions) {
-    ttsOptions.classList.toggle("active", ttsToggle.checked);
-  }
+  // 🎙️ TTS-Status nach dem Laden synchronisieren
+  updateTTSOptionsVisibility();
 
   const filterGroup = document.getElementById("filterGroup");
 
