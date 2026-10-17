@@ -128,6 +128,18 @@
               <input id="ttsToggle" type="checkbox">
             </div>
 
+            <!-- 🎙️ TTS-Einstellungen ein-/ausklappen -->
+            <button
+              id="ttsOptionsToggle"
+              class="tts-options-toggle"
+              type="button"
+              aria-label="TTS-Einstellungen aufklappen"
+              aria-controls="ttsOptions"
+              aria-expanded="false"
+              disabled>
+              <span class="tts-options-arrow" aria-hidden="true"></span>
+            </button>
+
             <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:center;">
               <label for="rate" id="labelRate" data-key="labelRate" style="font-weight:700;">Redegeschwindigkeit</label>
               <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
