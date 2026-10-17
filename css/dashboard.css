@@ -573,6 +573,44 @@ body.dark #themeToggle:hover {
   transform:translateY(-1px);
 }
 
+/* 🎙️ TTS-Einstellungen – Klappsteuerung */
+#ttsOptionsToggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px 6px;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+}
+
+#ttsOptionsToggle:hover:not(:disabled) {
+  color: var(--accent);
+}
+
+#ttsOptionsToggle:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+#ttsOptionsToggle .tts-options-arrow::after {
+  content: "⌄";
+  font-size: 22px;
+  line-height: 1;
+}
+
+#ttsOptionsToggle[aria-expanded="true"] .tts-options-arrow::after {
+  content: "⌃";
+}
+
+#ttsOptions.tts-collapsed {
+  display: none !important;
+}
+
 /* 🎧 Audio-Equalizer – einklappbarer Bereich */
 #equalizerPanel {
   border-top: 1px solid var(--border);
