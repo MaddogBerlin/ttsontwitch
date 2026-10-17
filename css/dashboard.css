@@ -962,3 +962,70 @@ header .left button:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+/* 🎮 Twitch Verbinden – gemeinsamer Eingaberahmen */
+.twitch-input-frame {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  box-sizing: border-box;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+/* Benutzername */
+.twitch-input-frame #twitchName {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+.twitch-input-frame #twitchName::placeholder {
+  color: var(--text);
+  opacity: 0.5;
+}
+
+/* Fokus auf den gemeinsamen Rahmen */
+.twitch-input-frame:focus-within {
+  border-color: var(--accent);
+}
+
+/* Verbinden-Button */
+.twitch-input-frame #connectBtn {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px 14px;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+  background: #303741;
+  color: #eee;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.twitch-input-frame #connectBtn:hover {
+  background: #3d4855;
+}
+
+/* ☀️ Lightmode */
+body:not(.dark) .twitch-input-frame #connectBtn {
+  background: #e0e4e9;
+  color: #222;
+}
+
+body:not(.dark) .twitch-input-frame #connectBtn:hover {
+  background: #d0d8e2;
+}
