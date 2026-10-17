@@ -690,7 +690,7 @@ body.dark #themeToggle:hover {
   justify-content: space-between;
   padding: 10px 6px;
   font-weight: 700;
-  font-size: 18%px;
+  font-size: 18px;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
@@ -923,3 +923,42 @@ header .left button:disabled {
   cursor: not-allowed;
 }
 
+/* 📋 TTS-Protokoll und Twitch-Chat nebeneinander */
+.tts-monitor-layout {
+  display: grid;
+  grid-template-columns: 35% minmax(0, 1fr);
+  gap: 20px;
+}
+
+.tts-monitor-log,
+.tts-monitor-chat {
+  min-width: 0;
+}
+
+.tts-monitor-log h3,
+.tts-monitor-chat h3 {
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+#ttsLog,
+#chatBox {
+  height: 300px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+#ttsLog {
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Schmale Browserfenster */
+@media (max-width: 700px) {
+  .tts-monitor-layout {
+    grid-template-columns: 1fr;
+  }
+}
