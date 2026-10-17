@@ -629,6 +629,7 @@ body.dark #themeToggle:hover {
   align-items: center;
   justify-content: space-between;
   font-weight: 700;
+  font-size: 16px;
   text-align: left;
   width: 100%;
   margin: 8px 0;
@@ -690,7 +691,7 @@ body.dark #themeToggle:hover {
   justify-content: space-between;
   padding: 10px 6px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
@@ -715,6 +716,33 @@ body.dark #themeToggle:hover {
 
 #equalizerPanel .equalizer-header:hover {
   color: var(--accent);
+}
+
+/* 🎧 Equalizer – volle Breite und Beschriftung links */
+.equalizer-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 0 10px;
+}
+
+.equalizer-controls label {
+  display: block;
+  width: 100%;
+  margin: 8px 0 0;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* 🎙️ Beschriftungen der TTS-Regler und Stimmenauswahl */
+#labelRate,
+#labelVolume,
+#labelVoice {
+  font-size: 14px;
 }
 
 /* 🎚️ TTS-Regler mit gemeinsamer Umrandung */
