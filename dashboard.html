@@ -155,21 +155,23 @@
               <input id="testText" type="text" maxlength="25" placeholder="Testnachricht…" style="width:60%;text-align:center;">
               <button id="speakBtn" class="action" style="margin-top:8px;" data-key="btnSpeak">Sprechen</button>
 
-              <!-- 🎧 Mini Equalizer -->
-            <div id="equalizerPanel" style="margin-top:15px;text-align:center;">
-              <h4 data-key="equalizerTitle" style="margin-bottom:6px;">Audio-Equalizer</h4>
+               <!-- 🎧 Mini Equalizer -->
+            <details id="equalizerPanel" style="margin-top:15px;">
+              <summary class="equalizer-header">
+                <span data-key="equalizerTitle">Audio-Equalizer</span>
+              </summary>
               
               <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:70%;margin:0 auto;">
-                <label for="bassControl" data-key="equalizerBass" style="font-weight:600;">Bass</label>
+                <label data-key="equalizerBass" style="font-weight:600;">Bass</label>
                 <input type="range" id="bassControl" min="-30" max="30" value="0" step="1" style="width:100%;">
 
-                <label for="midControl" data-key="equalizerMid" style="font-weight:600;">Mitten</label>
+                <label data-key="equalizerMid" style="font-weight:600;">Mitten</label>
                 <input type="range" id="midControl" min="-30" max="30" value="0" step="1" style="width:100%;">
 
-                <label for="trebleControl" data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
+                <label data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
                 <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1" style="width:100%;">
               </div>
-            </div>
+            </details>
 
 
             <div style="margin-top:12px;">
