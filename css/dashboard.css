@@ -956,6 +956,19 @@ header .left button:disabled {
   background: rgba(0, 0, 0, 0.03);
 }
 
+/* 📋 TTS-Protokoll & Twitch Chat – Scrollbalken unsichtbar */
+#ttsLog,
+#chatBox {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* ältere Browser */
+}
+
+/* Chrome, Opera GX, Edge */
+#ttsLog::-webkit-scrollbar,
+#chatBox::-webkit-scrollbar {
+  display: none;
+}
+
 /* Schmale Browserfenster */
 @media (max-width: 700px) {
   .tts-monitor-layout {
