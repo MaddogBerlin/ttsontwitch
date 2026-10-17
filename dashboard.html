@@ -183,16 +183,33 @@
                 <span data-key="equalizerTitle">Audio-Equalizer</span>
               </summary>
               
-              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:70%;margin:0 auto;">
-                <label data-key="equalizerBass" style="font-weight:600;">Bass</label>
-                <input type="range" id="bassControl" min="-30" max="30" value="0" step="1" style="width:100%;">
+              <div class="equalizer-controls">
 
-                <label data-key="equalizerMid" style="font-weight:600;">Mitten</label>
-                <input type="range" id="midControl" min="-30" max="30" value="0" step="1" style="width:100%;">
-
-                <label data-key="equalizerTreble" style="font-weight:600;">Höhen</label>
-                <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1" style="width:100%;">
+              <label for="bassControl" data-key="equalizerBass">Bass</label>
+              <div class="tts-slider-frame">
+                <div class="tts-slider-track">
+                  <input type="range" id="bassControl" min="-30" max="30" value="0" step="1">
+                </div>
+                <span id="bassValue" class="tts-slider-value">0 dB</span>
               </div>
+
+              <label for="midControl" data-key="equalizerMid">Mitten</label>
+              <div class="tts-slider-frame">
+                <div class="tts-slider-track">
+                  <input type="range" id="midControl" min="-30" max="30" value="0" step="1">
+                </div>
+                <span id="midValue" class="tts-slider-value">0 dB</span>
+              </div>
+
+              <label for="trebleControl" data-key="equalizerTreble">Höhen</label>
+              <div class="tts-slider-frame">
+                <div class="tts-slider-track">
+                  <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1">
+                </div>
+                <span id="trebleValue" class="tts-slider-value">0 dB</span>
+              </div>
+
+            </div>
             </details>
 
 
