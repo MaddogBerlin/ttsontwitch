@@ -1045,8 +1045,16 @@ function processTTSQueue() {
 const messageArea = document.getElementById("chatBox");
 
 function adjustLogHeight() {
-  const newHeight = Math.max(window.innerHeight * 0.3, 150); // mind. 150 px
-  messageArea.style.height = newHeight + "px";
+  const newHeight = Math.max(window.innerHeight * 0.3, 150);
+  const ttsLogArea = document.getElementById("ttsLog");
+
+  if (messageArea) {
+    messageArea.style.height = newHeight + "px";
+  }
+
+  if (ttsLogArea) {
+    ttsLogArea.style.height = newHeight + "px";
+  }
 }
 
 window.addEventListener('resize', adjustLogHeight);
