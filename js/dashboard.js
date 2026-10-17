@@ -321,6 +321,30 @@ document.getElementById("midControl").addEventListener("input", e => {
 document.getElementById("trebleControl").addEventListener("input", e => {
   eqFilters.treble.gain.value = e.target.value;
 });
+
+// 🎧 Equalizer – aktuelle dB-Werte anzeigen
+[
+  ["bassControl", "bassValue"],
+  ["midControl", "midValue"],
+  ["trebleControl", "trebleValue"]
+].forEach(([controlId, valueId]) => {
+  const control = document.getElementById(controlId);
+  const display = document.getElementById(valueId);
+
+  if (!control || !display) return;
+
+  const updateValue = () => {
+    const value = Number(control.value);
+    display.textContent = `${value > 0 ? "+" : ""}${value} dB`;
+  };
+
+  control.addEventListener("input", updateValue);
+  updateValue();
+
+  // Auch nach dem Laden gespeicherter Einstellungen aktualisieren
+  window.addEventListener("load", updateValue);
+});
+
 // 🌙✨ Sprachfunktion – Astra & Commander Harmonischer Codefluss
 const synth = window.speechSynthesis;
 let voices = [];
