@@ -32,14 +32,6 @@
 <body class="page-index">
 
     <header>
-    <div class="left user-info">
-      <img id="userAvatar" src="assets/default_avatar.png" alt="Profilbild" class="avatar hidden" />
-      <span id="userName" class="username hidden"></span>
-      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
-        Nicht eingeloggt
-      </button>
-    </div>
-
     <div class="center">
       <a href="index.html" id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
       <span class="divider"></span>
@@ -79,34 +71,55 @@
 
     <main>
 
-      <!-- Header 2 -->
-    <section class="panel intro-panel">
-      <h3>TTS on Twitch</h3>
+        <!-- Header 2 -->
+      <section class="panel intro-panel">
+        <h3>TTS on Twitch</h3>
 
-      <div class="welcome_tts">
-        <p><strong>Willkommen im TTS System!</strong></p>
+        <div class="welcome_tts">
+          <p><strong data-key="welcome_tts">Willkommen im TTS System!</strong></p>
 
-        <p data-key="intro_text">
-          Hier kannst du den <strong>Text-to-Speech</strong>-Dienst nutzen, um deinen
-          Zuschauern eine harmonische Sprachausgabe zu bieten –
-          ein sanftes Zusammenspiel aus Stimme und Gefühl.
-        </p>
+          <p><strong data-key="index_intro_title">Dein Twitch-Chat bekommt eine Stimme!</strong></p>
 
-        <p data-key="browser_hint">
-          Beachte bitte, dass unterschiedliche Browser-Varianten
-          mehr oder weniger Sprachausgaben unterstützen können.
-          Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
-        </p>
+          <p data-key="index_intro_description">Mit TTSonTwitch kannst du Chatnachrichten deiner Zuschauer direkt vorlesen lassen und dein Streaming-Erlebnis interaktiver gestalten.</p>
 
-        <p class="tagline">
-          „Ein sanfter Klang, geboren aus Code und Harmonie.“
-        </p>
+           <p data-key="index_intro_voice">
+           Passe die Sprachausgabe individuell an: Wähle eine verfügbare
+           Stimme, bestimme die Sprechgeschwindigkeit und Lautstärke
+           oder verfeinere den Klang mit dem integrierten Equalizer.
+         </p>
+
+         <p data-key="index_intro_filters">
+           <strong>Du entscheidest, was vorgelesen wird.</strong>
+           Mit verschiedenen Chatfiltern kannst du beispielsweise Bots,
+           bestimmte Befehle, Links und unerwünschte Wörter von der
+           Sprachausgabe ausschließen.
+         </p>
+
+         <p data-key="index_intro_dashboard">
+           Verbinde deinen Twitch-Account über das Dashboard und
+           verwalte deine TTS-Einstellungen übersichtlich an einem Ort.
+         </p>
+
+         <p data-key="browser_hint">
+           Die verfügbaren Stimmen können je nach Browser variieren.
+           Wir empfehlen einen aktuellen Browser.
+         </p>
+
+         <p class="tagline" data-key="index_intro_tagline">
+           „Ein sanfter Klang, geboren aus Code und Harmonie.“
+         </p>
         </div>
-    </section>
-
+      </section>
+    </main>
   
     <footer class="site-footer">
-      <div class="footer-left"></div>
+      <div class="footer-left">
+        <span id="loginStatus"
+              class="disconnected"
+              aria-live="polite">
+          🔴 Nicht verbunden
+        </span>
+      </div>
       <div class="footer-center">
         © 2025 TTSonTwitch<br>Version 1.0.3
       </div>
@@ -116,25 +129,59 @@
     </footer>
   
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const loginButton = document.getElementById("loginStatus");
-      if (!loginButton) return;
+  document.addEventListener("DOMContentLoaded", async () => {
+    const loginStatus = document.getElementById("loginStatus");
+    if (!loginStatus) return;
 
-      const token = sessionStorage.getItem("twitchToken");
+    const token = sessionStorage.getItem("twitchToken");
 
-      if (token) {
-        loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
-        loginButton.classList.remove("disconnected");
-        loginButton.classList.add("connected");
-      } else {
-        loginButton.textContent = "Nicht eingeloggt";
-        loginButton.classList.remove("connected");
-        loginButton.classList.add("disconnected");
+    const setStatus = (connected, text) => {
+      loginStatus.textContent = text;
+      loginStatus.classList.toggle("connected", connected);
+      loginStatus.classList.toggle("disconnected", !connected);
+    };
+
+    // Ohne Token keine Anmeldung
+    if (!token) {
+      setStatus(false, "🔴 Nicht verbunden");
+      return;
+    }
+
+    // Während der Twitch-Prüfung noch keinen grünen Status anzeigen
+    setStatus(false, "🟡 Anmeldung wird geprüft …");
+
+    try {
+      const response = await fetch("https://id.twitch.tv/oauth2/validate", {
+        headers: {
+          Authorization: `OAuth ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Twitch-Validierung fehlgeschlagen (${response.status})`);
       }
 
-      loginButton.disabled = true;
-    });
-  </script>
+      const data = await response.json();
+
+      // Nur gültige Tokens unserer Twitch-Anwendung akzeptieren
+      if (
+        data.client_id !== "yuol0okiv6jnik7kv000jdizlswyq6" ||
+        !data.login
+      ) {
+        throw new Error("Twitch-Anmeldung nicht gültig");
+      }
+
+      // Originalen Twitch-Loginnamen verwenden
+      setStatus(true, `🟢 Angemeldet als ${data.login}`);
+
+    } catch (error) {
+      console.warn("Twitch-Anmeldung konnte nicht bestätigt werden:", error);
+
+      // Bei fehlgeschlagener Prüfung nicht als angemeldet anzeigen
+      setStatus(false, "🔴 Nicht verbunden");
+    }
+  });
+</script>
 
 </body>
 </html>
