@@ -25,7 +25,7 @@ header {
 }*/
 
 /* PANELS */
-main {padding:90px 20px 60px;max-width:950px;margin:auto;}
+main {padding:55px 20px 60px;max-width:950px;margin:auto;}
 section.panel {
   background:var(--panel-bg);
   border:1px solid var(--border);
@@ -263,10 +263,7 @@ footer.site-footer {
   color:var(--text);
   border-top:1px solid var(--border);
   transition:background .5s,color .5s;
-  /* 🔧 Erweiterung für Vollbild-Harmonie */
-  width:100vw;                     /* volle Browserbreite */
-  margin-left:calc(50% - 50vw);    /* gleicht zentriertes main aus */
-  box-sizing:border-box;           /* sicheres Layoutverhalten */
+  box-sizing:border-box;
 }
 footer {
     display: block;
@@ -279,9 +276,10 @@ body {
 footer.site-footer {
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 100vw; /* volle Browserbreite */
-  margin-left: calc(50% - 50vw); /* gleicht main-Zentrierung aus */
+  left: 50%;
+  width: min(955px, 100%);
+  margin-left: 0;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between; /* verteilt links / mitte / rechts */
   align-items: center;
@@ -295,6 +293,7 @@ footer.site-footer {
   z-index: 100;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  border-radius: 10px;
   transition: background 0.5s ease, color 0.5s ease;
 }
 
@@ -333,6 +332,55 @@ body:not(.dark) footer.site-footer {
 /* 🌙✨ Begrüßungspanel – True Harmony Stil */
 .intro-panel {
   text-align: center;
+}
+
+/* 🌙✨ Index – innere Karte nach Dashboard-Vorlage */
+.panel.intro-panel .welcome_tts {
+  min-width: 0;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 15px;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #252932, #1c1f26);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+/* ☀️ Lightmode – innere Karte */
+body:not(.dark) .panel.intro-panel .welcome_tts {
+  background: #eeeeee;
+  color: #222;
+}
+
+/* 🌙✨ Index – Beschreibungstexte */
+.panel.intro-panel .welcome_tts p {
+  text-align: left;
+  line-height: 1.65;
+  margin: 12px 0;
+  font-size: 15.5px;
+  color: #c0c4cc;
+}
+
+body.dark .panel.intro-panel .welcome_tts p {
+  color: #c0c4cc;
+}
+
+/* Begrüßung bleibt zentriert */
+.panel.intro-panel .welcome_tts p:nth-child(1) {
+  text-align: center;
+}
+
+/* Untertitel linksbündig */
+.panel.intro-panel .welcome_tts p:nth-child(2) {
+  text-align: left;
+}
+
+/* Abschlussspruch bleibt ebenfalls zentriert */
+.panel.intro-panel .welcome_tts .tagline {
+  text-align: center;
+  margin-top: 18px;
+  font-style: italic;
+  opacity: 0.85;
 }
 
 .intro-box {

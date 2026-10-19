@@ -191,16 +191,20 @@ body.page-index.dark header .brand-link {
   text-shadow: 0 0 6px rgba(74, 104, 255, 0.4);
 }
 
-/* Einheitliche Zentrierung */
+/* Einheitliche Zentrierung – Header 955 px */
 body.page-index header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 36px;
+  padding: 6px 36px;
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  right: auto;
+  width: min(955px, 100%);
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  border-radius: 10px;
   z-index: 1000;
 }
 
