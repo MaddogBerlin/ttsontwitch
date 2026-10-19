@@ -34,15 +34,8 @@
 
 <body class="page-dashboard">
   <header>
-    <div class="left user-info">
-      <img id="userAvatar" src="assets/default_avatar.png" alt="Profilbild" class="avatar hidden" />
-      <span id="userName" class="username hidden"></span>
-      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
-        Nicht eingeloggt
-      </button>
-    </div>
-
-    <div class="center">
+    <div class="dashboard-header-inner">
+      <div class="center">
       <a href="index.html" id="brand" class="brand-link"  data-key="brand_title">TTS on Twitch</a>
       <span class="divider"></span>
       <a href="dashboard.html" data-key="nav_dashboard">Dashboard</a>
@@ -77,44 +70,112 @@
 
       <button id="themeToggle" data-key="toggle_theme">Darkmode</button>
     </div>
+    </div>
   </header>
 
 <main>
 
-  <!-- Header 2 -->
-    <section class="panel intro-panel">
-      <h1 data-key="dashboard_title">Dashboard</h1>
-      <div class="intro-box">
-        <p><strong><u data-key="intro_heading">Verwalten Sie Ihre Twitch-TTS-Einstellungen</u></strong></p>
+  <!-- ===== DASHBOARD – TWITCH CONNECT + INFORMATION ===== -->
+  <section class="panel dashboard-overview">
 
-        <p data-key="intro_text">
-          Hier kannst du den <strong>Text-to-Speech</strong>-Dienst nutzen, um deinen
-          Zuschauern eine harmonische Sprachausgabe zu bieten –
-          ein sanftes Zusammenspiel aus Stimme und Gefühl.
-        </p>
+    <div class="dashboard-overview-grid">
 
-        <p data-key="browser_hint">
-          Beachte bitte, dass unterschiedliche Browser-Varianten
-          mehr oder weniger Sprachausgaben unterstützen können.
-          Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
-        </p>
-      </div>
-    </section>
+      <!-- LINKE SPALTE – TWITCH CONNECT -->
+      <div class="dashboard-overview-column twitch-account-panel">
 
-  <!-- Header 3 -->
-    <section class="panel">
-      <h2 data-key="connect_heading">Twitch Verbinden</h2>
-      <div class="twitch-connect" style="margin-top:6px;">
-        <label for="twitchName" style="display:block;margin-bottom:4px;" data-key="label_twitch_name">
-          Twitch Name
-        </label>
-        <div class="input-group twitch-input-frame">
-          <input id="twitchName" type="text" maxlength="25" placeholder="Benutzername" style="width:180px;">
-          <button id="connectBtn" class="action" data-key="btn_connect">Connect</button>
+        <h2 data-key="connect_heading">Twitch Verbinden</h2>
+
+        <div class="twitch-profile">
+
+          <img
+            id="userAvatar"
+            src="assets/default_chatUser.png"
+            alt="Twitch Profilbild"
+            class="avatar"
+          />
+
+          <div class="twitch-profile-details">
+            <span id="userName" class="username"></span>
+
+            <div id="twitchProfileStats" class="twitch-profile-stats" hidden>
+              <span id="twitchAccountType"></span>
+              <span class="twitch-stats-separator">|</span>
+              <span>
+                Follower: <span id="twitchFollowerCount">–</span>
+              </span>
+            </div>
+          </div>
+
         </div>
-        <div id="lastTwitchUser" style="display:none;margin-top:8px;"></div>
+
+        <div class="twitch-connect">
+
+          <div
+            id="loginStatus"
+            class="twitch-login-name"
+            aria-live="polite"
+            data-key="connected_as"
+            hidden>
+          </div>
+
+          <label for="twitchName" data-key="label_twitch_name">
+            Twitch Name
+          </label>
+
+          <div class="input-group twitch-input-frame">
+            <input
+              id="twitchName"
+              type="text"
+              maxlength="25"
+              placeholder="Benutzername"
+            />
+
+            <button
+              id="connectBtn"
+              class="action"
+              data-key="btn_connect">
+              Connect
+            </button>
+          </div>
+
+        </div>
+
       </div>
-    </section>
+
+      <!-- RECHTE SPALTE – DASHBOARD INFORMATION -->
+      <div class="dashboard-overview-column dashboard-information-panel">
+
+        <h2 data-key="dashboard_title">Dashboard</h2>
+
+        <div class="intro-box">
+
+          <p>
+            <strong>
+              <u data-key="intro_heading">
+                Verwalten Sie Ihre Twitch-TTS-Einstellungen
+              </u>
+            </strong>
+          </p>
+
+          <p data-key="intro_text">
+            Hier kannst du den <strong>Text-to-Speech</strong>-Dienst nutzen, um deinen
+            Zuschauern eine harmonische Sprachausgabe zu bieten –
+            ein sanftes Zusammenspiel aus Stimme und Gefühl.
+          </p>
+
+          <p data-key="browser_hint">
+            Beachte bitte, dass unterschiedliche Browser-Varianten
+            mehr oder weniger Sprachausgaben unterstützen können.
+            Für das beste Erlebnis empfehlen wir stets aktuelle Browser-Versionen.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 
     <!-- ===== SPLIT PANEL (TTS + FILTER) ===== -->
     <section class="panel">
