@@ -7,21 +7,54 @@ body.dark {
   --accent:#55aaff;--border:#333;
 }
 
-/* HEADER */
+/* HEADER – Dashboard */
 header {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  right: auto;
+  width: min(955px, 100%);
+  box-sizing: border-box;
+  transform: translateX(-50%);
   z-index: 100;
   background: rgba(30, 30, 35, 0.9);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  padding: 10px 20px;
+  padding: 6px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   transition: background 0.5s, box-shadow 0.5s;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dashboard – Header-Inhalt auf Panelbreite */
+.dashboard-header-inner {
+  width: 100%;
+  max-width: 990px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Loginanzeige für späteren Accountbereich erhalten */
+.page-dashboard header .left.user-info {
+  display: none;
+}
+
+/* Navigation und Bedienelemente */
+.dashboard-header-inner .center {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.dashboard-header-inner .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* 🌙✨ Einheitliches Styling für Header-Navigation */
@@ -264,6 +297,114 @@ section.panel {
 }
 
 h1,h2,h3,p,label{text-align:center;margin:6px 0;}
+
+/* Dashboard – Twitch Connect + Information */
+.dashboard-overview-grid {
+  display: grid;
+  grid-template-columns: 35% minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.dashboard-overview-column {
+  min-width: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.dashboard-overview-column h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.dashboard-overview .intro-box {
+  max-width: none;
+  padding: 0 12px 12px;
+}
+
+.dashboard-overview .intro-box p {
+  margin: 6px 0 12px;
+  text-align: left;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.dashboard-overview .twitch-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.dashboard-overview .twitch-profile .avatar {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dashboard-overview .twitch-profile-details {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Twitch – Öffentlicher Anzeigename */
+.dashboard-overview .twitch-profile-details .username {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+/* Twitch – Affiliate / Partner und Follower */
+.dashboard-overview .twitch-profile-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text);
+  text-align: left;
+}
+
+.dashboard-overview .twitch-profile-stats[hidden] {
+  display: none;
+}
+
+.dashboard-overview .twitch-stats-separator {
+  opacity: 0.5;
+}
+
+.dashboard-overview .twitch-connect {
+  text-align: center;
+}
+
+.dashboard-overview .twitch-input-frame {
+  display: flex;
+  width: 100%;
+}
+
+.dashboard-overview .twitch-input-frame #twitchName {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .dashboard-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Split Panel */
 .split-panel {display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
