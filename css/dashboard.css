@@ -279,7 +279,7 @@ section.panel, header, footer {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
 }
 
-main {padding:90px 20px 60px;max-width:950px;margin:auto;}
+main {padding:55px 20px 60px;max-width:950px;margin:auto;}
 section.panel {
   background:var(--panel-bg);
   border:1px solid var(--border);
@@ -310,13 +310,21 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
   min-width: 0;
   padding: 15px;
   box-sizing: border-box;
-  background: var(--panel-bg);
+  background: linear-gradient(145deg, #252932, #1c1f26);
   border: 1px solid var(--border);
   border-radius: 10px;
 }
 
+/* 🌙 Sanfte Textfarbe der oberen Dashboard-Karten */
+body.dark .dashboard-overview-column {
+  --text: #B8ADB9;
+  color: var(--text);
+}
+
 .dashboard-overview-column h2 {
   margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
   font-size: 16px;
 }
 
@@ -342,8 +350,8 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
 
 .dashboard-overview .twitch-profile .avatar {
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
@@ -463,7 +471,7 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
 .split-half {
   flex:1;
   min-width:300px;
-  background:var(--panel-bg);
+  background:linear-gradient(145deg, #252932, #1c1f26);
   border:1px solid var(--border);
   border-radius:10px;padding:15px;
   transition:background .1s,border .1s;
@@ -472,6 +480,16 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
 body.light .split-half,
 body.dark .split-half {
   transition: none !important;
+}
+
+/* 🌙 Sanfte Textfarbe für TTS- und Filter-Einstellungen */
+body.dark .split-half {
+  color: #B8ADB9;
+}
+
+body.dark .split-half #ttsOptionsToggle,
+body.dark .split-half #filterOptionsToggle {
+  color: #B8ADB9;
 }
 
 .field {
@@ -1160,6 +1178,12 @@ header .left button:disabled {
 .tts-monitor-chat h3 {
   text-align: center;
   margin: 0 0 10px;
+}
+
+/* 🌙 Sanfte Überschriften für TTS-Protokoll und Twitch-Chat */
+body.dark .tts-monitor-log h3,
+body.dark .tts-monitor-chat h3 {
+  color: #B8ADB9;
 }
 
 #ttsLog,
