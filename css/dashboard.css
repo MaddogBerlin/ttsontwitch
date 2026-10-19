@@ -78,12 +78,6 @@ body:not(.dark) header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-header .center a {
-  color: var(--text);
-  text-decoration: none;
-  margin: 0 6px;
-}
-
 header .right {
   display: flex;
   gap: 10px;
@@ -321,6 +315,11 @@ body.dark .dashboard-overview-column {
   color: var(--text);
 }
 
+/* 🌙 Helle Überschriften der oberen Dashboard-Karten */
+body.dark .dashboard-overview-column h2 {
+  color: #DBDBDB;
+}
+
 /* ☀️ Lightmode – einheitliche Innenkarten */
 body:not(.dark) .dashboard-overview-column,
 body:not(.dark) .split-half {
@@ -494,6 +493,11 @@ body.dark .split-half {
   color: #B8ADB9;
 }
 
+/* 🌙 Helle Überschriften für TTS- und Filter-Einstellungen */
+body.dark .split-half h3 {
+  color: #DBDBDB;
+}
+
 body.dark .split-half #ttsOptionsToggle,
 body.dark .split-half #filterOptionsToggle {
   color: #B8ADB9;
@@ -534,8 +538,8 @@ footer.site-footer {
   position: auto;
   bottom: 0;
   left: 0;
-  width: 100vw; /* volle Browserbreite */
-  margin-left: calc(50% - 50vw); /* gleicht main-Zentrierung aus */
+  width: min(955px, 100%);
+  margin: 0 auto;
   display: flex;
   justify-content: space-between; /* verteilt links / mitte / rechts */
   align-items: center;
@@ -702,6 +706,20 @@ body.dark #ttsToggle:focus-visible,
 body.dark #toggleTTSFilter:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* 🌙 Gesperrte TTS- und Filter-Hauptschalter */
+body.dark #ttsToggle:disabled,
+body.dark #toggleTTSFilter:disabled {
+  background: #303238;
+  border-color: #50535a;
+  cursor: not-allowed;
+}
+
+/* Gespeicherte Häkchen im gesperrten Zustand grau darstellen */
+body.dark #ttsToggle:disabled:checked::after,
+body.dark #toggleTTSFilter:disabled:checked::after {
+  border-color: #777b83;
 }
 
 /* ☀️ Lightmode-Feinschliff */
@@ -1187,10 +1205,10 @@ header .left button:disabled {
   margin: 0 0 10px;
 }
 
-/* 🌙 Sanfte Überschriften für TTS-Protokoll und Twitch-Chat */
+/* 🌙 Helle Überschriften für TTS-Protokoll und Twitch-Chat */
 body.dark .tts-monitor-log h3,
 body.dark .tts-monitor-chat h3 {
-  color: #B8ADB9;
+  color: #DBDBDB;
 }
 
 #ttsLog,
