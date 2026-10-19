@@ -238,7 +238,6 @@ window.addEventListener("DOMContentLoaded", () => {
             twitchNameInput.disabled = true;
           }
 
-          
           // "Verbinden"-Button deaktivieren
           connectBtn.dataset.key = "btn_connected";
           connectBtn.textContent =
@@ -248,6 +247,8 @@ window.addEventListener("DOMContentLoaded", () => {
           connectBtn.disabled = true;
           connectBtn.classList.add("connected");
 
+          // Die Hauptschalter werden erst nach erfolgreicher
+          // Twitch-Chatverbindung in connectToTwitchChat() freigegeben.
 
           // Vorhandenes Profilbild durch Twitch-Avatar ersetzen
           if (userAvatar) {
@@ -292,7 +293,7 @@ const ttsOptions = document.getElementById("ttsOptions");
 const ttsOptionsToggle = document.getElementById("ttsOptionsToggle");
 
 function updateTTSOptionsVisibility() {
-  const enabled = ttsToggle.checked;
+  const enabled = ttsToggle.checked && !ttsToggle.disabled;
   const expanded =
     enabled && ttsOptionsToggle.getAttribute("aria-expanded") === "true";
 
@@ -333,7 +334,7 @@ const filterGroup = document.getElementById("filterGroup");
 const filterOptionsToggle = document.getElementById("filterOptionsToggle");
 
 function updateFilterOptionsVisibility() {
-  const enabled = filterToggle.checked;
+  const enabled = filterToggle.checked && !filterToggle.disabled;
   const expanded =
     enabled && filterOptionsToggle.getAttribute("aria-expanded") === "true";
 
@@ -914,6 +915,24 @@ function connectToTwitchChat(channelName, accessToken) {
     channels: [channelName]
   });
 
+  // Bei Verlust der Twitch-Chatverbindung die Hauptschalter sperren
+  client.on("disconnected", () => {
+    document.getElementById("ttsToggle").disabled = true;
+    document.getElementById("toggleTTSFilter").disabled = true;
+
+    updateTTSOptionsVisibility();
+    updateFilterOptionsVisibility();
+  });
+
+  // Nach erfolgreicher Wiederverbindung die Hauptschalter freigeben
+  client.on("connected", () => {
+    document.getElementById("ttsToggle").disabled = false;
+    document.getElementById("toggleTTSFilter").disabled = false;
+
+    updateTTSOptionsVisibility();
+    updateFilterOptionsVisibility();
+  });
+
   client.connect()
     .then(() => appendLog(`Chat verbunden: ${channelName}`))
     .catch(err => appendLog(`Chat Fehler: ${err.message}`));
@@ -1112,14 +1131,15 @@ client.on("message", (channel, tags, message, self) => {
   }
 
 
-  // === TTS Ausgabe ===
-  if (document.getElementById("ttsToggle")?.checked) {
+  // === TTS Ausgabe – nur mit aktiver Twitch-Verbindung ===
+  const twitchConnected = client.readyState() === "OPEN";
+
+  if (twitchConnected && document.getElementById("ttsToggle")?.checked) {
     speakChatMessage(`${displayName} sagt: ${ttsMessage}`);
   }
 
   });
 }
-
 
 const ttsQueue = [];
 let ttsSpeaking = false;
