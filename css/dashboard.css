@@ -321,6 +321,13 @@ body.dark .dashboard-overview-column {
   color: var(--text);
 }
 
+/* ☀️ Lightmode – helle Innenkarten und lesbare Schrift */
+body:not(.dark) .dashboard-overview-column,
+body:not(.dark) .split-half {
+  background: linear-gradient(145deg, #f5f5f5, #e5e5e5);
+  color: #222;
+}
+
 .dashboard-overview-column h2 {
   margin: 0 0 14px;
   padding-bottom: 10px;
