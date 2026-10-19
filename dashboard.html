@@ -110,15 +110,20 @@
 
         <div class="twitch-connect">
 
+          <!-- Twitch-Loginstatus bleibt für JavaScript erhalten -->
           <div
             id="loginStatus"
             class="twitch-login-name"
             aria-live="polite"
             data-key="connected_as"
+            style="display: none;"
             hidden>
           </div>
 
-          <label for="twitchName" data-key="label_twitch_name">
+          <label
+            for="twitchName"
+            data-key="label_twitch_name"
+            style="display: block; width: 100%; text-align: left;">
             Twitch Name
           </label>
 
