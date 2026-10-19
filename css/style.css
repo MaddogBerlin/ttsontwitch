@@ -365,6 +365,10 @@ body.dark .panel.intro-panel .welcome_tts p {
   color: #c0c4cc;
 }
 
+body:not(.dark) .panel.intro-panel .welcome_tts p {
+  color: #222;
+}
+
 /* Begrüßung bleibt zentriert */
 .panel.intro-panel .welcome_tts p:nth-child(1) {
   text-align: center;
