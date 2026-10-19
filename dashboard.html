@@ -95,6 +95,13 @@
           />
 
           <div class="twitch-profile-details">
+
+            <!-- Verbindungsstatus ohne Twitch-Anmeldung -->
+            <div id="twitchDisconnectedStatus" class="twitch-disconnected-status">
+              <span class="twitch-status-dot" aria-hidden="true">🔴</span>
+              <span data-key="connection_disconnected">Nicht verbunden</span>
+            </div>
+
             <span id="userName" class="username"></span>
 
             <div id="twitchProfileStats" class="twitch-profile-stats" hidden>
