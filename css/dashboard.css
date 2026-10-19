@@ -385,6 +385,30 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
   opacity: 0.5;
 }
 
+/* 🟠 Twitch Affiliate – Gold/Orange */
+.dashboard-overview #twitchAccountType[data-type="affiliate"] {
+  color: #d99532;
+  font-weight: 600;
+}
+
+/* 🟣 Twitch Partner – Twitch-Lila */
+.dashboard-overview #twitchAccountType[data-type="partner"] {
+  color: #9146ff;
+  font-weight: 600;
+}
+
+/* Twitch Streamer – Standardfarbe */
+.dashboard-overview #twitchAccountType[data-type="streamer"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* 🟢 Twitch Follower – dezentes Grün */
+.dashboard-overview .twitch-profile-stats > span:last-child {
+  color: #36b97c;
+  font-weight: 500;
+}
+
 .dashboard-overview .twitch-connect {
   text-align: center;
 }
