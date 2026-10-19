@@ -357,6 +357,29 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
   gap: 6px;
 }
 
+/* Twitch – Status ohne Anmeldung */
+.dashboard-overview .twitch-disconnected-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+}
+
+/* Roten Status nach erfolgreicher Anmeldung ausblenden */
+.dashboard-overview .twitch-disconnected-status[hidden] {
+  display: none;
+}
+
+/* Rotes Statussymbol */
+.dashboard-overview .twitch-status-dot {
+  font-size: 12px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 /* Twitch – Öffentlicher Anzeigename */
 .dashboard-overview .twitch-profile-details .username {
   font-size: 15px;
@@ -422,6 +445,11 @@ h1,h2,h3,p,label{text-align:center;margin:6px 0;}
   flex: 1;
   width: 0;
   min-width: 0;
+}
+
+/* Twitch-Loginstatus nach Verbindung kleiner darstellen */
+.dashboard-overview .twitch-input-frame #twitchName:disabled {
+  font-size: 12px;
 }
 
 @media (max-width: 700px) {
