@@ -100,6 +100,13 @@ window.addEventListener("DOMContentLoaded", () => {
           const userName = document.getElementById("userName");
           const twitchNameInput = document.getElementById("twitchName");
 
+          // Verbindungsstatus nach erfolgreicher Twitch-Anmeldung ausblenden
+          const disconnectedStatus = document.getElementById("twitchDisconnectedStatus");
+
+          if (disconnectedStatus) {
+            disconnectedStatus.hidden = true;
+          }
+
           // Öffentlichen Twitch-Anzeigenamen neben dem Avatar anzeigen
           if (userName) {
             userName.textContent = user.display_name;
