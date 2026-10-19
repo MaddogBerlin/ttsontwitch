@@ -9,6 +9,10 @@ if (navigationEntry?.type === "reload") {
   sessionStorage.removeItem("twitchToken");
 }
 
+// Beim Verlassen des Dashboards ist die Chatverbindung nicht mehr garantiert
+window.addEventListener("pagehide", () => {
+  sessionStorage.removeItem("twitchChatConnected");
+});
 
 // Beim Laden prüfen, ob Session bereits einen Modus gesetzt hat
 window.addEventListener("DOMContentLoaded", () => {
@@ -917,6 +921,9 @@ function connectToTwitchChat(channelName, accessToken) {
 
   // Bei Verlust der Twitch-Chatverbindung die Hauptschalter sperren
   client.on("disconnected", () => {
+    // Gespeicherten Twitch-Chatstatus zurücksetzen
+    sessionStorage.removeItem("twitchChatConnected");
+
     document.getElementById("ttsToggle").disabled = true;
     document.getElementById("toggleTTSFilter").disabled = true;
 
@@ -926,6 +933,9 @@ function connectToTwitchChat(channelName, accessToken) {
 
   // Nach erfolgreicher Wiederverbindung die Hauptschalter freigeben
   client.on("connected", () => {
+    // Tatsächliche Twitch-Chatverbindung für die Startseite merken
+    sessionStorage.setItem("twitchChatConnected", "true");
+
     document.getElementById("ttsToggle").disabled = false;
     document.getElementById("toggleTTSFilter").disabled = false;
 

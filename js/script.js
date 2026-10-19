@@ -21,17 +21,19 @@ themeToggle.addEventListener("click", () => {
   themeToggle.textContent = isDark ? "Lightmode" : "Darkmode";
 });
 
-const userData = localStorage.getItem("twitchUser");
-if (userData) {
-  const { name, avatar } = JSON.parse(userData);
-  document.getElementById("userAvatar").src = avatar;
-  document.getElementById("userName").textContent = name;
+// 🕒 Lokale Systemzeit im Footer anzeigen
+function updateClock() {
+  const clock = document.getElementById("systemClock");
+  if (!clock) return;
+
+  clock.textContent = new Date().toLocaleTimeString("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
 }
 
-function updateClock() {
-  const now = new Date();
-  const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  document.getElementById("systemClock").textContent = timeString;
-}
-setInterval(updateClock, 1000);
 updateClock();
+setInterval(updateClock, 1000);
+
