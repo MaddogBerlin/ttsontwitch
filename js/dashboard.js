@@ -9,25 +9,6 @@ if (navigationEntry?.type === "reload") {
   sessionStorage.removeItem("twitchToken");
 }
 
-// Zuletzt verbundenen Twitch-Account anzeigen
-window.addEventListener("DOMContentLoaded", () => {
-  const savedUser = localStorage.getItem("lastTwitchUser");
-  const lastUserBox = document.getElementById("lastTwitchUser");
-
-  const hashParams = new URLSearchParams(window.location.hash.substring(1));
-  const hashToken = hashParams.get("access_token");
-  const sessionToken = sessionStorage.getItem("twitchToken");
-
-  if (savedUser && lastUserBox && !hashToken && !sessionToken) {
-    lastUserBox.textContent = `↻ ${savedUser}`;
-    lastUserBox.style.display = "block";
-    lastUserBox.style.cursor = "pointer";
-
-    lastUserBox.addEventListener("click", () => {
-      document.getElementById("connectBtn")?.click();
-});   
-  }
-});
 
 // Beim Laden prüfen, ob Session bereits einen Modus gesetzt hat
 window.addEventListener("DOMContentLoaded", () => {
@@ -48,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twitch Client-ID ein
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
-const scope = "user:read:email chat:read"; // kann bei Bedarf erweitert werden, z. B. chat:read chat:edit
+const scope = "user:read:email chat:read moderator:read:followers"; // Berechtigung zum Abrufen der Followerzahl
 
 // Funktion: Startet den Twitch-Login-Flow
 document.getElementById("connectBtn").addEventListener("click", () => {
@@ -114,30 +95,86 @@ window.addEventListener("DOMContentLoaded", () => {
           }
 
           
-          // Header-Button aktualisieren
+          // Twitch-Profilinformationen aktualisieren
+          const userAvatar = document.getElementById("userAvatar");
+          const userName = document.getElementById("userName");
+          const twitchNameInput = document.getElementById("twitchName");
+
+          // Öffentlichen Twitch-Anzeigenamen neben dem Avatar anzeigen
+          if (userName) {
+            userName.textContent = user.display_name;
+            userName.classList.remove("hidden");
+          }
+
+          // Twitch-Kontostatus aus den Profildaten übernehmen
+          const twitchAccountType =
+            document.getElementById("twitchAccountType");
+
+          if (twitchAccountType) {
+            const accountTypes = {
+              affiliate: "Affiliate",
+              partner: "Partner"
+            };
+
+            twitchAccountType.textContent =
+              accountTypes[user.broadcaster_type] || "Streamer";
+          }
+
+          // Twitch-Followerzahl des angemeldeten Kanals abrufen
+          const twitchFollowerCount =
+            document.getElementById("twitchFollowerCount");
+
+          fetch(
+            `https://api.twitch.tv/helix/channels/followers?broadcaster_id=${encodeURIComponent(user.id)}`,
+            {
+              headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Client-Id": clientId
+              }
+            }
+          )
+            .then(res => {
+              if (!res.ok) {
+                throw new Error(`Follower-API Fehler (${res.status})`);
+              }
+
+              return res.json();
+            })
+            .then(data => {
+              if (twitchFollowerCount) {
+                twitchFollowerCount.textContent =
+                  Number(data.total).toLocaleString("de-DE");
+              }
+
+              const twitchProfileStats =
+                document.getElementById("twitchProfileStats");
+
+              if (twitchProfileStats) {
+                twitchProfileStats.hidden = false;
+              }
+            })
+            .catch(err => {
+              console.error("Twitch-Follower konnten nicht geladen werden:", err);
+            });
+
+          // Tatsächlichen Twitch-Loginnamen für die Statuszeile verwenden
           statusBtn.dataset.key = "connected_as";
-          statusBtn.dataset.twitchDisplayName = user.display_name;
+          statusBtn.dataset.twitchDisplayName = user.login;
 
           const lang = localStorage.getItem("lang") || "de";
           const connectedText =
             dashboardTranslations[lang]?.connected_as ||
             dashboardTranslations.de.connected_as;
 
-          statusBtn.textContent = `${connectedText} ${user.display_name}`;
+          statusBtn.textContent = `${connectedText} ${user.login}`;
           statusBtn.classList.remove("disconnected");
           statusBtn.classList.add("connected");
+          statusBtn.hidden = false;
 
-
-          // Twitch-Eingabe nach erfolgreicher Verbindung ausblenden
-          const twitchNameInput = document.getElementById("twitchName");
-          const twitchNameLabel = document.querySelector('label[for="twitchName"]');
-
+          // Eingabefeld sichtbar lassen, aber bei Verbindung sperren
           if (twitchNameInput) {
-            twitchNameInput.style.display = "none";
-          }
-
-          if (twitchNameLabel) {
-            twitchNameLabel.style.display = "none";
+            twitchNameInput.value = user.login;
+            twitchNameInput.disabled = true;
           }
 
           
@@ -151,14 +188,13 @@ window.addEventListener("DOMContentLoaded", () => {
           connectBtn.classList.add("connected");
 
 
-          // Profilbild im Header anzeigen
-          const img = document.createElement("img");
-          img.src = user.profile_image_url;
-          img.alt = user.display_name;
-          img.style.height = "26px";
-          img.style.borderRadius = "50%";
-          img.style.marginLeft = "8px";
-          statusBtn.after(img);
+          // Vorhandenes Profilbild durch Twitch-Avatar ersetzen
+          if (userAvatar) {
+            userAvatar.src =
+              user.profile_image_url || "assets/default_chatUser.png";
+            userAvatar.alt = user.display_name;
+            userAvatar.classList.remove("hidden");
+          }
         }
       })
       .catch(err => {
@@ -170,8 +206,10 @@ window.addEventListener("DOMContentLoaded", () => {
         }
       });
   } else {
-    // Kein Token → Status auf "nicht eingeloggt"
-    statusBtn.textContent = "Nicht eingeloggt";
+    // Ohne Verbindung keine Statusmeldung anzeigen
+    statusBtn.textContent = "";
+    statusBtn.hidden = true;
+    statusBtn.classList.remove("connected");
     statusBtn.classList.add("disconnected");
   }
 });
