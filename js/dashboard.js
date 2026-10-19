@@ -104,6 +104,34 @@ window.addEventListener("DOMContentLoaded", () => {
           if (userName) {
             userName.textContent = user.display_name;
             userName.classList.remove("hidden");
+
+            // Originale Twitch-Chatfarbe des Benutzers abrufen
+            fetch(
+              `https://api.twitch.tv/helix/chat/color?user_id=${encodeURIComponent(user.id)}`,
+              {
+                headers: {
+                  "Authorization": "Bearer " + accessToken,
+                  "Client-Id": clientId
+                }
+              }
+            )
+              .then(res => {
+                if (!res.ok) {
+                  throw new Error(`Twitch-Farb-API Fehler (${res.status})`);
+                }
+
+                return res.json();
+              })
+              .then(data => {
+                const twitchColor = data.data?.[0]?.color;
+
+                if (twitchColor && /^#[0-9a-fA-F]{6}$/.test(twitchColor)) {
+                  userName.style.color = twitchColor;
+                }
+              })
+              .catch(err => {
+                console.warn("Twitch-Namensfarbe konnte nicht geladen werden:", err);
+              });
           }
 
           // Twitch-Kontostatus aus den Profildaten übernehmen
@@ -116,8 +144,16 @@ window.addEventListener("DOMContentLoaded", () => {
               partner: "Partner"
             };
 
+            const accountType =
+              accountTypes[user.broadcaster_type]
+                ? user.broadcaster_type
+                : "streamer";
+
             twitchAccountType.textContent =
               accountTypes[user.broadcaster_type] || "Streamer";
+
+            // Passende CSS-Farbe für den Twitch-Accounttyp
+            twitchAccountType.dataset.type = accountType;
           }
 
           // Twitch-Followerzahl des angemeldeten Kanals abrufen
@@ -189,9 +225,9 @@ window.addEventListener("DOMContentLoaded", () => {
           statusBtn.classList.add("connected");
           statusBtn.hidden = false;
 
-          // Eingabefeld sichtbar lassen, aber bei Verbindung sperren
+          // Eingabefeld sichtbar lassen und Loginstatus anzeigen
           if (twitchNameInput) {
-            twitchNameInput.value = user.login;
+            twitchNameInput.value = `${connectedText} ${user.login}`;
             twitchNameInput.disabled = true;
           }
 
