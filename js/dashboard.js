@@ -142,8 +142,26 @@ window.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
               if (twitchFollowerCount) {
+                const total = Number(data.total);
+
+                const formatFollowers = (count) => {
+                  if (count < 100000) {
+                    return count.toLocaleString("de-DE");
+                  }
+
+                  const divisor = count >= 1000000 ? 1000000 : 1000;
+                  const suffix = count >= 1000000 ? "M" : "K";
+                  const value = Math.floor((count / divisor) * 10) / 10;
+
+                  return value.toLocaleString("de-DE", {
+                    maximumFractionDigits: 1
+                  }) + suffix;
+                };
+
                 twitchFollowerCount.textContent =
-                  Number(data.total).toLocaleString("de-DE");
+                  Number.isFinite(total) && total >= 0
+                    ? formatFollowers(total)
+                    : "–";
               }
 
               const twitchProfileStats =
