@@ -82,7 +82,16 @@ const dashboardTranslations = {
     equalizerTitle: "Audio-Equalizer",
     equalizerBass: "Bass",
     equalizerMid: "Mitten",
-    equalizerTreble: "Höhen"
+    equalizerTreble: "Höhen",
+    ttsViewerVoicesTitle: "TTS Stimmen Zuschauer",
+    ttsViewerNamePlaceholder: "Zuschauer Name",
+    ttsViewerVoicePlaceholder: "Stimmenauswahl",
+    ttsViewerVoiceConfirm: "Stimme zuordnen",
+    ttsViewerVoiceMissing: "Bitte Zuschauername und Stimme auswählen.",
+    ttsViewerVoiceAssigned: "Zuschauerstimme zugeordnet:",
+    ttsViewerVoicesEnabled: "TTS Stimmen Zuschauer aktiviert.",
+    ttsViewerVoicesDisabled: "TTS Stimmen Zuschauer deaktiviert.",
+    ttsViewerVoiceDelete: "Zuschauerstimme entfernen"
   },
 
   en: {
@@ -159,7 +168,16 @@ const dashboardTranslations = {
     equalizerTitle: "Audio Equalizer",
     equalizerBass: "Bass",
     equalizerMid: "Mid",
-    equalizerTreble: "Treble"
+    equalizerTreble: "Treble",
+    ttsViewerVoicesTitle: "TTS Viewer Voices",
+    ttsViewerNamePlaceholder: "Viewer Name",
+    ttsViewerVoicePlaceholder: "Select Voice",
+    ttsViewerVoiceConfirm: "Assign Voice",
+    ttsViewerVoiceMissing: "Please select a viewer name and voice.",
+    ttsViewerVoiceAssigned: "Viewer voice assigned:",
+    ttsViewerVoicesEnabled: "TTS Viewer Voices enabled.",
+    ttsViewerVoicesDisabled: "TTS Viewer Voices disabled.",
+    ttsViewerVoiceDelete: "Remove viewer voice"
   },
 
   fr: {
@@ -180,7 +198,7 @@ const dashboardTranslations = {
     success_saved: "Paramètres enregistrés ✅",
     error_login: "Échec de la connexion ❌",
 
-    lblFilterToggle: "Filtre TTS activé / désactivé",
+    lblFilterToggle: "TTS Filter On / Off",
     lblCmds: "Masquer les commandes (!)",
     lblBots: "Masquer les bots Twitch",
     lblUserOnly: "Afficher uniquement les messages utilisateurs",
@@ -224,7 +242,7 @@ const dashboardTranslations = {
     ttsSettings: "Paramètres TTS",
     ttsFilterTitle: "Filtres TTS",
     ttsVoicesTitle: "Voix TTS",
-    ttsToggleLabel: "TTS Activé / Désactivé",
+    ttsToggleLabel: "TTS On / Off",
     labelRate: "Vitesse de parole",
     labelVolume: "Volume",
     labelVoice: "Voix TTS",
@@ -236,7 +254,16 @@ const dashboardTranslations = {
     equalizerTitle: "Égaliseur Audio",
     equalizerBass: "Basses",
     equalizerMid: "Médiums",
-    equalizerTreble: "Aigus"
+    equalizerTreble: "Aigus",
+    ttsViewerVoicesTitle: "Voix TTS des spectateurs",
+    ttsViewerNamePlaceholder: "Nom du spectateur",
+    ttsViewerVoicePlaceholder: "Choisir une voix",
+    ttsViewerVoiceConfirm: "Attribuer une voix",
+    ttsViewerVoiceMissing: "Veuillez saisir un nom de spectateur et choisir une voix.",
+    ttsViewerVoiceAssigned: "Voix attribuée au spectateur :",
+    ttsViewerVoicesEnabled: "Voix TTS des spectateurs activées.",
+    ttsViewerVoicesDisabled: "Voix TTS des spectateurs désactivées.",
+    ttsViewerVoiceDelete: "Supprimer la voix du spectateur"
   },
 
   es: {
@@ -257,7 +284,7 @@ const dashboardTranslations = {
     success_saved: "Configuración guardada ✅",
     error_login: "Error de inicio de sesión ❌",
 
-    lblFilterToggle: "Filtro TTS Activar / Desactivar",
+    lblFilterToggle: "TTS Filter On / Off",
     lblCmds: "Ocultar comandos (!)",
     lblBots: "Ocultar bots de Twitch",
     lblUserOnly: "Mostrar solo mensajes de usuario",
@@ -301,7 +328,7 @@ const dashboardTranslations = {
     ttsSettings: "Configuración TTS",
     ttsVoicesTitle: "Voces TTS",
     ttsFilterTitle: "Filtros TTS",
-    ttsToggleLabel: "TTS Activado / Desactivado",
+    ttsToggleLabel: "TTS On / Off",
     labelRate: "Velocidad de habla",
     labelVolume: "Volumen",
     labelVoice: "Voz TTS",
@@ -313,8 +340,16 @@ const dashboardTranslations = {
     equalizerTitle: "Ecualizador de Audio",
     equalizerBass: "Graves",
     equalizerMid: "Medios",
-    equalizerTreble: "Agudos"
-
+    equalizerTreble: "Agudos",
+    ttsViewerVoicesTitle: "Voces TTS de espectadores",
+    ttsViewerNamePlaceholder: "Nombre del espectador",
+    ttsViewerVoicePlaceholder: "Seleccionar voz",
+    ttsViewerVoiceConfirm: "Asignar voz",
+    ttsViewerVoiceMissing: "Introduce el nombre del espectador y selecciona una voz.",
+    ttsViewerVoiceAssigned: "Voz asignada al espectador:",
+    ttsViewerVoicesEnabled: "Voces TTS de espectadores activadas.",
+    ttsViewerVoicesDisabled: "Voces TTS de espectadores desactivadas.",
+    ttsViewerVoiceDelete: "Eliminar voz del espectador"
   },
 };
 /* 🌙✨ Übersetzungsfunktion */

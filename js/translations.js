@@ -27,6 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const langMenu = document.getElementById("langMenu");
   const langFlag = document.getElementById("langFlag");
 
+  // Gespeicherte Sprache beim Seitenstart auch als Flagge anzeigen
+  const savedFlag = langMenu?.querySelector(
+    `li[data-lang="${currentLang}"]`
+  )?.dataset.flag;
+
+  if (langFlag && savedFlag) {
+    langFlag.src = savedFlag;
+  }
+
   if (langBtn && langMenu) {
     // Menü öffnen / schließen
     langBtn.addEventListener("click", (e) => {
@@ -48,6 +57,20 @@ document.addEventListener("DOMContentLoaded", () => {
           currentLang = selectedLang;
           if (langFlag) langFlag.src = selectedFlag;
           applyTranslations();
+
+          // Zuschauer-Stimmenauswahl nach Sprachwechsel aktualisieren
+          const viewerVoiceSelect = document.getElementById("ttsViewerVoice");
+          const defaultOption = viewerVoiceSelect?.querySelector('option[value=""]');
+
+          if (defaultOption) {
+            const viewerLang = ["de", "en", "fr", "es"].includes(currentLang)
+            ? currentLang
+            : "de";
+
+          defaultOption.textContent =
+            dashboardTranslations[viewerLang]?.ttsViewerVoicePlaceholder ||
+            dashboardTranslations.de.ttsViewerVoicePlaceholder;
+          }
         }
         langMenu.classList.add("hidden");
       });
@@ -95,6 +118,32 @@ document.addEventListener("DOMContentLoaded", () => {
           el.innerHTML = text;
         }
 
+      }
+    });
+
+    // 🎙️ Tooltips und Beschriftungen der Zuschauerstimmen übersetzen
+    document.querySelectorAll("[data-tooltip-key]").forEach((el) => {
+      const key = el.dataset.tooltipKey;
+
+      const text =
+        (typeof dashboardTranslations !== "undefined"
+          ? dashboardTranslations[currentLang]?.[key]
+          : null) ||
+        (typeof dashboardTranslations !== "undefined"
+          ? dashboardTranslations.de?.[key]
+          : null);
+
+      if (!text) return;
+
+      el.title = text;
+
+      if (key === "ttsViewerVoiceDelete") {
+        const name = el.closest(".tts-user-voice-entry")
+          ?.querySelector(".tts-user-voice-name")?.textContent;
+
+        el.setAttribute("aria-label", name ? `${text}: ${name}` : text);
+      } else {
+        el.setAttribute("aria-label", text);
       }
     });
 

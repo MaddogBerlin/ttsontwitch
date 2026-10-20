@@ -226,7 +226,15 @@ window.addEventListener("DOMContentLoaded", () => {
           statusBtn.dataset.key = "connected_as";
           statusBtn.dataset.twitchDisplayName = user.login;
 
-          const lang = localStorage.getItem("lang") || "de";
+          const supportedLangs = ["de", "en", "fr", "es"];
+          const savedLang = localStorage.getItem("lang");
+          const browserLang = navigator.language?.substring(0, 2);
+
+          const lang = supportedLangs.includes(savedLang)
+            ? savedLang
+            : supportedLangs.includes(browserLang)
+              ? browserLang
+              : "de";
           const connectedText =
             dashboardTranslations[lang]?.connected_as ||
             dashboardTranslations.de.connected_as;
@@ -297,6 +305,7 @@ const ttsOptions = document.getElementById("ttsOptions");
 const ttsOptionsToggle = document.getElementById("ttsOptionsToggle");
 
 function updateTTSOptionsVisibility() {
+  // Stimmen-Einstellungen nur bei aktiver und freigegebener TTS-Checkbox
   const enabled = ttsToggle.checked && !ttsToggle.disabled;
   const expanded =
     enabled && ttsOptionsToggle.getAttribute("aria-expanded") === "true";
@@ -321,7 +330,7 @@ ttsToggle.addEventListener("change", () => {
 });
 
 ttsOptionsToggle.addEventListener("click", () => {
-  if (!ttsToggle.checked) return;
+  if (!ttsToggle.checked || ttsToggle.disabled) return;
 
   const expanded =
     ttsOptionsToggle.getAttribute("aria-expanded") === "true";
@@ -363,7 +372,7 @@ filterToggle.addEventListener("change", () => {
 });
 
 filterOptionsToggle.addEventListener("click", () => {
-  if (!filterToggle.checked) return;
+  if (!filterToggle.checked || filterToggle.disabled) return;
 
   const expanded =
     filterOptionsToggle.getAttribute("aria-expanded") === "true";
@@ -455,14 +464,49 @@ let voices = [];
 
 function populateVoices() {
   voices = synth.getVoices();
+
   const voiceSelect = document.getElementById("voice");
+  const viewerVoiceSelect = document.getElementById("ttsViewerVoice");
+
   voiceSelect.innerHTML = "";
+
+  if (viewerVoiceSelect) {
+  const supportedLangs = ["de", "en", "fr", "es"];
+  const savedLang = localStorage.getItem("lang");
+  const browserLang = navigator.language?.substring(0, 2);
+
+  const lang = supportedLangs.includes(savedLang)
+    ? savedLang
+    : supportedLangs.includes(browserLang)
+      ? browserLang
+      : "de";
+
+  const placeholder =
+    dashboardTranslations[lang]?.ttsViewerVoicePlaceholder ||
+    dashboardTranslations.de.ttsViewerVoicePlaceholder;
+
+  viewerVoiceSelect.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.dataset.key = "ttsViewerVoicePlaceholder";
+  defaultOption.textContent = placeholder;
+
+  viewerVoiceSelect.appendChild(defaultOption);
+}
 
   voices.forEach((v) => {
     const option = document.createElement("option");
     option.value = v.name;
     option.textContent = `${v.name} (${v.lang})`;
     voiceSelect.appendChild(option);
+
+    if (viewerVoiceSelect) {
+      const viewerOption = document.createElement("option");
+      viewerOption.value = v.name;
+      viewerOption.textContent = `${v.name} (${v.lang})`;
+      viewerVoiceSelect.appendChild(viewerOption);
+    }
   });
 
   const savedVoice = voiceSelect.dataset.savedVoice;
@@ -477,6 +521,264 @@ populateVoices();
 if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoices;
 }
+
+// 🎙️ TTS Stimmen User – Zuschauerstimmen zuordnen
+const VIEWER_VOICES_STORAGE_KEY = "ttsViewerVoices";
+const viewerVoiceAssignments = new Map();
+
+// 🎲 Zufällige Zuschauerstimmen pro Kalendertag
+const DAILY_VIEWER_VOICES_STORAGE_KEY = "ttsDailyViewerVoices";
+const dailyViewerVoices = new Map();
+
+function getLocalTTSDate() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+// 🎲 Tagesstimmen aus dem lokalen Speicher laden
+function loadDailyViewerVoices() {
+  dailyViewerVoices.clear();
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(DAILY_VIEWER_VOICES_STORAGE_KEY) || "null"
+    );
+
+    if (!saved || saved.date !== getLocalTTSDate()) {
+      localStorage.removeItem(DAILY_VIEWER_VOICES_STORAGE_KEY);
+      return;
+    }
+
+    if (!Array.isArray(saved.assignments)) return;
+
+    saved.assignments.forEach(([name, voice]) => {
+      if (typeof name === "string" && typeof voice === "string") {
+        dailyViewerVoices.set(name, voice);
+      }
+    });
+  } catch (error) {
+    console.warn("Tagesstimmen konnten nicht geladen werden:", error);
+  }
+}
+
+// 🎲 Tagesstimmen mit aktuellem Datum speichern
+function saveDailyViewerVoices() {
+  localStorage.setItem(
+    DAILY_VIEWER_VOICES_STORAGE_KEY,
+    JSON.stringify({
+      date: getLocalTTSDate(),
+      assignments: [...dailyViewerVoices.entries()]
+    })
+  );
+}
+
+// 🎲 Zufällige Tagesstimme für einen Zuschauer ermitteln
+function getDailyViewerVoice(viewerName) {
+  const name = viewerName.trim().toLowerCase();
+
+  if (!name || voices.length === 0) return null;
+
+  // Tageswechsel auch ohne F5 erkennen
+  let saved = null;
+
+  try {
+    saved = JSON.parse(
+      localStorage.getItem(DAILY_VIEWER_VOICES_STORAGE_KEY) || "null"
+    );
+  } catch (error) {
+    console.warn("Ungültiger Tagesstimmen-Speicher:", error);
+  }
+
+  if (!saved || saved.date !== getLocalTTSDate()) {
+    dailyViewerVoices.clear();
+    saveDailyViewerVoices();
+  }
+
+  // Bereits ausgeloste Stimme weiterverwenden
+  const existingVoice = dailyViewerVoices.get(name);
+
+  if (existingVoice && voices.some(v => v.name === existingVoice)) {
+    return existingVoice;
+  }
+
+  // Neue zufällige Stimme auswählen
+  const randomVoice = voices[Math.floor(Math.random() * voices.length)];
+
+  dailyViewerVoices.set(name, randomVoice.name);
+  saveDailyViewerVoices();
+
+  return randomVoice.name;
+}
+
+// Gespeicherte Zuschauerstimmen laden
+function loadViewerVoiceAssignments() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(VIEWER_VOICES_STORAGE_KEY) || "[]"
+    );
+
+    if (!Array.isArray(saved)) return;
+
+    saved.forEach(entry => {
+      if (
+        typeof entry.name === "string" &&
+        typeof entry.voice === "string" &&
+        entry.name.trim() &&
+        entry.voice.trim()
+      ) {
+        viewerVoiceAssignments.set(
+          entry.name.trim().toLowerCase(),
+          {
+            name: entry.name.trim(),
+            voice: entry.voice
+          }
+        );
+      }
+    });
+  } catch (error) {
+    console.warn("Zuschauerstimmen konnten nicht geladen werden:", error);
+  }
+}
+
+// Zuschauerstimmen dauerhaft speichern
+function saveViewerVoiceAssignments() {
+  localStorage.setItem(
+    VIEWER_VOICES_STORAGE_KEY,
+    JSON.stringify([...viewerVoiceAssignments.values()])
+  );
+}
+
+const viewerNameInput = document.getElementById("ttsViewerName");
+const viewerVoiceInput = document.getElementById("ttsViewerVoice");
+const viewerVoiceConfirm = document.getElementById("ttsViewerVoiceConfirm");
+const viewerVoicesList = document.getElementById("ttsUserVoicesList");
+
+function renderViewerVoices() {
+  viewerVoicesList.replaceChildren();
+
+  viewerVoiceAssignments.forEach(({ name, voice }) => {
+    const entry = document.createElement("div");
+    entry.className = "tts-user-voice-entry";
+
+    const nameElement = document.createElement("span");
+    nameElement.className = "tts-user-voice-name";
+    nameElement.textContent = name;
+
+    const voiceElement = document.createElement("span");
+    voiceElement.className = "tts-user-voice-selected";
+    voiceElement.textContent = voice;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "tts-user-voice-delete";
+    deleteButton.textContent = "✕";
+    const lang = localStorage.getItem("lang") || "de";
+
+    const deleteTooltip =
+      dashboardTranslations[lang]?.ttsViewerVoiceDelete ||
+      dashboardTranslations.de.ttsViewerVoiceDelete;
+
+    deleteButton.title = deleteTooltip;
+    deleteButton.setAttribute("aria-label", `${deleteTooltip}: ${name}`);
+    deleteButton.dataset.tooltipKey = "ttsViewerVoiceDelete";
+
+    deleteButton.addEventListener("click", () => {
+      viewerVoiceAssignments.delete(name.trim().toLowerCase());
+      saveViewerVoiceAssignments();
+      renderViewerVoices();
+    });
+
+    entry.append(nameElement, voiceElement, deleteButton);
+    viewerVoicesList.appendChild(entry);
+  });
+}
+
+viewerVoiceConfirm.addEventListener("click", () => {
+  const name = viewerNameInput.value.trim();
+  const voice = viewerVoiceInput.value;
+
+  if (!name || !voice) {
+    const lang = localStorage.getItem("lang") || "de";
+
+appendLog(
+  dashboardTranslations[lang]?.ttsViewerVoiceMissing ||
+  dashboardTranslations.de.ttsViewerVoiceMissing
+);
+    return;
+  }
+
+  const key = name.toLowerCase();
+
+  viewerVoiceAssignments.set(key, { name, voice });
+
+  saveViewerVoiceAssignments();
+  renderViewerVoices();
+
+  const lang = localStorage.getItem("lang") || "de";
+
+const message =
+  dashboardTranslations[lang]?.ttsViewerVoiceAssigned ||
+  dashboardTranslations.de.ttsViewerVoiceAssigned;
+
+appendLog(`${message}: ${name} → ${voice}`);
+
+  viewerNameInput.value = "";
+  viewerVoiceInput.value = "";
+});
+
+// Gespeicherte Zuordnungen beim Seitenstart wiederherstellen
+loadViewerVoiceAssignments();
+renderViewerVoices();
+
+// 🎲 Gespeicherte Tagesstimmen wiederherstellen
+loadDailyViewerVoices();
+
+// 🎙️ TTS Stimmen Zuschauer – Aktivierung und Aufklappfunktion
+const ttsUserVoicesToggle = document.getElementById("ttsUserVoicesToggle");
+const ttsUserVoicesContent = document.querySelector(".tts-user-voices-content");
+
+function updateTTSUserVoicesVisibility() {
+  if (!ttsUserVoicesToggle || !ttsUserVoicesContent) return;
+
+  const enabled = ttsUserVoicesToggle.checked;
+
+  ttsUserVoicesContent.hidden = !enabled;
+  ttsUserVoicesContent.style.display = enabled ? "" : "none";
+}
+
+ttsUserVoicesToggle?.addEventListener("change", () => {
+  localStorage.setItem(
+    "ttsUserVoicesEnabled",
+    String(ttsUserVoicesToggle.checked)
+  );
+
+  updateTTSUserVoicesVisibility();
+
+  const lang = localStorage.getItem("lang") || "de";
+
+appendLog(
+  ttsUserVoicesToggle.checked
+    ? (dashboardTranslations[lang]?.ttsViewerVoicesEnabled ||
+       dashboardTranslations.de.ttsViewerVoicesEnabled)
+    : (dashboardTranslations[lang]?.ttsViewerVoicesDisabled ||
+       dashboardTranslations.de.ttsViewerVoicesDisabled)
+);
+});
+
+// Beim Laden den gespeicherten Schalterzustand wiederherstellen
+const savedViewerVoicesEnabled = localStorage.getItem("ttsUserVoicesEnabled");
+
+if (ttsUserVoicesToggle && savedViewerVoicesEnabled !== null) {
+  ttsUserVoicesToggle.checked = savedViewerVoicesEnabled === "true";
+}
+
+// Beim Laden den richtigen Zustand herstellen
+updateTTSUserVoicesVisibility();
 
 document.getElementById("speakBtn").addEventListener("click", () => {
   const text = document.getElementById("testText").value.trim();
@@ -1145,7 +1447,9 @@ client.on("message", (channel, tags, message, self) => {
   const twitchConnected = client.readyState() === "OPEN";
 
   if (twitchConnected && document.getElementById("ttsToggle")?.checked) {
-    speakChatMessage(`${displayName} sagt: ${ttsMessage}`);
+    const viewerName = tags.username || displayName;
+
+    speakChatMessage(`${displayName} sagt: ${ttsMessage}`, viewerName);
   }
 
   });
@@ -1154,10 +1458,10 @@ client.on("message", (channel, tags, message, self) => {
 const ttsQueue = [];
 let ttsSpeaking = false;
 
-function speakChatMessage(text) {
+function speakChatMessage(text, viewerName = "") {
   if (!text.trim()) return;
 
-  ttsQueue.push(text);
+  ttsQueue.push({ text, viewerName });
   processTTSQueue();
 }
 
@@ -1165,11 +1469,38 @@ function processTTSQueue() {
   if (ttsSpeaking || ttsQueue.length === 0) return;
 
   ttsSpeaking = true;
-  const text = ttsQueue.shift();
+  const { text, viewerName } = ttsQueue.shift();
 
   const utter = new SpeechSynthesisUtterance(text);
-  const selectedVoiceName = document.getElementById("voice")?.value;
-  const selectedVoice = voices.find(v => v.name === selectedVoiceName);
+
+  // Allgemeine TTS-Stimme als Standard
+  let selectedVoiceName = document.getElementById("voice")?.value;
+
+  // Individuelle Zuschauerstimmen nur bei aktiver Checkbox
+  const viewerVoicesEnabled =
+    document.getElementById("ttsUserVoicesToggle")?.checked === true;
+
+  if (viewerVoicesEnabled && viewerName) {
+    const assignment = viewerVoiceAssignments.get(
+      viewerName.trim().toLowerCase()
+    );
+
+    if (assignment) {
+      // 💾 Dauerhaft zugeordnete Stimme hat Vorrang
+      selectedVoiceName = assignment.voice;
+    } else {
+      // 🎲 Ohne feste Zuordnung: zufällige Tagesstimme
+      const dailyVoice = getDailyViewerVoice(viewerName);
+
+      if (dailyVoice) {
+        selectedVoiceName = dailyVoice;
+      }
+    }
+  }
+
+  const selectedVoice = voices.find(
+    v => v.name === selectedVoiceName
+  );
 
   if (selectedVoice) utter.voice = selectedVoice;
 
@@ -1198,15 +1529,9 @@ function processTTSQueue() {
 const messageArea = document.getElementById("chatBox");
 
 function adjustLogHeight() {
-  const newHeight = Math.max(window.innerHeight * 0.3, 150);
-  const ttsLogArea = document.getElementById("ttsLog");
-
+  // Die Chat-Höhe wird künftig durch das Dashboard-Layout gesteuert.
   if (messageArea) {
-    messageArea.style.height = newHeight + "px";
-  }
-
-  if (ttsLogArea) {
-    ttsLogArea.style.height = newHeight + "px";
+    messageArea.style.removeProperty("height");
   }
 }
 

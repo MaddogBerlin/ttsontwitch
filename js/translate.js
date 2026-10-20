@@ -24,6 +24,28 @@ document.querySelectorAll("[data-lang]").forEach(btn => {
     const lang = btn.getAttribute("data-lang");
     localStorage.setItem("lang", lang);
     applyTranslations(lang);
+
+    const deleteTooltip =
+      dashboardTranslations[lang]?.ttsViewerVoiceDelete ||
+      dashboardTranslations.de.ttsViewerVoiceDelete;
+
+    document.querySelectorAll(".tts-user-voice-delete").forEach(button => {
+      const name = button.closest(".tts-user-voice-entry")
+        ?.querySelector(".tts-user-voice-name")?.textContent;
+
+      button.title = deleteTooltip;
+      button.setAttribute("aria-label", `${deleteTooltip}: ${name || ""}`);
+    });
+
+    // Platzhalter der Zuschauer-Stimmenauswahl aktualisieren
+    const viewerVoiceSelect = document.getElementById("ttsViewerVoice");
+    const defaultOption = viewerVoiceSelect?.querySelector('option[value=""]');
+
+    if (defaultOption) {
+      defaultOption.textContent =
+        dashboardTranslations[lang]?.ttsViewerVoicePlaceholder ||
+        dashboardTranslations.de.ttsViewerVoicePlaceholder;
+    }
   });
 });
 
