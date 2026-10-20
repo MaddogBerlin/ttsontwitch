@@ -335,6 +335,12 @@ ttsOptionsToggle.addEventListener("click", () => {
   const expanded =
     ttsOptionsToggle.getAttribute("aria-expanded") === "true";
 
+  // 🎙️ Stimmen öffnen: Filter-Einstellungen automatisch schließen
+  if (!expanded) {
+    filterOptionsToggle.setAttribute("aria-expanded", "false");
+    updateFilterOptionsVisibility();
+  }
+
   ttsOptionsToggle.setAttribute("aria-expanded", String(!expanded));
   updateTTSOptionsVisibility();
 });
@@ -376,6 +382,12 @@ filterOptionsToggle.addEventListener("click", () => {
 
   const expanded =
     filterOptionsToggle.getAttribute("aria-expanded") === "true";
+
+  // 🛡️ Filter öffnen: Stimmen-Einstellungen automatisch schließen
+  if (!expanded) {
+    ttsOptionsToggle.setAttribute("aria-expanded", "false");
+    updateTTSOptionsVisibility();
+  }
 
   filterOptionsToggle.setAttribute("aria-expanded", String(!expanded));
   updateFilterOptionsVisibility();
