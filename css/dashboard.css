@@ -517,6 +517,7 @@ body:not(.dark) .split-half {
 /* Dashboard – Innenkarten an das neue Raster anpassen */
 .dashboard-control-panel .split-half {
   min-width: 0;
+  min-height: 0;
   box-sizing: border-box;
   width: 100%;
 }
