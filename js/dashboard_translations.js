@@ -91,7 +91,9 @@ const dashboardTranslations = {
     ttsViewerVoiceAssigned: "Zuschauerstimme zugeordnet:",
     ttsViewerVoicesEnabled: "TTS Stimmen Zuschauer aktiviert.",
     ttsViewerVoicesDisabled: "TTS Stimmen Zuschauer deaktiviert.",
-    ttsViewerVoiceDelete: "Zuschauerstimme entfernen"
+    ttsViewerVoiceDelete: "Zuschauerstimme entfernen",
+    ttsDailyVoicesTitle: "TTS Zufällige Tagesstimmen",
+    ttsDailyVoiceDelete: "Tagesstimme entfernen"
   },
 
   en: {
@@ -177,7 +179,9 @@ const dashboardTranslations = {
     ttsViewerVoiceAssigned: "Viewer voice assigned:",
     ttsViewerVoicesEnabled: "TTS Viewer Voices enabled.",
     ttsViewerVoicesDisabled: "TTS Viewer Voices disabled.",
-    ttsViewerVoiceDelete: "Remove viewer voice"
+    ttsViewerVoiceDelete: "Remove viewer voice",
+    ttsDailyVoicesTitle: "TTS Random Daily Voices",
+    ttsDailyVoiceDelete: "Remove daily voice"
   },
 
   fr: {
@@ -263,7 +267,9 @@ const dashboardTranslations = {
     ttsViewerVoiceAssigned: "Voix attribuée au spectateur :",
     ttsViewerVoicesEnabled: "Voix TTS des spectateurs activées.",
     ttsViewerVoicesDisabled: "Voix TTS des spectateurs désactivées.",
-    ttsViewerVoiceDelete: "Supprimer la voix du spectateur"
+    ttsViewerVoiceDelete: "Supprimer la voix du spectateur",
+    ttsDailyVoicesTitle: "Voix TTS aléatoires du jour",
+    ttsDailyVoiceDelete: "Supprimer la voix du jour"
   },
 
   es: {
@@ -349,7 +355,9 @@ const dashboardTranslations = {
     ttsViewerVoiceAssigned: "Voz asignada al espectador:",
     ttsViewerVoicesEnabled: "Voces TTS de espectadores activadas.",
     ttsViewerVoicesDisabled: "Voces TTS de espectadores desactivadas.",
-    ttsViewerVoiceDelete: "Eliminar voz del espectador"
+    ttsViewerVoiceDelete: "Eliminar voz del espectador",
+    ttsDailyVoicesTitle: "Voces TTS aleatorias del día",
+    ttsDailyVoiceDelete: "Eliminar voz del día"
   },
 };
 /* 🌙✨ Übersetzungsfunktion */

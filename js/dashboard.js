@@ -578,6 +578,56 @@ function loadDailyViewerVoices() {
   }
 }
 
+// 🎲 Zufällige Tagesstimmen im Dashboard anzeigen
+function renderDailyViewerVoices() {
+  const list = document.getElementById("ttsDailyVoicesList");
+  if (!list) return;
+
+  list.replaceChildren();
+
+  dailyViewerVoices.forEach((voice, name) => {
+    const entry = document.createElement("div");
+    entry.className = "tts-daily-voice-entry";
+
+    const nameElement = document.createElement("span");
+    nameElement.className = "tts-daily-voice-name";
+    nameElement.textContent = name;
+
+    const voiceElement = document.createElement("span");
+    voiceElement.className = "tts-daily-voice-selected";
+    voiceElement.textContent = voice;
+    voiceElement.title = voice;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "tts-daily-voice-delete";
+    deleteButton.textContent = "✕";
+
+    // 🌍 Sprachabhängiger Tooltip für zufällige Tagesstimmen
+    const lang = localStorage.getItem("lang") || "de";
+
+    const deleteTooltip =
+      dashboardTranslations[lang]?.ttsDailyVoiceDelete ||
+      dashboardTranslations.de.ttsDailyVoiceDelete;
+
+    deleteButton.title = deleteTooltip;
+    deleteButton.setAttribute(
+      "aria-label",
+      `${deleteTooltip}: ${name}`
+    );
+    deleteButton.dataset.tooltipKey = "ttsDailyVoiceDelete";
+
+    // 🎲 Nur die zufällige Tagesstimme dieses Zuschauers entfernen
+    deleteButton.addEventListener("click", () => {
+      dailyViewerVoices.delete(name);
+      saveDailyViewerVoices();
+    });
+
+    entry.append(nameElement, voiceElement, deleteButton);
+    list.appendChild(entry);
+  });
+}
+
 // 🎲 Tagesstimmen mit aktuellem Datum speichern
 function saveDailyViewerVoices() {
   localStorage.setItem(
@@ -587,6 +637,9 @@ function saveDailyViewerVoices() {
       assignments: [...dailyViewerVoices.entries()]
     })
   );
+
+  // 🎲 Tagesstimmenliste nach jeder Speicherung aktualisieren
+  renderDailyViewerVoices();
 }
 
 // 🎲 Zufällige Tagesstimme für einen Zuschauer ermitteln
@@ -749,6 +802,7 @@ renderViewerVoices();
 
 // 🎲 Gespeicherte Tagesstimmen wiederherstellen
 loadDailyViewerVoices();
+renderDailyViewerVoices();
 
 // 🎙️ TTS Stimmen Zuschauer – Aktivierung und Aufklappfunktion
 const ttsUserVoicesToggle = document.getElementById("ttsUserVoicesToggle");

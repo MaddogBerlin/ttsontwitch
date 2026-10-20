@@ -25,6 +25,11 @@ document.querySelectorAll("[data-lang]").forEach(btn => {
     localStorage.setItem("lang", lang);
     applyTranslations(lang);
 
+    // 🎲 Tagesstimmen nach Sprachwechsel neu darstellen
+    if (typeof renderDailyViewerVoices === "function") {
+      renderDailyViewerVoices();
+    }
+
     const deleteTooltip =
       dashboardTranslations[lang]?.ttsViewerVoiceDelete ||
       dashboardTranslations.de.ttsViewerVoiceDelete;
