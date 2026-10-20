@@ -7,16 +7,20 @@ body.dark {
   --accent:#55aaff;--border:#333;
 }
 
-/* HEADER */
+/* HEADER – gleiche Form und Position wie Index */
 header {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  right: auto;
+  width: min(955px, 100%);
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  border-radius: 10px;
   z-index: 100;
-  background: rgba(30, 30, 35, 0.9); /* Darkmode Standard */
+  background: rgba(30, 30, 35, 0.9);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  padding: 10px 20px;
+  padding: 6px 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -217,14 +221,14 @@ body.dark .brand-link:hover {
 body.dark .center .divider {
   color: rgba(255, 255, 255, 0.4);
 }
-/* 🌙✨ True Harmony – Header Balance ohne .left */
-
+/* 🌙✨ Header-Navigation – links wie auf der Index */
 header .center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  position: static;
+  transform: none;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  text-align: left;
 }
 
 header .right {
@@ -278,23 +282,20 @@ footer {
 body {
     margin: 0;
 }
-/* ═══ 🌙✨ TRUE HARMONY – HYBRID FOOTER FIX ═══ */
+/* ═══ 🌙✨ TRUE HARMONY – FOOTER WIE INDEX ═══ */
 footer.site-footer {
-  position: auto;
-  bottom: 0;
-  left: 0;
-  width: 100vw; /* volle Browserbreite */
-  margin-left: calc(50% - 50vw); /* gleicht main-Zentrierung aus */
+  position: relative;
+  width: min(955px, 100%);
+  margin: 20px auto 0;
   display: flex;
-  justify-content: space-between; /* verteilt links / mitte / rechts */
+  justify-content: space-between;
   align-items: center;
   background-color: rgba(30, 33, 40, 0.85);
   color: var(--text);
   font-size: 13px;
   padding: 8px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
   z-index: 100;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
@@ -305,6 +306,30 @@ footer.site-footer {
 .footer-left {
   flex: 1;
   line-height: 1.4;
+}
+
+/* Twitch-Loginstatus im Footer */
+.footer-login-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* Statuspunkt */
+.footer-login-status::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e05252;
+}
+
+/* Erfolgreich angemeldet */
+.footer-login-status.connected::before {
+  background: #36d995;
 }
 
 /* Mittig ausgerichteter Text */
