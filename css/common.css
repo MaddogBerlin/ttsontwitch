@@ -180,7 +180,7 @@ body.page-index header .brand-link {
 
 /* Darkmode Struktur */
 body.page-index.dark header {
-  background: #1b1e24;
+  background: rgba(27, 30, 36, 0.9);
   color: #e0e3e9;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
