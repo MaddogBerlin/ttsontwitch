@@ -189,49 +189,112 @@
 
   </section>
 
-    <!-- ===== SPLIT PANEL (TTS + FILTER) ===== -->
-    <section class="panel">
+    <!-- ===== DASHBOARD – TTS STEUERUNG + MONITOR ===== -->
+    <section class="panel dashboard-control-panel">
       <div class="split-panel">
 
-        <!-- LEFT HALF -->
-        <div class="split-half">
+        <!-- LINKE SPALTE – TTS STEUERUNG UND FILTER -->
+        <div class="split-half dashboard-tts-column">
           <h3 id="ttsSettings" data-key="ttsSettings">TTS Einstellungen</h3>
-            <div class="field" style="justify-content:center;gap:8px;">
-              <label for="ttsToggle" id="ttsToggleLabel" data-key="ttsToggleLabel">TTS An / Aus</label>
-              <input id="ttsToggle" type="checkbox" disabled>
+            <!-- TTS-Hauptschalter und Filter-Schalter nebeneinander -->
+            <div class="tts-toggle-row">
+              <div class="field" style="justify-content:center;gap:8px;">
+                <label for="ttsToggle" id="ttsToggleLabel" data-key="ttsToggleLabel">TTS An / Aus</label>
+                <input id="ttsToggle" type="checkbox" disabled>
+              </div>
+
+              <div class="field" style="justify-content:center;gap:8px;">
+                <span id="lblFilterToggle" data-key="lblFilterToggle">TTS Filter An / Aus</span>
+                <input id="toggleTTSFilter" type="checkbox" disabled>
+              </div>
             </div>
 
-            <!-- 🎙️ TTS-Einstellungen ein-/ausklappen -->
-            <button
-              id="ttsOptionsToggle"
-              class="tts-options-toggle"
-              type="button"
-              aria-label="TTS-Einstellungen aufklappen"
-              aria-controls="ttsOptions"
-              aria-expanded="false"
-              disabled>
-              <span data-key="ttsVoicesTitle">TTS Stimmen</span>
-              <span class="tts-options-arrow" aria-hidden="true"></span>
-            </button>
+            <!-- 🎛️ Auswahlleiste – TTS Stimmen / TTS Filter -->
+            <div class="tts-module-navigation">
+
+              <!-- 🎙️ TTS-Stimmen-Auswahl -->
+              <button
+                id="ttsOptionsToggle"
+                class="tts-options-toggle"
+                type="button"
+                aria-label="TTS-Einstellungen aufklappen"
+                aria-controls="ttsOptions"
+                aria-expanded="false">
+                <span data-key="ttsVoicesTitle">TTS Stimmen</span>
+              </button>
+
+              <!-- 🛡️ TTS-Filter-Auswahl -->
+              <button
+                id="filterOptionsToggle"
+                class="tts-options-toggle"
+                type="button"
+                aria-label="Filter-Einstellungen aufklappen"
+                aria-controls="filterGroup"
+                aria-expanded="false">
+                <span data-key="ttsFilterTitle">TTS Filter</span>
+              </button>
+
+            </div>
+
+            <!-- Blaue Trennlinie unter der TTS-Modulauswahl -->
+            <div class="tts-module-divider" aria-hidden="true"></div>
 
             <div class="tts-options slidefade hidden" id="ttsOptions" style="text-align:left;">
-              <label for="rate" id="labelRate" data-key="labelRate" style="display:block;text-align:left;font-weight:700;margin-bottom:8px;";">Redegeschwindigkeit</label>
-              <div class="tts-slider-frame">
-              <div class="tts-slider-track">
-                <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1">
-              </div>
-              <span id="rateValue" class="tts-slider-value">1.0×</span>
-            </div>
 
-              <hr style="border:0;border-top:1px solid var(--border);margin:12px 0;">
+              <!-- 🎛️ Gemeinsamer Bereich für fünf vertikale TTS-Regler -->
+              <div class="tts-vertical-controls">
 
-              <label for="volume" id="labelVolume" data-key="labelVolume" style="display:block;text-align:left;font-weight:700;margin-bottom:8px;">Lautstärke</label>
-              <div class="tts-slider-frame">
-              <div class="tts-slider-track">
-                <input id="volume" type="range" min="0" max="1" step="0.05" value="1">
+              <div class="tts-control-item">
+                <label for="rate" id="labelRate" data-key="labelRate">Redegeschwindigkeit</label>
+                <div class="tts-slider-frame">
+                  <div class="tts-slider-track">
+                    <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1">
+                  </div>
+                  <span id="rateValue" class="tts-slider-value">1.0×</span>
+                </div>
               </div>
-              <span id="volumeValue" class="tts-slider-value">100 %</span>
-            </div>
+
+              <div class="tts-control-item">
+                <label for="volume" id="labelVolume" data-key="labelVolume">Lautstärke</label>
+                <div class="tts-slider-frame">
+                  <div class="tts-slider-track">
+                    <input id="volume" type="range" min="0" max="1" step="0.05" value="1">
+                  </div>
+                  <span id="volumeValue" class="tts-slider-value">100 %</span>
+                </div>
+              </div>
+
+              <div class="tts-control-item">
+                <label for="bassControl" data-key="equalizerBass">Bass</label>
+                <div class="tts-slider-frame">
+                  <div class="tts-slider-track">
+                    <input type="range" id="bassControl" min="-30" max="30" value="0" step="1">
+                  </div>
+                  <span id="bassValue" class="tts-slider-value">0 dB</span>
+                </div>
+              </div>
+
+              <div class="tts-control-item">
+                <label for="midControl" data-key="equalizerMid">Mitten</label>
+                <div class="tts-slider-frame">
+                  <div class="tts-slider-track">
+                    <input type="range" id="midControl" min="-30" max="30" value="0" step="1">
+                  </div>
+                  <span id="midValue" class="tts-slider-value">0 dB</span>
+                </div>
+              </div>
+
+              <div class="tts-control-item">
+                <label for="trebleControl" data-key="equalizerTreble">Höhen</label>
+                <div class="tts-slider-frame">
+                  <div class="tts-slider-track">
+                    <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1">
+                  </div>
+                  <span id="trebleValue" class="tts-slider-value">0 dB</span>
+                </div>
+              </div>
+
+              </div> <!-- Ende tts-vertical-controls -->
 
               <hr style="border:0;border-top:1px solid var(--border);margin:12px 0;">
 
@@ -250,69 +313,46 @@
                 <button id="speakBtn" class="action" type="button" data-key="btnSpeak">Sprechen</button>
               </div>
 
-               <!-- 🎧 Mini Equalizer -->
-            <details id="equalizerPanel" style="margin-top:15px;">
-              <summary class="equalizer-header">
-                <span data-key="equalizerTitle">Audio-Equalizer</span>
-              </summary>
-              
-              <div class="equalizer-controls">
+              <!-- 🎙️ Individuelle TTS-Stimmen für Zuschauer -->
+              <div class="tts-user-voices">
 
-              <label for="bassControl" data-key="equalizerBass">Bass</label>
-              <div class="tts-slider-frame">
-                <div class="tts-slider-track">
-                  <input type="range" id="bassControl" min="-30" max="30" value="0" step="1">
+                <div class="tts-user-voices-header">
+                  <label for="ttsUserVoicesToggle" data-key="ttsViewerVoicesTitle">TTS Stimmen Zuschauer</label>
+                  <input id="ttsUserVoicesToggle" type="checkbox">
                 </div>
-                <span id="bassValue" class="tts-slider-value">0 dB</span>
-              </div>
 
-              <label for="midControl" data-key="equalizerMid">Mitten</label>
-              <div class="tts-slider-frame">
-                <div class="tts-slider-track">
-                  <input type="range" id="midControl" min="-30" max="30" value="0" step="1">
+                <div class="tts-user-voices-content">
+                  <div class="tts-user-voices-input">
+                    <input id="ttsViewerName" type="text"
+                      maxlength="25" placeholder="Zuschauer Name"
+                      data-key="ttsViewerNamePlaceholder">
+
+                    <select id="ttsViewerVoice">
+                      <option value="" data-key="ttsViewerVoicePlaceholder">Stimmenauswahl</option>
+                    </select>
+
+                    <button id="ttsViewerVoiceConfirm"
+                      type="button" title="Stimme zuordnen"
+                      aria-label="Stimme zuordnen"
+                      data-tooltip-key="ttsViewerVoiceConfirm">✓</button>
+                  </div>
+
+                  <div id="ttsUserVoicesList" class="tts-user-voices-list">
+                  </div>
                 </div>
-                <span id="midValue" class="tts-slider-value">0 dB</span>
-              </div>
 
-              <label for="trebleControl" data-key="equalizerTreble">Höhen</label>
-              <div class="tts-slider-frame">
-                <div class="tts-slider-track">
-                  <input type="range" id="trebleControl" min="-30" max="30" value="0" step="1">
-                </div>
-                <span id="trebleValue" class="tts-slider-value">0 dB</span>
-              </div>
+              </div> <!-- Ende tts-user-voices -->
 
-            </div>
-            </details>
+              </div> <!-- Ende ttsOptions -->
 
+            <!-- EINFÜGEPUNKT – TTS FILTER WERDEN HIER INTEGRIERT -->
 
-            
-              </div>
-            </div>
+            <!-- TTS FILTER – VORLÄUFIGER CONTAINER IN DER LINKEN SPALTE -->
+            <div class="dashboard-filter-container">
 
-            <!-- RIGHT HALF -->
-            <div class="split-half">
-              <h3 id="filterSettings" data-key="filterSettings">Filter Einstellungen</h3>
+            <!-- 🛡️ TTS-Filter-Button wird in der gemeinsamen Auswahlleiste platziert -->
 
-            <div class="field" style="justify-content:center;gap:8px;">
-              <span id="lblFilterToggle" data-key="lblFilterToggle">TTS Filter An / Aus</span>
-              <input id="toggleTTSFilter" type="checkbox" disabled>
-            </div>
-
-            <!-- 🛡️ Filter-Einstellungen ein-/ausklappen -->
-            <button
-              id="filterOptionsToggle"
-              class="tts-options-toggle"
-              type="button"
-              aria-label="Filter-Einstellungen aufklappen"
-              aria-controls="filterGroup"
-              aria-expanded="false"
-              disabled>
-              <span data-key="ttsFilterTitle">TTS Filter</span>
-              <span class="tts-options-arrow" aria-hidden="true"></span>
-            </button>
-
-            <div id="filterGroup" class="slidefade hidden">
+            <div id="filterGroup" class="slidefade active">
 
             <!-- 1️⃣  Basis-Filter -->
             <div class="field">
@@ -327,6 +367,12 @@
             </div>
             <input id="blockBots" type="text" placeholder="bot1,bot2" style="display:none;width:70%;margin-top:5px;">
 
+            <div class="field">
+              <span id="lblWordBan" data-key="lblWordBan">TTS-Bannliste (Wörter)</span>
+              <input id="toggleWordBan" type="checkbox">
+            </div>
+            <input id="blockWords" type="text" placeholder="wort1, wort2, wort3" style="display:none;width:70%;margin-top:5px;">
+
             <!-- 2️⃣  Erweiterte Filter -->
             <div class="field">
               <span id="lblLinks" data-key="lblLinks">Keine Links lesen</span>
@@ -334,19 +380,13 @@
             </div>
 
             <div class="field">
-              <span id="lblWordBan" data-key="lblWordBan">TTS-Bannliste (Wörter)</span>
-              <input id="toggleWordBan" type="checkbox">
-            </div>
-            <input id="blockWords" type="text" placeholder="wort1, wort2, wort3" style="display:none;width:70%;margin-top:5px;">
-
-            <div class="field">
               <span id="lblSymbols" data-key="lblSymbols">Symbol/Emoji-Spam filtern</span>
               <input id="toggleSymbolSpam" type="checkbox">
             </div>
 
             <!-- 3️⃣  Moderatoren-Filter -->
-            <div class="field" style="text-align:center;">
-              <div id="lblModHeader" data-key="lblModHeader" style="display:block;font-weight:700;margin-bottom:6px;">
+            <div class="field" style="display:flex;flex-direction:column;align-items:stretch;text-align:left;">
+              <div id="lblModHeader" data-key="lblModHeader" style="display:block;font-weight:700;font-size:14px;margin-bottom:6px;">
                 Moderatoren-Filter
               </div>
               <div class="mod-filter" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
@@ -364,29 +404,34 @@
                 </label>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+            </div>
+         </div> <!-- Ende Filter-Container -->
+       </div> <!-- Ende linke TTS-Spalte -->
 
-    <!-- 📋 TTS-Protokoll und Twitch-Chat nebeneinander -->
-    <section class="panel">
-      <div class="tts-monitor-layout">
+       <!-- RECHTE SPALTE – TTS-PROTOKOLL UND TWITCH-CHAT -->
+       <div class="split-half dashboard-monitor-column">
 
-        <div class="tts-monitor-log">
-          <h3 id="ttsLogTitle" data-key="ttsLogTitle">TTS-Protokoll</h3>
-          <div id="ttsLog">
-            <div style="opacity:.7;">[System] Protokoll initialisiert…</div>
-          </div>
-        </div>
+         <div class="tts-monitor-layout">
 
-        <div class="tts-monitor-chat">
-          <h3 data-key="chat_header">Twitch Chat</h3>
-          <div id="chatBox"></div>
-        </div>
+           <div class="tts-monitor-log">
+             <h3 id="ttsLogTitle" data-key="ttsLogTitle">TTS-Protokoll</h3>
+             <div id="ttsLog">
+               <div style="opacity:.7;">[System] Protokoll initialisiert…</div>
+             </div>
+           </div>
 
-      </div>
-    </section>
+           <div class="tts-monitor-chat">
+             <h3 data-key="chat_header">Twitch Chat</h3>
+             <div id="chatBox"></div>
+           </div>
+
+         </div>
+
+       </div>
+
+       </div> <!-- Ende Split-Panel -->
+     </section>
+
 </main>
 
     <footer class="site-footer">
