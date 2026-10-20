@@ -41,14 +41,6 @@
 
 <body class="page-privacy">
   <header>
-    <div class="left user-info">
-      <img id="userAvatar" src="assets/default_avatar.png" alt="Profilbild" class="avatar hidden" />
-      <span id="userName" class="username hidden"></span>
-      <button id="loginStatus" class="disconnected" aria-live="polite" data-key="not_logged_in">
-        Nicht eingeloggt
-      </button>
-    </div>
-
     <div class="center">
       <a href="index.html" id="brand" class="brand-link" data-key="brand_title">TTS on Twitch</a>
       <span class="divider"></span>
@@ -130,30 +122,72 @@
 </main>
 
   <footer class="site-footer">
-      <div class="footer-center"></div>
-        <span data-key="footer_text">© 2025 TTSonTwitch<br>Version 1.0.3</span>
-      </div>
-      <div class="footer-right" id="systemClock">--:--:--</div>
+    <div class="footer-left">
+      <span id="loginStatus"
+            class="footer-login-status disconnected"
+            aria-live="polite"
+            data-key="not_logged_in">
+        Nicht eingeloggt
+      </span>
+    </div>
+
+    <div class="footer-center">
+      <span data-key="footer_text">© 2025 TTSonTwitch<br>Version 1.0.3</span>
+    </div>
+
+    <div class="footer-right" id="systemClock">--:--:--</div>
   </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const loginButton = document.getElementById("loginStatus");
-  if (!loginButton) return;
+document.addEventListener("DOMContentLoaded", async () => {
+  const loginStatus = document.getElementById("loginStatus");
+  if (!loginStatus) return;
 
   const token = sessionStorage.getItem("twitchToken");
 
-  if (token) {
-    loginButton.textContent = "Eingeloggt (Dashboard aktiv)";
-    loginButton.classList.remove("disconnected");
-    loginButton.classList.add("connected");
-  } else {
-    loginButton.textContent = "Nicht eingeloggt";
-    loginButton.classList.remove("connected");
-    loginButton.classList.add("disconnected");
+  const setStatus = (connected, text) => {
+    loginStatus.textContent = text;
+    loginStatus.classList.toggle("connected", connected);
+    loginStatus.classList.toggle("disconnected", !connected);
+  };
+
+  // Ohne Token keine Anmeldung
+  if (!token) {
+    setStatus(false, "Nicht verbunden");
+    return;
   }
 
-  loginButton.disabled = true;
+  // Während der Twitch-Prüfung noch keinen grünen Status anzeigen
+  setStatus(false, "Anmeldung wird geprüft …");
+
+  try {
+    const response = await fetch("https://id.twitch.tv/oauth2/validate", {
+      headers: {
+        Authorization: `OAuth ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Twitch-Validierung fehlgeschlagen (${response.status})`);
+    }
+
+    const data = await response.json();
+
+    // Nur gültige Tokens unserer Twitch-Anwendung akzeptieren
+    if (
+      data.client_id !== "yuol0okiv6jnik7kv000jdizlswyq6" ||
+      !data.login
+    ) {
+      throw new Error("Twitch-Anmeldung nicht gültig");
+    }
+
+    // Originalen Twitch-Loginnamen verwenden
+    setStatus(true, `Angemeldet als ${data.login}`);
+
+  } catch (error) {
+    console.warn("Twitch-Anmeldung konnte nicht bestätigt werden:", error);
+    setStatus(false, "Nicht verbunden");
+  }
 });
 </script>
 
