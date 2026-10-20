@@ -472,8 +472,39 @@ body:not(.dark) .split-half {
   }
 }
 
-/* Split Panel */
-.split-panel {display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+/* TTS-Hauptschalter und Filter-Schalter nebeneinander */
+.tts-toggle-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.tts-toggle-row .field {
+  margin: 0;
+  min-width: 0;
+  gap: 5px !important;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* TTS-Modulauswahl – zwei gleich breite Buttons */
+.tts-module-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+/* Split Panel – gleiche Spaltenbreiten wie Twitch Connect + Dashboard Information */
+.dashboard-control-panel .split-panel {
+  display: grid;
+  grid-template-columns: 35% minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
 .split-half {
   flex:1;
   min-width:300px;
@@ -482,6 +513,14 @@ body:not(.dark) .split-half {
   border-radius:10px;padding:15px;
   transition:background .1s,border .1s;
 }
+
+/* Dashboard – Innenkarten an das neue Raster anpassen */
+.dashboard-control-panel .split-half {
+  min-width: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
 /* 🩶 Astra & Commander Fix – Kein Nachglühen bei Theme-Wechsel */
 body.light .split-half,
 body.dark .split-half {
@@ -604,13 +643,15 @@ section.panel:last-of-type { margin-bottom:60px; }
 #filterGroup .field:last-of-type { border-bottom:none; }
 #filterGroup .field span {
   font-weight:700;
+  font-size:13px;
   letter-spacing:.2px;
 }
+
 #filterGroup input[type="text"] {
   background:rgba(255,255,255,0.85);
   border:1px solid rgba(0,0,0,0.15);
   border-radius:5px;
-  padding:4px 6px;
+  padding:2px 6px;
   font-size:13px;
   text-align:center;
   color:#333;
@@ -661,12 +702,13 @@ body.dark .mod-filter label { color:#d8d8d8; font-weight:500; }
 /* 🌙 Darkmode – Filter-Checkboxen */
 body.dark #filterGroup input[type="checkbox"],
 body.dark #ttsToggle,
-body.dark #toggleTTSFilter {
+body.dark #toggleTTSFilter,
+body.dark #ttsUserVoicesToggle {
   appearance: none;
   -webkit-appearance: none;
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
   box-sizing: border-box;
   margin: 0;
   border: 1px solid #596270;
@@ -680,7 +722,8 @@ body.dark #toggleTTSFilter {
 /* Aktivierte Checkbox */
 body.dark #filterGroup input[type="checkbox"]:checked,
 body.dark #ttsToggle:checked,
-body.dark #toggleTTSFilter:checked {
+body.dark #toggleTTSFilter:checked,
+body.dark #ttsUserVoicesToggle:checked {
   background: #354b63;
   border-color: #6895c0;
 }
@@ -688,11 +731,12 @@ body.dark #toggleTTSFilter:checked {
 /* Haken – Filter und beide Hauptschalter */
 body.dark #filterGroup input[type="checkbox"]:checked::after,
 body.dark #ttsToggle:checked::after,
-body.dark #toggleTTSFilter:checked::after {
+body.dark #toggleTTSFilter:checked::after,
+body.dark #ttsUserVoicesToggle:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 1px;
+  left: 3px;
+  top: 0px;
   width: 4px;
   height: 8px;
   border: solid #dcecff;
@@ -703,7 +747,8 @@ body.dark #toggleTTSFilter:checked::after {
 /* Tastaturfokus */
 body.dark #filterGroup input[type="checkbox"]:focus-visible,
 body.dark #ttsToggle:focus-visible,
-body.dark #toggleTTSFilter:focus-visible {
+body.dark #toggleTTSFilter:focus-visible,
+body.dark #ttsUserVoicesToggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -799,7 +844,7 @@ body.dark section.panel textarea,
 body.dark #chatBox {
   background:rgba(30,30,30,0.85);
   color:#ddd;
-  border-color:rgba(255,255,255,0.2);
+  border-color:var(--border);
   box-shadow:inset 0 0 6px rgba(255,255,255,0.08);
 }
 body:not(.dark) section.panel textarea,
@@ -863,18 +908,35 @@ body.dark #themeToggle:hover {
 #filterOptionsToggle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-weight: 700;
-  font-size: 16px;
-  text-align: left;
+  font-size: 12px;
+  text-align: center;
   width: 100%;
   margin: 8px 0;
   padding: 8px 6px;
   background: transparent;
   color: var(--text);
   border: none;
-  border-top: 1px solid var(--border);
   cursor: pointer;
+}
+
+/* TTS-Modulauswahl – dezente Trennlinie */
+.tts-module-divider {
+  width: 100%;
+  height: 2px;
+  margin: 12px 0 16px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* TTS-Modulauswahl – Buttons innerhalb des Rasters */
+.tts-module-navigation #ttsOptionsToggle,
+.tts-module-navigation #filterOptionsToggle {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 /* Hover für beide Klappleisten */
@@ -911,9 +973,7 @@ body.dark #themeToggle:hover {
 }
 
 /* 🛡️ Filter-Klappleiste vertikal ausrichten */
-#filterOptionsToggle {
-  margin-top: 18px;
-}
+/* Beide TTS-Auswahlbuttons verwenden die Abstände der gemeinsamen Navigation. */
 
 /* 🎧 Audio-Equalizer – einklappbarer Bereich */
 #equalizerPanel {
@@ -978,13 +1038,61 @@ body.dark #themeToggle:hover {
 #labelRate,
 #labelVolume,
 #labelVoice {
-  font-size: 14px;
+  font-size: 12px;
+}
+
+/* 🎛️ Fünf TTS-Regler nebeneinander */
+.tts-vertical-controls {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.tts-vertical-controls .tts-control-item {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-rows: 1fr;
+  align-items: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.tts-vertical-controls .tts-control-item > label {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: center;
+}
+
+.tts-vertical-controls .tts-control-item > .tts-slider-frame {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* 🎛️ Wertanzeige oberhalb des vertikalen Schiebers */
+.tts-vertical-controls .tts-slider-value {
+  order: -1;
+  flex: none;
+  width: 100%;
+  min-height: 28px;
+  border-left: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+
+.tts-vertical-controls .tts-control-item > label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-size: 12px;
+  text-align: center;
 }
 
 /* 🎚️ TTS-Regler mit gemeinsamer Umrandung */
 .tts-slider-frame {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -997,9 +1105,19 @@ body.dark #themeToggle:hover {
 .tts-slider-track {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex: 1;
   min-width: 0;
   padding: 7px 10px;
+}
+
+/* 🎚️ Platz für vertikale TTS-Schieberegler */
+.tts-vertical-controls .tts-slider-track {
+  flex: none;
+  width: 100%;
+  height: 150px;
+  box-sizing: border-box;
+  padding: 12px 4px;
 }
 
 .tts-slider-track input[type="range"] {
@@ -1015,15 +1133,21 @@ body.dark #themeToggle:hover {
   cursor: pointer;
 }
 
+/* 🎚️ Vertikale TTS-Schieberegler */
+.tts-vertical-controls .tts-slider-track input[type="range"] {
+  appearance: slider-vertical;
+  -webkit-appearance: slider-vertical;
+  width: 16px;
+  height: 130px;
+  min-width: 16px;
+  margin: 0;
+  accent-color: #8895a5;
+}
+
 /* Chromium / Opera GX – Reglerknopf */
 .tts-slider-track input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 12px;
-  height: 16px;
-  border: 1px solid #687381;
-  border-radius: 3px;
-  background: #8895a5;
+  appearance: auto;
+  -webkit-appearance: auto;
   cursor: grab;
 }
 
@@ -1074,7 +1198,9 @@ body.dark #themeToggle:hover {
   outline: none;
   background: transparent;
   color: var(--text);
-  font: inherit;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
   text-align: left;
 }
 
@@ -1092,7 +1218,7 @@ body.dark #themeToggle:hover {
   flex: 0 0 auto;
   box-sizing: border-box;
   margin: 0;
-  padding: 8px 14px;
+  padding: 2px 14px;
   border: none;
   border-left: 1px solid var(--border);
   border-radius: 0;
@@ -1133,12 +1259,14 @@ body:not(.dark) #ttsOptions .tts-input-frame #speakBtn:hover {
   width: 100%;
   box-sizing: border-box;
   margin: 0;
-  padding: 4px 12px;
+  padding: 2px 12px;
   border: none;
   border-radius: 0;
   background: transparent;
   color: var(--text);
-  font: inherit;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
   text-align: left;
   cursor: pointer;
 }
@@ -1163,6 +1291,186 @@ body:not(.dark) #ttsOptions .tts-voice-frame #voice option {
   background-color:rgba(85,170,255,0.15);
   transition:box-shadow 0.3s ease,background-color 0.3s ease;
 }
+
+/* 🎙️ TTS-Stimmen für einzelne Zuschauer */
+.tts-user-voices {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Überschrift links, Aktivierung rechts */
+.tts-user-voices-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tts-user-voices-header label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.tts-user-voices-header input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* 🎙️ Zuschauername, Stimmenauswahl und Bestätigung */
+.tts-user-voices-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px;
+  gap: 4px;
+  width: 100%;
+  align-items: center;
+}
+
+.tts-user-voices-input > input,
+.tts-user-voices-input > select,
+.tts-user-voices-input > button {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 🎙️ Einheitliches Design der Zuschauer-Stimmenauswahl */
+.tts-user-voices-input > input,
+.tts-user-voices-input > select {
+  height: 26px;
+  margin: 0;
+  padding: 2px 5px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #eeeeee;
+  color: #222;
+  font-size: 11px;
+}
+
+body.dark .tts-user-voices-input > input,
+body.dark .tts-user-voices-input > select {
+  background: #1c1f26;
+  color: #eeeeee;
+  border-color: #333;
+}
+
+/* Fokusrahmen der Zuschauer-Stimmenauswahl */
+.tts-user-voices-input > input:focus,
+.tts-user-voices-input > select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.tts-user-voices-input > button {
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #353c49;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tts-user-voices-input > button:hover {
+  background: #465a73;
+}
+
+/* ☀️ Lightmode – Zuschauerstimme bestätigen */
+body:not(.dark) .tts-user-voices-input > button {
+  background: #e0e4e9;
+  color: #222;
+}
+
+body:not(.dark) .tts-user-voices-input > button:hover {
+  background: #d0d8e2;
+}
+
+/* 🎙️ Liste der zugeordneten Zuschauerstimmen */
+.tts-user-voices-list {
+  width: 100%;
+  min-height: 65px;
+  max-height: 160px;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow-y: auto;
+  text-align: left;
+  font-size: 11px;
+}
+
+/* Darkmode – Hintergrund der Zuschauerliste */
+body.dark .tts-user-voices-list {
+  background: #1c1f26;
+}
+
+/* Lightmode – Hintergrund der Zuschauerliste */
+body:not(.dark) .tts-user-voices-list {
+  background: #eeeeee;
+}
+
+/* 🎙️ Einzelne Zuschauer-Stimmen-Zuordnung */
+.tts-user-voice-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 35%) minmax(0, 1fr) 22px;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tts-user-voice-delete {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tts-user-voice-delete:hover {
+  background: rgba(255, 107, 107, 0.12);
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.tts-user-voice-delete:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tts-user-voice-entry:last-child {
+  border-bottom: none;
+}
+
+.tts-user-voice-name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.tts-user-voice-name,
+.tts-user-voice-selected {
+  min-width: 0;
+  text-align: left;
+}
+
+.tts-user-voice-selected {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* 🌙 Einheitliches Header-Login-Button-Styling */
 header .left .disconnected,
 header .left .connected {
@@ -1187,16 +1495,31 @@ header .left button:disabled {
   cursor: not-allowed;
 }
 
-/* 📋 TTS-Protokoll und Twitch-Chat nebeneinander */
+/* 📋 TTS-Protokoll oben, Twitch-Chat darunter */
 .tts-monitor-layout {
   display: grid;
-  grid-template-columns: 35% minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 20px;
+  min-height: 100%;
 }
 
 .tts-monitor-log,
 .tts-monitor-chat {
   min-width: 0;
+}
+
+/* Twitch-Chat: Überschrift und Chatfenster getrennt berechnen */
+.tts-monitor-chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tts-monitor-chat #chatBox {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 225px;
 }
 
 .tts-monitor-log h3,
@@ -1213,7 +1536,6 @@ body.dark .tts-monitor-chat h3 {
 
 #ttsLog,
 #chatBox {
-  height: 300px;
   box-sizing: border-box;
   overflow-y: auto;
   resize: none;
@@ -1222,9 +1544,24 @@ body.dark .tts-monitor-chat h3 {
   padding: 6px;
 }
 
+/* Twitch-Chat – normale Größe und dynamische Anpassung */
+#chatBox {
+  height: 100%;
+  min-height: 300px;
+}
+
 #ttsLog {
+  height: 100px;
   font-size: 13px;
-  background: rgba(0, 0, 0, 0.03);
+}
+
+/* TTS-Protokoll – gleiche Innenfarbe wie Twitch-Chat */
+body.dark #ttsLog {
+  background: rgba(30, 30, 30, 0.85);
+}
+
+body:not(.dark) #ttsLog {
+  background: rgba(255, 255, 255, 0.95);
 }
 
 /* 📋 TTS-Protokoll & Twitch Chat – Scrollbalken unsichtbar */
