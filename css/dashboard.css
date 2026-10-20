@@ -1471,6 +1471,78 @@ body:not(.dark) .tts-user-voices-list {
   white-space: nowrap;
 }
 
+/* 🎲 Zufällige Tagesstimmen – eigener Listenbereich */
+.tts-daily-voices {
+  width: 100%;
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Überschrift */
+.tts-daily-voices-title {
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Tagesstimmenliste – gleiche Optik wie feste Stimmen */
+#ttsDailyVoicesList {
+  min-height: 65px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+/* Einzelne Zeile: Zuschauer | Stimme | Löschen */
+.tts-daily-voice-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 35%) minmax(0, 1fr) 22px;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tts-daily-voice-entry:last-child {
+  border-bottom: none;
+}
+
+.tts-daily-voice-name {
+  min-width: 0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.tts-daily-voice-selected {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Tagesstimme entfernen */
+.tts-daily-voice-delete {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tts-daily-voice-delete:hover {
+  background: rgba(255, 107, 107, 0.12);
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
 /* 🌙 Einheitliches Header-Login-Button-Styling */
 header .left .disconnected,
 header .left .connected {
@@ -1544,10 +1616,12 @@ body.dark .tts-monitor-chat h3 {
   padding: 6px;
 }
 
-/* Twitch-Chat – normale Größe und dynamische Anpassung */
+/* Twitch-Chat – feste Maximalhöhe mit internem Scrollen */
 #chatBox {
-  height: 100%;
+  height: 400px;
   min-height: 300px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 #ttsLog {
