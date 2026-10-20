@@ -29,7 +29,7 @@ const privacyTranslations = {
     nav_log: "Log TTS",
     lang_button: "DE",
     toggle_theme: "Darkmode",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     privacy_header: "Datenschutzerklärung",
     privacy_section1_title: "1. Verantwortlicher",
@@ -73,7 +73,7 @@ const privacyTranslations = {
     nav_log: "TTS Log",
     lang_button: "EN",
     toggle_theme: "Darkmode",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     privacy_header: "Privacy Policy",
     privacy_section1_title: "1. Controller",
@@ -116,7 +116,7 @@ const privacyTranslations = {
     nav_log: "Journal TTS",
     lang_button: "FR",
     toggle_theme: "Mode sombre",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     privacy_header: "Déclaration de confidentialité",
     privacy_section1_title: "1. Responsable du traitement",
@@ -160,7 +160,7 @@ const privacyTranslations = {
     nav_log: "Registro TTS",
     lang_button: "ES",
     toggle_theme: "Modo oscuro",
-    footer_text: "© 2025 TTSonTwitch<br>Versión 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Versión 1.0.4",
 
     privacy_header: "Política de privacidad",
     privacy_section1_title: "1. Responsable",

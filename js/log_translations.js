@@ -1,6 +1,6 @@
 /* ===========================================================
  🌙✨ TRUE HARMONY – LOG / TTS HISTORY TRANSLATIONS
- Version: 1.0
+ Version: 1.4
  Description: Übersetzungen für log.html (TTS-Verlauf & Systemmeldungen)
  Autor: Astra 🩶 & Commander ❤️
 =========================================================== */
@@ -29,9 +29,37 @@ const logTranslations = {
     nav_log: "Log TTS",
     lang_button: "DE",
     toggle_theme: "Darkmode",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     log_title: "Log TTS – Entwicklungsdokumentation",
+
+    // Version 1.0.4
+    v104_title: "Version 1.0.4",
+    v104_desc: "Page-Layouts & TTS-Erweiterungen",
+    // Benutzeroberfläche und Layout
+    v104_ui_heading: "Benutzeroberfläche und Layout",
+    v104_ui_layout: "Überarbeitung der Page-Layouts",
+    v104_ui_dashboard: "Dashboard mit neuer zweispaltiger Anordnung",
+    v104_ui_chat: "TTS-Protokoll und Twitch-Chat im rechten Bereich",
+    v104_ui_columns: "Dynamische Anpassung der Dashboard-Spalten",
+    // TTS-Einstellungen
+    v104_settings_heading: "TTS-Einstellungen",
+    v104_settings_sections: "Separate Auswahlbereiche für TTS-Stimmen und TTS-Filter",
+    v104_settings_toggle: "Gegenseitige Klappsteuerung der Einstellungsbereiche",
+    v104_settings_lock: "Überarbeitete Aktivierungs- und Sperrlogik",
+    v104_settings_eq: "Integration des Equalizers in die TTS-Stimmeneinstellungen",
+    // Neue Stimmenfunktionen
+    v104_voices_heading: "Neue Stimmenfunktionen",
+    v104_voices_assignment: "Individuelle Stimmenzuordnung für Zuschauer",
+    v104_voices_management: "Speichern, Laden, Aktualisieren und Löschen von Stimmenzuordnungen",
+    v104_voices_daily: "Zufällige Tagesstimmen mit Speicherung und Wiederherstellung",
+    v104_voices_priority: "Vorrang fest zugewiesener Zuschauerstimmen",
+    // Twitch und Dashboard
+    v104_twitch_heading: "Twitch und Dashboard",
+    v104_twitch_account: "Überarbeiteter Twitch-Accountbereich mit Profilinformationen",
+    v104_twitch_status: "Anzeige des Twitch-Loginnamens, Accountstatus und der Followerzahl",
+    v104_twitch_layout: "Verbesserte Anordnung von Twitch Connect und Dashboard-Informationen",
+
     v103_title: "Version 1.0.3",
     v103_desc: "TTS Erweiterung & Filter-System",
     v103_tts_panel: "Neues Einstellungs-Panel „TTS Einstellungen“:",
@@ -95,9 +123,36 @@ const logTranslations = {
     nav_log: "TTS Log",
     lang_button: "EN",
     toggle_theme: "Darkmode",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     log_title: "Log TTS – Development Documentation",
+    // Version 1.0.4
+    v104_title: "Version 1.0.4",
+    v104_desc: "Page Layouts & TTS Enhancements",
+    // User Interface and Layout
+    v104_ui_heading: "User Interface and Layout",
+    v104_ui_layout: "Redesigned page layouts",
+    v104_ui_dashboard: "Dashboard with a new two-column layout",
+    v104_ui_chat: "TTS log and Twitch chat in the right-hand section",
+    v104_ui_columns: "Dynamic adjustment of dashboard columns",
+    // TTS Settings
+    v104_settings_heading: "TTS Settings",
+    v104_settings_sections: "Separate sections for TTS voices and TTS filters",
+    v104_settings_toggle: "Mutually exclusive expandable settings sections",
+    v104_settings_lock: "Revised activation and locking logic",
+    v104_settings_eq: "Integrated equalizer into the TTS voice settings",
+    // New Voice Features
+    v104_voices_heading: "New Voice Features",
+    v104_voices_assignment: "Individual voice assignments for viewers",
+    v104_voices_management: "Save, load, update and delete voice assignments",
+    v104_voices_daily: "Random daily voices with saving and restoration",
+    v104_voices_priority: "Priority for permanently assigned viewer voices",
+    // Twitch and Dashboard
+    v104_twitch_heading: "Twitch and Dashboard",
+    v104_twitch_account: "Redesigned Twitch account section with profile information",
+    v104_twitch_status: "Display of Twitch login name, account status and follower count",
+    v104_twitch_layout: "Improved layout of Twitch Connect and dashboard information",
+
     v103_title: "Version 1.0.3",
     v103_desc: "TTS Expansion & Filter System",
     v103_tts_panel: "New Settings Panel “TTS Settings”:",
@@ -161,9 +216,36 @@ const logTranslations = {
     nav_log: "Journal TTS",
     lang_button: "FR",
     toggle_theme: "Mode sombre",
-    footer_text: "© 2025 TTSonTwitch<br>Version 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Version 1.0.4",
 
     log_title: "Journal TTS – Documentation du développement",
+    // Version 1.0.4
+    v104_title: "Version 1.0.4",
+    v104_desc: "Refonte des mises en page et améliorations TTS",
+    // Interface utilisateur et mise en page
+    v104_ui_heading: "Interface utilisateur et mise en page",
+    v104_ui_layout: "Refonte des mises en page",
+    v104_ui_dashboard: "Tableau de bord avec une nouvelle disposition en deux colonnes",
+    v104_ui_chat: "Journal TTS et chat Twitch dans la partie droite",
+    v104_ui_columns: "Adaptation dynamique des colonnes du tableau de bord",
+    // Paramètres TTS
+    v104_settings_heading: "Paramètres TTS",
+    v104_settings_sections: "Sections distinctes pour les voix TTS et les filtres TTS",
+    v104_settings_toggle: "Ouverture exclusive des sections de paramètres",
+    v104_settings_lock: "Révision de la logique d’activation et de verrouillage",
+    v104_settings_eq: "Intégration de l’égaliseur dans les paramètres des voix TTS",
+    // Nouvelles fonctionnalités vocales
+    v104_voices_heading: "Nouvelles fonctionnalités vocales",
+    v104_voices_assignment: "Attribution individuelle de voix aux spectateurs",
+    v104_voices_management: "Enregistrement, chargement, mise à jour et suppression des attributions vocales",
+    v104_voices_daily: "Voix quotidiennes aléatoires avec sauvegarde et restauration",
+    v104_voices_priority: "Priorité aux voix attribuées de manière permanente aux spectateurs",
+    // Twitch et tableau de bord
+    v104_twitch_heading: "Twitch et tableau de bord",
+    v104_twitch_account: "Section du compte Twitch remaniée avec les informations du profil",
+    v104_twitch_status: "Affichage du nom de connexion Twitch, de l’état du compte et du nombre d’abonnés",
+    v104_twitch_layout: "Amélioration de la disposition de Twitch Connect et des informations du tableau de bord",
+
     v103_title: "Version 1.0.3",
     v103_desc: "Extension TTS et système de filtre",
     v103_tts_panel: "Nouveau panneau de configuration « Paramètres TTS » :",
@@ -227,10 +309,37 @@ const logTranslations = {
     nav_log: "Registro TTS",
     lang_button: "ES",
     toggle_theme: "Modo oscuro",
-    footer_text: "© 2025 TTSonTwitch<br>Versión 1.0.3",
+    footer_text: "© 2026 TTSonTwitch<br>Versión 1.0.4",
 
     log_title: "Registro TTS – Documentación de desarrollo",
-    v103_title: "Versión 1.0.3",
+    // Version 1.0.4
+    v104_title: "Versión 1.0.4",
+    v104_desc: "Rediseño de las páginas y mejoras de TTS",
+    // Interfaz de usuario y diseño
+    v104_ui_heading: "Interfaz de usuario y diseño",
+    v104_ui_layout: "Rediseño de las páginas",
+    v104_ui_dashboard: "Panel de control con nueva distribución en dos columnas",
+    v104_ui_chat: "Registro TTS y chat de Twitch en la sección derecha",
+    v104_ui_columns: "Ajuste dinámico de las columnas del panel de control",
+    // Configuración TTS
+    v104_settings_heading: "Configuración TTS",
+    v104_settings_sections: "Secciones separadas para voces TTS y filtros TTS",
+    v104_settings_toggle: "Apertura exclusiva de las secciones de configuración",
+    v104_settings_lock: "Lógica de activación y bloqueo revisada",
+    v104_settings_eq: "Integración del ecualizador en la configuración de voces TTS",
+    // Nuevas funciones de voz
+    v104_voices_heading: "Nuevas funciones de voz",
+    v104_voices_assignment: "Asignación individual de voces a los espectadores",
+    v104_voices_management: "Guardar, cargar, actualizar y eliminar asignaciones de voz",
+    v104_voices_daily: "Voces diarias aleatorias con guardado y restauración",
+    v104_voices_priority: "Prioridad para las voces asignadas permanentemente a los espectadores",
+    // Twitch y panel de control
+    v104_twitch_heading: "Twitch y panel de control",
+    v104_twitch_account: "Sección de cuenta de Twitch rediseñada con información del perfil",
+    v104_twitch_status: "Visualización del nombre de usuario de Twitch, estado de la cuenta y número de seguidores",
+    v104_twitch_layout: "Distribución mejorada de Twitch Connect y la información del panel de control",
+
+    v103_title: "Version 1.0.3",
     v103_desc: "Extensión TTS y sistema de filtro",
     v103_tts_panel: "Nuevo panel de configuración “Ajustes TTS”:",
     v103_tts_toggle: "TTS Activado / Desactivado – Interruptor principal de voz",
