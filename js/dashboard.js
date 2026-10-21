@@ -204,6 +204,32 @@ window.addEventListener("DOMContentLoaded", () => {
               console.log("Tier 1:", tierCounts["1000"]);
               console.log("Tier 2:", tierCounts["2000"]);
               console.log("Tier 3:", tierCounts["3000"]);
+
+              // ⭐ Persönliches Abonnement des angemeldeten Accounts suchen
+              const ownSubscription = (data.data || []).find(
+                sub => sub.user_id === user.id
+              );
+
+              const twitchSubscriptionTier =
+                document.getElementById("twitchSubscriptionTier");
+
+              const twitchTierValue =
+                document.getElementById("twitchTierValue");
+
+              if (ownSubscription && twitchSubscriptionTier && twitchTierValue) {
+                const tierNames = {
+                  "1000": "1",
+                  "2000": "2",
+                  "3000": "3"
+                };
+
+                const tier = tierNames[ownSubscription.tier];
+
+                if (tier) {
+                  twitchTierValue.textContent = tier;
+                  twitchSubscriptionTier.hidden = false;
+                }
+              }
             })
             .catch(err => {
               console.error("Twitch-Abonnements konnten nicht geladen werden:", err);
