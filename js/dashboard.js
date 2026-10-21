@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
 ════════════════════════════════════════════════════════════════════════════════════════════════════ */
 const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twitch Client-ID ein
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
-const scope = "user:read:email chat:read moderator:read:followers"; // Berechtigung zum Abrufen der Followerzahl
+const scope = "user:read:email chat:read moderator:read:followers channel:read:subscriptions"; // Followerzahl und Kanal-Abonnements abrufen
 
 // Funktion: Startet den Twitch-Login-Flow
 document.getElementById("connectBtn").addEventListener("click", () => {
@@ -166,6 +166,31 @@ window.addEventListener("DOMContentLoaded", () => {
             // Passende CSS-Farbe für den Twitch-Accounttyp
             twitchAccountType.dataset.type = accountType;
           }
+
+          // Twitch-Abonnements des angemeldeten Kanals prüfen
+          fetch(
+            `https://api.twitch.tv/helix/subscriptions?broadcaster_id=${encodeURIComponent(user.id)}&first=100`,
+            {
+              headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Client-Id": clientId
+              }
+            }
+          )
+            .then(res => {
+              if (!res.ok) {
+                throw new Error(`Twitch-Abonnement-API Fehler (${res.status})`);
+              }
+
+              return res.json();
+            })
+            .then(data => {
+              console.log("Twitch-Abonnements – Gesamtzahl:", data.total);
+              console.log("Twitch-Abonnements – erste Seite:", data.data);
+            })
+            .catch(err => {
+              console.error("Twitch-Abonnements konnten nicht geladen werden:", err);
+            });
 
           // Twitch-Followerzahl des angemeldeten Kanals abrufen
           const twitchFollowerCount =
