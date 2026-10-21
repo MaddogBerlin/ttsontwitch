@@ -1591,9 +1591,11 @@ header .left button:disabled {
 }
 
 .tts-monitor-chat #chatBox {
-  flex: 1 1 auto;
-  height: auto;
+  flex: 0 1 auto;
+  height: 300px;
   min-height: 225px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .tts-monitor-log h3,
