@@ -422,15 +422,15 @@ body:not(.dark) .split-half {
   opacity: 0.5;
 }
 
-/* 🟠 Twitch Affiliate – Gold/Orange */
+/* 🟣 Twitch Affiliate – Twitch-Violett */
 .dashboard-overview #twitchAccountType[data-type="affiliate"] {
-  color: #d99532;
+  color: #A970FF;
   font-weight: 600;
 }
 
-/* 🟣 Twitch Partner – Twitch-Lila */
+/* 🟣 Twitch Partner – Twitch-Violett */
 .dashboard-overview #twitchAccountType[data-type="partner"] {
-  color: #9146ff;
+  color: #A970FF;
   font-weight: 600;
 }
 
@@ -441,9 +441,15 @@ body:not(.dark) .split-half {
 }
 
 /* 🟢 Twitch Follower – dezentes Grün */
-.dashboard-overview .twitch-profile-stats > span:last-child {
+.dashboard-overview .twitch-profile-stats > span:not([id]):has(#twitchFollowerCount) {
   color: #36b97c;
   font-weight: 500;
+}
+
+/* 🟡 Twitch-Abonnement – Goldgelb */
+.dashboard-overview #twitchSubscriptionTier {
+  color: #EAB308;
+  font-weight: 600;
 }
 
 .dashboard-overview .twitch-connect {
