@@ -35,6 +35,44 @@ const clientId = "yuol0okiv6jnik7kv000jdizlswyq6"; // <– trage hier deine Twit
 const redirectUri = "https://ttsontwitch.de/dashboard.html";
 const scope = "user:read:email chat:read moderator:read:followers channel:read:subscriptions"; // Followerzahl und Kanal-Abonnements abrufen
 
+// 🪛 Zuletzt verwendeten Twitch-Account im Eingaberahmen anzeigen
+function updateSavedTwitchAccount() {
+  const savedAccount = localStorage.getItem("lastTwitchUser");
+  const accountContainer = document.getElementById("twitchSavedAccount");
+  const accountName = document.getElementById("twitchSavedAccountName");
+  const twitchNameInput = document.getElementById("twitchName");
+  const connectBtn = document.getElementById("connectBtn");
+
+  if (!accountContainer || !accountName || !twitchNameInput || !connectBtn) return;
+
+  // Während einer aktiven Twitch-Anmeldung die bisherige Anzeige beibehalten
+  const isConnected = connectBtn.classList.contains("connected");
+
+  if (isConnected) {
+    accountContainer.hidden = true;
+    twitchNameInput.hidden = false;
+    connectBtn.hidden = false;
+    return;
+  }
+
+  if (savedAccount) {
+    // Gespeicherten Account statt der normalen Anmeldung anzeigen
+    accountName.textContent = savedAccount;
+    accountContainer.hidden = false;
+    twitchNameInput.hidden = true;
+    connectBtn.hidden = true;
+  } else {
+    // Ohne gespeicherten Account normale Anmeldung anzeigen
+    accountName.textContent = "";
+    accountContainer.hidden = true;
+    twitchNameInput.hidden = false;
+    connectBtn.hidden = false;
+  }
+}
+
+// Gespeicherten Account beim Öffnen des Dashboards anzeigen
+window.addEventListener("DOMContentLoaded", updateSavedTwitchAccount);
+
 // Funktion: Startet den Twitch-Login-Flow
 document.getElementById("connectBtn").addEventListener("click", () => {
   const authUrl =
@@ -47,6 +85,33 @@ document.getElementById("connectBtn").addEventListener("click", () => {
 
   // Weiterleitung zu Twitch Login
   window.location.href = authUrl;
+});
+
+// 🪛 Gespeicherten Twitch-Account erneut auswählen
+document.getElementById("twitchAccountSelect")?.addEventListener("click", () => {
+  const savedAccount = localStorage.getItem("lastTwitchUser");
+  if (!savedAccount) return;
+
+  const twitchNameInput = document.getElementById("twitchName");
+
+  if (twitchNameInput) {
+    twitchNameInput.value = savedAccount;
+  }
+
+  // Twitch muss die Anmeldung erneut autorisieren.
+  // Der gespeicherte Benutzername allein ist keine Anmeldung.
+  document.getElementById("connectBtn")?.click();
+});
+
+// 🗑️ Gespeicherten Twitch-Account aus der Auswahl entfernen
+document.getElementById("twitchAccountRemove")?.addEventListener("click", () => {
+  // Ausschließlich den zuletzt gespeicherten Accountnamen entfernen
+  localStorage.removeItem("lastTwitchUser");
+
+  // Accountauswahl unmittelbar aktualisieren
+  updateSavedTwitchAccount();
+
+  // Twitch-Anmeldung und TTS-Einstellungen bleiben unverändert
 });
 
 // Funktion: Prüft beim Laden, ob ein Access-Token vorhanden ist
