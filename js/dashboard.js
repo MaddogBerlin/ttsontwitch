@@ -185,8 +185,25 @@ window.addEventListener("DOMContentLoaded", () => {
               return res.json();
             })
             .then(data => {
+              // 📊 Abonnement-Tiers des angemeldeten Twitch-Kanals
+              const tierCounts = {
+                "1000": 0,
+                "2000": 0,
+                "3000": 0
+              };
+
+              // Jeden zurückgegebenen Abonnement-Eintrag auswerten
+              (data.data || []).forEach(sub => {
+                if (Object.hasOwn(tierCounts, sub.tier)) {
+                  tierCounts[sub.tier]++;
+                }
+              });
+
+              // 🔎 Vorläufige Kontrolle in der Browserkonsole
               console.log("Twitch-Abonnements – Gesamtzahl:", data.total);
-              console.log("Twitch-Abonnements – erste Seite:", data.data);
+              console.log("Tier 1:", tierCounts["1000"]);
+              console.log("Tier 2:", tierCounts["2000"]);
+              console.log("Tier 3:", tierCounts["3000"]);
             })
             .catch(err => {
               console.error("Twitch-Abonnements konnten nicht geladen werden:", err);
