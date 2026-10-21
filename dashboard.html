@@ -139,6 +139,8 @@
           </label>
 
           <div class="input-group twitch-input-frame">
+
+            <!-- Normale Twitch-Anmeldung -->
             <input
               id="twitchName"
               type="text"
@@ -152,6 +154,27 @@
               data-key="btn_connect">
               Connect
             </button>
+
+            <!-- 🪛 Gespeicherter Account direkt im Eingaberahmen -->
+            <div id="twitchSavedAccount" class="twitch-saved-account" hidden>
+              <button
+                id="twitchAccountSelect"
+                type="button"
+                class="twitch-account-select"
+                title="Gespeicherten Twitch-Account erneut auswählen">
+                ↻ <span id="twitchSavedAccountName"></span>
+              </button>
+
+              <button
+                id="twitchAccountRemove"
+                type="button"
+                class="twitch-account-remove"
+                title="Gespeicherten Twitch-Account entfernen"
+                aria-label="Gespeicherten Twitch-Account entfernen">
+                ✕
+              </button>
+            </div>
+
           </div>
 
         </div>
