@@ -1732,3 +1732,82 @@ body:not(.dark) .twitch-input-frame #connectBtn {
 body:not(.dark) .twitch-input-frame #connectBtn:hover {
   background: #d0d8e2;
 }
+
+/* 🪛 Gespeicherter Twitch-Account im vorhandenen Eingaberahmen */
+.twitch-input-frame #twitchSavedAccount {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Verborgene Elemente dürfen keinen Platz beanspruchen */
+.twitch-input-frame #twitchSavedAccount[hidden],
+.twitch-input-frame #twitchName[hidden],
+.twitch-input-frame #connectBtn[hidden] {
+  display: none;
+}
+
+/* ↻ Gespeicherten Account auswählen */
+.twitch-input-frame #twitchAccountSelect {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ✕ Gespeicherten Account entfernen */
+.twitch-input-frame #twitchAccountRemove {
+  flex: 0 0 34px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+  background: #303741;
+  color: #eee;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 🌙 Darkmode – Hover */
+body.dark .twitch-input-frame #twitchAccountSelect:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body.dark .twitch-input-frame #twitchAccountRemove:hover {
+  background: #63333a;
+}
+
+/* ☀️ Lightmode */
+body:not(.dark) .twitch-input-frame #twitchAccountSelect:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body:not(.dark) .twitch-input-frame #twitchAccountRemove {
+  background: #e0e4e9;
+  color: #222;
+}
+
+body:not(.dark) .twitch-input-frame #twitchAccountRemove:hover {
+  background: #f0caca;
+}
+
+/* Tastaturbedienung */
+.twitch-input-frame #twitchAccountSelect:focus-visible,
+.twitch-input-frame #twitchAccountRemove:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
