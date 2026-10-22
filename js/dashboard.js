@@ -937,9 +937,12 @@ renderViewerVoices();
 loadDailyViewerVoices();
 renderDailyViewerVoices();
 
-// 🎙️ TTS Stimmen Zuschauer – Aktivierung und Aufklappfunktion
+// 🎙️ TTS Stimmen Zuschauer – Hauptschalter
 const ttsUserVoicesToggle = document.getElementById("ttsUserVoicesToggle");
 const ttsUserVoicesContent = document.querySelector(".tts-user-voices-content");
+
+// 🎲 Zufällige Tagesstimmen – eigener, untergeordneter Schalter
+const ttsDailyVoicesToggle = document.getElementById("ttsDailyVoicesToggle");
 
 function updateTTSUserVoicesVisibility() {
   if (!ttsUserVoicesToggle || !ttsUserVoicesContent) return;
@@ -948,6 +951,25 @@ function updateTTSUserVoicesVisibility() {
 
   ttsUserVoicesContent.hidden = !enabled;
   ttsUserVoicesContent.style.display = enabled ? "" : "none";
+
+  // Random-Schalter nur bei aktivierten Zuschauerstimmen bedienbar
+  if (ttsDailyVoicesToggle) {
+    ttsDailyVoicesToggle.disabled = !enabled;
+  }
+}
+
+// 🎲 Random-Einstellung unabhängig vom Hauptschalter speichern
+ttsDailyVoicesToggle?.addEventListener("change", () => {
+  localStorage.setItem(
+    "ttsDailyVoicesEnabled",
+    String(ttsDailyVoicesToggle.checked)
+  );
+});
+
+// 🎲 Gespeicherten Random-Schalterzustand wiederherstellen
+if (ttsDailyVoicesToggle) {
+  ttsDailyVoicesToggle.checked =
+    localStorage.getItem("ttsDailyVoicesEnabled") === "true";
 }
 
 ttsUserVoicesToggle?.addEventListener("change", () => {
@@ -1687,14 +1709,18 @@ function processTTSQueue() {
     if (assignment) {
       // 💾 Dauerhaft zugeordnete Stimme hat Vorrang
       selectedVoiceName = assignment.voice;
-    } else {
-      // 🎲 Ohne feste Zuordnung: zufällige Tagesstimme
+    
+    } else if (
+      document.getElementById("ttsDailyVoicesToggle")?.checked === true
+    ) {
+      // 🎲 Zufällige Tagesstimmen nur bei aktiviertem Random-Schalter
       const dailyVoice = getDailyViewerVoice(viewerName);
 
       if (dailyVoice) {
         selectedVoiceName = dailyVoice;
       }
     }
+
   }
 
   const selectedVoice = voices.find(
