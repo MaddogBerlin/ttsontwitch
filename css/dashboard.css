@@ -710,7 +710,8 @@ body.dark .mod-filter label { color:#d8d8d8; font-weight:500; }
 body.dark #filterGroup input[type="checkbox"],
 body.dark #ttsToggle,
 body.dark #toggleTTSFilter,
-body.dark #ttsUserVoicesToggle {
+body.dark #ttsUserVoicesToggle,
+body.dark #ttsDailyVoicesToggle {
   appearance: none;
   -webkit-appearance: none;
   width: 13px;
@@ -730,7 +731,8 @@ body.dark #ttsUserVoicesToggle {
 body.dark #filterGroup input[type="checkbox"]:checked,
 body.dark #ttsToggle:checked,
 body.dark #toggleTTSFilter:checked,
-body.dark #ttsUserVoicesToggle:checked {
+body.dark #ttsUserVoicesToggle:checked,
+body.dark #ttsDailyVoicesToggle:checked {
   background: #354b63;
   border-color: #6895c0;
 }
@@ -739,7 +741,8 @@ body.dark #ttsUserVoicesToggle:checked {
 body.dark #filterGroup input[type="checkbox"]:checked::after,
 body.dark #ttsToggle:checked::after,
 body.dark #toggleTTSFilter:checked::after,
-body.dark #ttsUserVoicesToggle:checked::after {
+body.dark #ttsUserVoicesToggle:checked::after,
+body.dark #ttsDailyVoicesToggle:checked::after {
   content: "";
   position: absolute;
   left: 3px;
@@ -755,7 +758,8 @@ body.dark #ttsUserVoicesToggle:checked::after {
 body.dark #filterGroup input[type="checkbox"]:focus-visible,
 body.dark #ttsToggle:focus-visible,
 body.dark #toggleTTSFilter:focus-visible,
-body.dark #ttsUserVoicesToggle:focus-visible {
+body.dark #ttsUserVoicesToggle:focus-visible,
+body.dark #ttsDailyVoicesToggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
