@@ -24,7 +24,6 @@ const dashboardTranslations = {
     save_button: "Speichern",
     success_saved: "Einstellungen gespeichert ✅",
     error_login: "Anmeldung fehlgeschlagen ❌",
-
     // Filterlabels
     lblFilterToggle: "TTS Filter An / Aus",
     lblCmds: "Blende Commands aus (!)",
@@ -93,7 +92,10 @@ const dashboardTranslations = {
     ttsViewerVoicesDisabled: "TTS Stimmen Zuschauer deaktiviert.",
     ttsViewerVoiceDelete: "Zuschauerstimme entfernen",
     ttsDailyVoicesTitle: "TTS Zufällige Tagesstimmen",
-    ttsDailyVoiceDelete: "Tagesstimme entfernen"
+    ttsDailyVoiceDelete: "Tagesstimme entfernen",
+    ttsDailyVoicesEnabled: "TTS Zufällige Tagesstimmen aktiviert.",
+    ttsDailyVoicesDisabled: "TTS Zufällige Tagesstimmen deaktiviert."
+
   },
 
   en: {
@@ -113,7 +115,6 @@ const dashboardTranslations = {
     save_button: "Save",
     success_saved: "Settings saved ✅",
     error_login: "Login failed ❌",
-
     lblFilterToggle: "TTS Filter On / Off",
     lblCmds: "Hide Commands (!)",
     lblBots: "Hide Twitch Bots",
@@ -181,7 +182,10 @@ const dashboardTranslations = {
     ttsViewerVoicesDisabled: "TTS Viewer Voices disabled.",
     ttsViewerVoiceDelete: "Remove viewer voice",
     ttsDailyVoicesTitle: "TTS Random Daily Voices",
-    ttsDailyVoiceDelete: "Remove daily voice"
+    ttsDailyVoiceDelete: "Remove daily voice",
+    ttsDailyVoicesEnabled: "TTS Random Daily Voices enabled.",
+    ttsDailyVoicesDisabled: "TTS Random Daily Voices disabled."
+
   },
 
   fr: {
@@ -201,7 +205,6 @@ const dashboardTranslations = {
     save_button: "Sauvegarder",
     success_saved: "Paramètres enregistrés ✅",
     error_login: "Échec de la connexion ❌",
-
     lblFilterToggle: "TTS Filter On / Off",
     lblCmds: "Masquer les commandes (!)",
     lblBots: "Masquer les bots Twitch",
@@ -269,7 +272,10 @@ const dashboardTranslations = {
     ttsViewerVoicesDisabled: "Voix TTS des spectateurs désactivées.",
     ttsViewerVoiceDelete: "Supprimer la voix du spectateur",
     ttsDailyVoicesTitle: "Voix TTS aléatoires du jour",
+    ttsDailyVoicesEnabled: "Voix TTS aléatoires du jour activées.",
+    ttsDailyVoicesDisabled: "Voix TTS aléatoires du jour désactivées.",
     ttsDailyVoiceDelete: "Supprimer la voix du jour"
+
   },
 
   es: {
@@ -289,7 +295,6 @@ const dashboardTranslations = {
     save_button: "Guardar",
     success_saved: "Configuración guardada ✅",
     error_login: "Error de inicio de sesión ❌",
-
     lblFilterToggle: "TTS Filter On / Off",
     lblCmds: "Ocultar comandos (!)",
     lblBots: "Ocultar bots de Twitch",
@@ -357,7 +362,10 @@ const dashboardTranslations = {
     ttsViewerVoicesDisabled: "Voces TTS de espectadores desactivadas.",
     ttsViewerVoiceDelete: "Eliminar voz del espectador",
     ttsDailyVoicesTitle: "Voces TTS aleatorias del día",
-    ttsDailyVoiceDelete: "Eliminar voz del día"
+    ttsDailyVoiceDelete: "Eliminar voz del día",
+    ttsDailyVoicesEnabled: "Voces TTS aleatorias del día activadas.",
+    ttsDailyVoicesDisabled: "Voces TTS aleatorias del día desactivadas."
+
   },
 };
 /* 🌙✨ Übersetzungsfunktion */

@@ -964,6 +964,16 @@ ttsDailyVoicesToggle?.addEventListener("change", () => {
     "ttsDailyVoicesEnabled",
     String(ttsDailyVoicesToggle.checked)
   );
+
+  const lang = localStorage.getItem("lang") || "de";
+
+  appendLog(
+    ttsDailyVoicesToggle.checked
+      ? (dashboardTranslations[lang]?.ttsDailyVoicesEnabled ||
+         dashboardTranslations.de.ttsDailyVoicesEnabled)
+      : (dashboardTranslations[lang]?.ttsDailyVoicesDisabled ||
+         dashboardTranslations.de.ttsDailyVoicesDisabled)
+  );
 });
 
 // 🎲 Gespeicherten Random-Schalterzustand wiederherstellen
