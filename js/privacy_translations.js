@@ -35,7 +35,7 @@ const privacyTranslations = {
     privacy_section1_title: "1. Verantwortlicher",
     privacy_section1_text: `Verantwortlich für die Datenverarbeitung auf dieser Webseite ist:<br>
       <strong>[Roberto Blümel]</strong><br>
-      <a href="ttsontwitch.de">E-Mail</a>`,
+      <a href="mailto:ttsontwitch-de@outlook.de">E-Mail</a>`,
     privacy_section2_title: "2. Erhebung und Speicherung personenbezogener Daten",
     privacy_section2_text: `Beim Besuch dieser Webseite werden automatisch Informationen durch den Browser erfasst (z. B. IP-Adresse, verwendeter Browser, Uhrzeit des Zugriffs). 
       Diese Daten dienen ausschließlich der technischen Bereitstellung und Stabilität der Seite und werden nicht an Dritte weitergegeben.`,
@@ -79,7 +79,7 @@ const privacyTranslations = {
     privacy_section1_title: "1. Controller",
     privacy_section1_text: `Responsible for data processing on this website:<br>
       <strong>[Roberto Blümel]</strong><br>
-      <a href="ttsontwitch.de">E-mail</a>`,
+      <a href="mailto:ttsontwitch-de@outlook.de">E-mail</a>`,
     privacy_section2_title: "2. Collection and storage of personal data",
     privacy_section2_text: `When visiting this website, certain information is automatically collected by the browser (e.g., IP address, browser type, access time). 
       These data are used solely for technical provision and site stability and are not shared with third parties.`,
@@ -122,7 +122,7 @@ const privacyTranslations = {
     privacy_section1_title: "1. Responsable du traitement",
     privacy_section1_text: `Responsable du traitement des données sur ce site web :<br>
       <strong>[Roberto Blümel]</strong><br>
-      <a href="ttsontwitch.de">E-mail</a>`,
+      <a href="mailto:ttsontwitch-de@outlook.de">E-mail</a>`,
     privacy_section2_title: "2. Collecte et stockage des données personnelles",
     privacy_section2_text: `Lors de la visite de ce site, certaines informations sont automatiquement collectées par le navigateur 
       (par ex. adresse IP, type de navigateur, heure d’accès). 
@@ -166,7 +166,7 @@ const privacyTranslations = {
     privacy_section1_title: "1. Responsable",
     privacy_section1_text: `Responsable del tratamiento de datos en este sitio web:<br>
       <strong>[Roberto Blümel]</strong><br>
-      <a href="ttsontwitch.de">Correo electrónico</a>`,
+      <a href="mailto:ttsontwitch-de@outlook.de">Correo electrónico</a>`,
     privacy_section2_title: "2. Recopilación y almacenamiento de datos personales",
     privacy_section2_text: `Al visitar este sitio web, el navegador recopila automáticamente cierta información 
       (por ejemplo, dirección IP, tipo de navegador, hora de acceso). 
