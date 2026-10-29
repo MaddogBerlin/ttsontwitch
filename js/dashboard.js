@@ -154,6 +154,16 @@ window.addEventListener("DOMContentLoaded", () => {
         if (user) {
           // Zuletzt erfolgreich verbundenen Twitch-Account merken
           localStorage.setItem("lastTwitchUser", user.login);
+
+          // 🛡️ BetterTTV-Emotes für diesen Twitch-Kanal laden
+          loadBTTVEmotes(user.id);
+
+          // 🛡️ FrankerFaceZ-Emotes für diesen Twitch-Kanal laden
+          loadFFZEmotes(user.id);
+
+          // 🛡️ 7TV-Emotes für diesen Twitch-Kanal laden
+          load7TVEmotes(user.id);
+
           connectToTwitchChat(user.login, accessToken);
 
           // Protokollmeldung
@@ -1045,7 +1055,10 @@ document.addEventListener("DOMContentLoaded", () => {
   { id: "toggleBots", label: "Blende Twitch Bots aus" },
   { id: "toggleNoLinks", label: "Keine Links lesen" },
   { id: "toggleWordBan", label: "TTS-Bannliste (Wörter)" },
-  { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" }
+  { id: "toggleSymbolSpam", label: "Symbol/Emoji-Spam filtern" },
+  { id: "toggleBTTV", label: "BetterTTV-Emotes filtern" },
+  { id: "toggleFFZ", label: "FrankerFaceZ-Emotes filtern" },
+  { id: "toggle7TV", label: "7TV-Emotes filtern" }
 ];
 
   function writeFilterLog(label, checked) {
@@ -1148,6 +1161,15 @@ function saveTTSSettings() {
   toggleSymbolSpam:
   document.getElementById("toggleSymbolSpam")?.checked || false,
 
+  toggleBTTV:
+  document.getElementById("toggleBTTV")?.checked || false,
+
+  toggleFFZ:
+  document.getElementById("toggleFFZ")?.checked || false,
+
+  toggle7TV:
+  document.getElementById("toggle7TV")?.checked || false,
+
   blockCommands:
     document.getElementById("blockCommands")?.value || "",
 
@@ -1190,7 +1212,10 @@ function saveTTSSettings() {
   "toggleBots",
   "toggleNoLinks",
   "toggleWordBan",
-  "toggleSymbolSpam"
+  "toggleSymbolSpam",
+  "toggleBTTV",
+  "toggleFFZ",
+  "toggle7TV"
 ].forEach(id => {
   document.getElementById(id)?.addEventListener(
     "change",
@@ -1276,7 +1301,10 @@ function loadTTSSettings() {
   "toggleBots",
   "toggleNoLinks",
   "toggleWordBan",
-  "toggleSymbolSpam"
+  "toggleSymbolSpam",
+  "toggleBTTV",
+  "toggleFFZ",
+  "toggle7TV"
   ].forEach(id => {
     const element = document.getElementById(id);
 
@@ -1433,6 +1461,134 @@ function appendTwitchEmotes(container, message, emotes) {
       document.createTextNode(message.slice(cursor))
     );
   }
+}
+
+// 🛡️ Drittanbieter-Emotes für die TTS-Filter
+// Globale und kanalspezifische Emotes werden später hier gesammelt.
+const thirdPartyEmotes = {
+  bttv: new Set(),
+  ffz: new Set(),
+  sevenTV: new Set()
+};
+
+// 🛡️ BetterTTV – globale und kanalspezifische Emotes laden
+async function loadBTTVEmotes(channelId) {
+  thirdPartyEmotes.bttv.clear();
+
+  const endpoints = [
+    "https://api.betterttv.net/3/cached/emotes/global",
+    `https://api.betterttv.net/3/cached/users/twitch/${encodeURIComponent(channelId)}`
+  ];
+
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const emotes = Array.isArray(data)
+        ? data
+        : [
+            ...(data.channelEmotes || []),
+            ...(data.sharedEmotes || [])
+          ];
+
+      emotes.forEach(emote => {
+        if (typeof emote.code === "string" && emote.code) {
+          thirdPartyEmotes.bttv.add(emote.code);
+        }
+      });
+
+    } catch (error) {
+      console.warn("BetterTTV-Emotes konnten nicht geladen werden:", error);
+    }
+  }
+
+  console.log(
+    `BetterTTV: ${thirdPartyEmotes.bttv.size} Emotes geladen.`
+  );
+}
+
+// 🛡️ FrankerFaceZ – globale und kanalspezifische Emotes laden
+async function loadFFZEmotes(channelId) {
+  thirdPartyEmotes.ffz.clear();
+
+  const endpoints = [
+    "https://api.frankerfacez.com/v1/set/global",
+    `https://api.frankerfacez.com/v1/room/id/${encodeURIComponent(channelId)}`
+  ];
+
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // FFZ speichert Emotes in verschiedenen Sets
+      Object.values(data.sets || {}).forEach(set => {
+        (set.emoticons || []).forEach(emote => {
+          if (typeof emote.name === "string" && emote.name) {
+            thirdPartyEmotes.ffz.add(emote.name);
+          }
+        });
+      });
+
+    } catch (error) {
+      console.warn("FrankerFaceZ-Emotes konnten nicht geladen werden:", error);
+    }
+  }
+
+  console.log(
+    `FrankerFaceZ: ${thirdPartyEmotes.ffz.size} Emotes geladen.`
+  );
+}
+
+// 🛡️ 7TV – globale und kanalspezifische Emotes laden
+async function load7TVEmotes(channelId) {
+  thirdPartyEmotes.sevenTV.clear();
+
+  const endpoints = [
+    "https://7tv.io/v3/emote-sets/global",
+    `https://7tv.io/v3/users/twitch/${encodeURIComponent(channelId)}`
+  ];
+
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Globale Emotes oder Emotes des aktiven Kanal-Sets
+      const emotes = Array.isArray(data.emotes)
+        ? data.emotes
+        : (data.emote_set?.emotes || []);
+
+      emotes.forEach(emote => {
+        if (typeof emote.name === "string" && emote.name) {
+          thirdPartyEmotes.sevenTV.add(emote.name);
+        }
+      });
+
+    } catch (error) {
+      console.warn("7TV-Emotes konnten nicht geladen werden:", error);
+    }
+  }
+
+  console.log(
+    `7TV: ${thirdPartyEmotes.sevenTV.size} Emotes geladen.`
+  );
 }
 
 function connectToTwitchChat(channelName, accessToken) {
@@ -1647,6 +1803,41 @@ client.on("message", (channel, tags, message, self) => {
 
       // Leerzeichen nach dem Entfernen sauber zusammenziehen
       ttsMessage = ttsMessage.replace(/\s+/g, " ").trim();
+  }
+
+  // === TTS Filter: BetterTTV, FrankerFaceZ und 7TV ===
+  if (ttsFilterEnabled) {
+    const activeEmotes = new Set();
+
+    // BetterTTV
+    if (document.getElementById("toggleBTTV")?.checked) {
+      thirdPartyEmotes.bttv.forEach(name => activeEmotes.add(name));
+    }
+
+    // FrankerFaceZ
+    if (document.getElementById("toggleFFZ")?.checked) {
+      thirdPartyEmotes.ffz.forEach(name => activeEmotes.add(name));
+    }
+
+    // 7TV
+    if (document.getElementById("toggle7TV")?.checked) {
+      thirdPartyEmotes.sevenTV.forEach(name => activeEmotes.add(name));
+    }
+
+    // Nur vollständige Emote-Namen entfernen
+    activeEmotes.forEach(name => {
+      const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      const regex = new RegExp(
+        `(?<![\\p{L}\\p{N}_])${escapedName}(?![\\p{L}\\p{N}_])`,
+        "gu"
+      );
+
+      ttsMessage = ttsMessage.replace(regex, "");
+    });
+
+    // Überflüssige Leerzeichen entfernen
+    ttsMessage = ttsMessage.replace(/\s+/g, " ").trim();
   }
 
   // === TTS Filter: Moderatoren ===
