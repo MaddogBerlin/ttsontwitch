@@ -1868,7 +1868,12 @@ client.on("message", (channel, tags, message, self) => {
   // === TTS Ausgabe – nur mit aktiver Twitch-Verbindung ===
   const twitchConnected = client.readyState() === "OPEN";
 
-  if (twitchConnected && document.getElementById("ttsToggle")?.checked) {
+  // 🎙️ Leere Nachrichten nach der Filterung nicht vorlesen
+  if (
+    twitchConnected &&
+    document.getElementById("ttsToggle")?.checked &&
+    ttsMessage.trim()
+  ) {
     const viewerName = tags.username || displayName;
 
     speakChatMessage(`${displayName} sagt: ${ttsMessage}`, viewerName);
