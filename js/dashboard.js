@@ -1628,11 +1628,6 @@ function connectToTwitchChat(channelName, accessToken) {
     document.getElementById("ttsToggle").disabled = false;
     document.getElementById("toggleTTSFilter").disabled = false;
 
-    // 🎙️ TTS-Stimmen nach erfolgreicher Verbindung automatisch öffnen
-    if (ttsToggle.checked) {
-      ttsOptionsToggle.setAttribute("aria-expanded", "true");
-    }
-
     updateTTSOptionsVisibility();
     updateFilterOptionsVisibility();
   });
@@ -1953,6 +1948,15 @@ function processTTSQueue() {
     ttsSpeaking = false;
     processTTSQueue();
   };
+
+  // 🔎 Diagnose: Benutzeraktivierung vor der Sprachausgabe
+  const activation = navigator.userActivation;
+
+  appendLog(
+    `TTS-Diagnose: hasBeenActive=${activation?.hasBeenActive ?? "unbekannt"}, ` +
+    `isActive=${activation?.isActive ?? "unbekannt"}, ` +
+    `Stimme=${selectedVoice?.name ?? "Standard"}`
+  );
 
   synth.speak(utter);
 }
