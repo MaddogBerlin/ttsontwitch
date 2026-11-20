@@ -1628,6 +1628,11 @@ function connectToTwitchChat(channelName, accessToken) {
     document.getElementById("ttsToggle").disabled = false;
     document.getElementById("toggleTTSFilter").disabled = false;
 
+    // 🎙️ TTS-Stimmen nach erfolgreicher Verbindung automatisch öffnen
+    if (ttsToggle.checked) {
+      ttsOptionsToggle.setAttribute("aria-expanded", "true");
+    }
+
     updateTTSOptionsVisibility();
     updateFilterOptionsVisibility();
   });
