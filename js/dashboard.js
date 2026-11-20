@@ -83,8 +83,17 @@ document.getElementById("connectBtn").addEventListener("click", () => {
     `&force_verify=true` +
     `&scope=${encodeURIComponent(scope)}`;
 
-  // Weiterleitung zu Twitch Login
-  window.location.href = authUrl;
+  // 🪟 Twitch-Anmeldung in einem separaten Popup öffnen
+  twitchOAuthPopup = window.open(
+    authUrl,
+    "twitchOAuthPopup",
+    "width=550,height=750,resizable=yes,scrollbars=yes"
+  );
+
+  // Falls der Browser das Popup blockiert, bisherigen Login verwenden
+  if (!twitchOAuthPopup) {
+    window.location.href = authUrl;
+  }
 });
 
 // 🪛 Gespeicherten Twitch-Account erneut auswählen
@@ -114,13 +123,31 @@ document.getElementById("twitchAccountRemove")?.addEventListener("click", () => 
   // Twitch-Anmeldung und TTS-Einstellungen bleiben unverändert
 });
 
-// Funktion: Prüft beim Laden, ob ein Access-Token vorhanden ist
-window.addEventListener("DOMContentLoaded", () => {
+// Funktion: Verarbeitet die vorhandene Twitch-Anmeldung
+function handleTwitchOAuth(receivedToken = null) {
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
+
+  // 🪟 Twitch-OAuth-Rückkehr im Anmelde-Popup
+  const popupToken = params.get("access_token");
+
+  if (window.opener && popupToken) {
+    window.opener.postMessage(
+      {
+        type: "twitchOAuthSuccess",
+        accessToken: popupToken
+      },
+      window.location.origin
+    );
+
+    window.close();
+    return;
+  }
+
   const accessToken =
-  params.get("access_token") ||
-  sessionStorage.getItem("twitchToken");
+    receivedToken ||
+    popupToken ||
+    sessionStorage.getItem("twitchToken");
   const statusBtn = document.getElementById("loginStatus");
   const connectBtn = document.getElementById("connectBtn");
   const log = document.getElementById("ttsLog");
@@ -429,6 +456,35 @@ window.addEventListener("DOMContentLoaded", () => {
     statusBtn.classList.remove("connected");
     statusBtn.classList.add("disconnected");
   }
+}
+
+// Bestehende Anmeldung beim Laden weiterhin ausführen
+window.addEventListener("DOMContentLoaded", () => {
+  handleTwitchOAuth();
+});
+
+// 🪟 Referenz auf unser Twitch-Anmeldefenster
+let twitchOAuthPopup = null;
+
+// 🪟 Twitch-OAuth-Ergebnis aus dem Anmelde-Popup empfangen
+window.addEventListener("message", (event) => {
+  // Nur Nachrichten von unserer eigenen Webseite akzeptieren
+  if (event.origin !== window.location.origin) return;
+
+  // Nur Nachrichten aus unserem eigenen Anmelde-Popup akzeptieren
+  if (!twitchOAuthPopup || event.source !== twitchOAuthPopup) return;
+
+  // Nur das erwartete Twitch-OAuth-Ergebnis verarbeiten
+  if (
+    event.data?.type !== "twitchOAuthSuccess" ||
+    typeof event.data.accessToken !== "string" ||
+    !event.data.accessToken
+  ) {
+    return;
+  }
+
+  // Bestehende Twitch-Anmeldelogik verwenden
+  handleTwitchOAuth(event.data.accessToken);
 });
 
 // Klick: Wechseln & in der aktuellen Sitzung speichern
@@ -1948,15 +2004,6 @@ function processTTSQueue() {
     ttsSpeaking = false;
     processTTSQueue();
   };
-
-  // 🔎 Diagnose: Benutzeraktivierung vor der Sprachausgabe
-  const activation = navigator.userActivation;
-
-  appendLog(
-    `TTS-Diagnose: hasBeenActive=${activation?.hasBeenActive ?? "unbekannt"}, ` +
-    `isActive=${activation?.isActive ?? "unbekannt"}, ` +
-    `Stimme=${selectedVoice?.name ?? "Standard"}`
-  );
 
   synth.speak(utter);
 }
