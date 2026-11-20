@@ -83,11 +83,22 @@ document.getElementById("connectBtn").addEventListener("click", () => {
     `&force_verify=true` +
     `&scope=${encodeURIComponent(scope)}`;
 
-  // 🪟 Twitch-Anmeldung in einem separaten Popup öffnen
+  // 🪟 Twitch-Anmeldung mittig über dem Dashboard öffnen
+  const popupWidth = 550;
+  const popupHeight = 750;
+
+  const popupLeft = Math.round(
+    window.screenX + (window.outerWidth - popupWidth) / 2
+  );
+
+  const popupTop = Math.round(
+    window.screenY + (window.outerHeight - popupHeight) / 2
+  );
+
   twitchOAuthPopup = window.open(
     authUrl,
     "twitchOAuthPopup",
-    "width=550,height=750,resizable=yes,scrollbars=yes"
+    `width=${popupWidth},height=${popupHeight},left=${popupLeft},top=${popupTop},resizable=yes,scrollbars=yes`
   );
 
   // Falls der Browser das Popup blockiert, bisherigen Login verwenden
